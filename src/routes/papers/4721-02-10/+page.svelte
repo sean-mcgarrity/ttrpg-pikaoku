@@ -15,8 +15,8 @@
       <div class="text-4xl text-center font-heading tracking-wide">
         MENHEMES ANNOUNCES ANOTHER RUN
       </div>
-      <div class="flex flex-row py-2 text-justify gap-4 border-b border-offblack">
-        <div class="w-1/3 flex flex-col gap-4">
+      <div class="flex flex-col md:flex-row py-2 text-justify gap-4 border-b border-offblack">
+        <div class="md:w-1/3 flex flex-col gap-4">
           <div class="text-2xl text-center font-heading -mb-2 tracking-wide">
             Fifth Time The Charm For Rajani?
           </div>
@@ -35,7 +35,7 @@
             Baxter Boggs, an experienced fisherman. "[He] only cares after his own purse."
           </p>
         </div>
-        <div class="w-1/3 flex flex-col gap-4">
+        <div class="md:w-1/3 flex flex-col gap-4">
           <p>
             Mayor Menhemes has come under fire from the local fishing community in recent times,
             following his controversial support of the Fish and Hunt Districting bill in Absalom.
@@ -53,7 +53,7 @@
             of success are considered low.
           </p>
         </div>
-        <div class="w-1/3 flex flex-col gap-4">
+        <div class="md:w-1/3 flex flex-col gap-4">
           <p>
             As disagreements mount in Otari ahead of the mayoral election, a new potential candidate
             has emerged in the form of Alymora Inkleholtz, a successful businesswoman and Inkleholtz
@@ -73,8 +73,8 @@
         </div>
       </div>
     </div>
-    <div class="px-4 py-2 flex flex-row gap-4">
-      <div class="w-1/2 flex flex-col gap-2">
+    <div class="px-4 py-2 flex flex-col md:flex-row gap-4">
+      <div class="md:w-1/2 flex flex-col gap-2">
         <div class="text-3xl text-center tracking-widest font-heading uppercase">
           Adventurers Arrive
         </div>
@@ -115,7 +115,9 @@
           </ul>
         </div>
       </div>
-      <div class="flex flex-col flex-1 border-l border-offblack px-4">
+      <div
+        class="flex flex-col flex-1 pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-offblack md:px-4"
+      >
         <h4 class="text-3xl text-center font-heading mb-2 uppercase">Sahuagin Take Fisher</h4>
         <p class="text-justify">
           The tight-knit town of Otari is mourning the loss of one of its own. Leif Dunwallow, a
