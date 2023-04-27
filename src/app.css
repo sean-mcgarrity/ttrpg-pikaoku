@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Chomsky';
+  src: url('./assets/fonts/chomsky.regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Heathergreen';
+  src: url('./assets/fonts/heathergreen.regular.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Steelfish';
+  src: url('./assets/fonts/steelfish.rg-regular.otf') format('opentype');
+}

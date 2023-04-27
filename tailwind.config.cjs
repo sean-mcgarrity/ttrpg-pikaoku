@@ -7,7 +7,14 @@ module.exports = {
         svelteDark: '#F03A00',
         hotPink: '#FF1966',
         dark: '#111111',
-        light: '#FAFAFA'
+        light: '#FAFAFA',
+        offblack: '#333333'
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        title: ['Chomsky', 'serif'],
+        heading: ['serif'],
+        body: ['Inter', 'sans-serif']
       }
     }
   },
