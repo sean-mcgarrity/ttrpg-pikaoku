@@ -3,7 +3,7 @@
 </script>
 
 <div
-  class="bg-gray-300 border-2 border-offblack rounded shadow p-2 sm:p-4 md:p-8 max-w-4xl mx-auto flex flex-col font-body text-offblack"
+  class="bg-gray-100 border-2 border-offblack rounded shadow p-2 sm:p-4 md:p-8 max-w-4xl mx-auto flex flex-col font-body text-offblack"
 >
   <div class="flex flex-col md:flex-row items-center border-b border-offblack mb-1 pb-1 gap-2">
     <div
