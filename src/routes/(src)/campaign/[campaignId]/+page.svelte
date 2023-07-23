@@ -1,6 +1,5 @@
 <script>
-  import LandingLink from './LandingLink.svelte';
-  import monsterPartsBanner from '$assets/images/monster-parts-banner.webp';
+  import LandingLink from '$src/components/LandingLink.svelte';
 </script>
 
 <svelte:head>
@@ -14,7 +13,7 @@
       description="A list of all the campaigns I've run."
       href="/monster-parts"
       bgImgSrc="monster-parts-banner"
-    /> 
+    />
     <LandingLink
       title="Otari Handouts"
       description=""

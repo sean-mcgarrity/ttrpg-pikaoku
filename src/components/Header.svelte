@@ -1,17 +1,7 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import type { AuthSession } from '@supabase/supabase-js';
-  import { supabase } from '$lib/supabaseClient';
-  import { onMount } from 'svelte';
+  export let user = null;
 
-  export let session: any;
-
-  onMount(async () => {
-    session = await supabase.auth.getSession();
-    console.log('session', session);
-  });
-
-  console.log('session', session);
+  console.log('header user', user);
 </script>
 
 <nav
@@ -20,7 +10,14 @@
   <div class="font-bold text-2xl uppercase">
     <a class="" href="/">Sean's Game</a>
   </div>
-  <div>
-    <a href="/login">Login</a>
-  </div>
+  {#if user}
+    <div class="flex flex-row items-center">
+      <div class="mr-4">{user.email}</div>
+      <a href="/logout">Logout</a>
+    </div>
+  {:else}
+    <div>
+      <a href="/login">Login</a>
+    </div>
+  {/if}
 </nav>

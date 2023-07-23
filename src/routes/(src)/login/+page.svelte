@@ -1,5 +1,8 @@
 <script lang="ts">
-  import { supabase } from '$lib/supabaseClient';
+  export let data;
+  let { supabase } = data;
+  $: ({ supabase } = data);
+
   import { onMount } from 'svelte';
 
   async function signInWithDiscord() {
