@@ -14,7 +14,7 @@
       description="A list of all the campaigns I've run."
       href="/monster-parts"
       bgImgSrc="monster-parts-banner"
-    />
+    /> 
     <LandingLink
       title="Otari Handouts"
       description=""
