@@ -1,0 +1,73 @@
+<script lang="ts">
+  import { page } from '$app/stores';
+  import SwitchField from '$src/components/forms/controls/SwitchField.svelte';
+  import TextField from '$src/components/forms/controls/TextField.svelte';
+  const campaignId = $page.params.campaignId;
+
+  let title = '';
+  let description = '';
+  let bannerSrc = '';
+  let passcode = '';
+  let archived = false;
+
+  let campaign = null;
+  async function loadCampaigns() {
+    const { data: result, error } = await $page.data.supabase
+      .from('campaigns')
+      .select()
+      .eq('id', campaignId)
+      .single();
+    if (!error && result) {
+      campaign = result;
+      title = campaign.name;
+      description = campaign.description;
+      bannerSrc = campaign.banner_src;
+      passcode = campaign.passcode;
+      archived = campaign.archived;
+    }
+  }
+
+  async function updateCampaign() {
+    const { data: result, error } = await $page.data.supabase
+      .from('campaigns')
+      .update({
+        name: title,
+        description,
+        banner_src: bannerSrc,
+        passcode,
+        archived
+      })
+      .eq('id', campaignId);
+    console.log('result', result);
+    if (!error && result) {
+      campaign = result;
+      title = campaign.name;
+      description = campaign.description;
+      bannerSrc = campaign.banner_src;
+      passcode = campaign.passcode;
+      archived = campaign.archived;
+    }
+  }
+
+  $: if ($page.data.session) {
+    loadCampaigns();
+  }
+
+  $: console.log('campaign', campaign);
+</script>
+
+<form on:submit={updateCampaign}>
+  <div class="bg-white bg-opacity-10 rounded px-16 py-8 pb-16 flex flex-col gap-4">
+    <TextField label="Title" bind:value={title} />
+    <TextField label="Description" bind:value={description} />
+    <TextField label="Banner" bind:value={bannerSrc} />
+    <TextField label="Passcode" bind:value={passcode} />
+    <SwitchField label="Archived" bind:value={archived} />
+    <button
+      type="submit"
+      class="rounded px-4 py-1 mt-4 bg-green-600 mx-auto font-medium text-black"
+    >
+      Save
+    </button>
+  </div>
+</form>
