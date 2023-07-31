@@ -5,14 +5,13 @@
   import LandingLink from '$src/components/LandingLink.svelte';
   import LinkButton from '$src/components/LinkButton.svelte';
 
-  const campaignId = $page.params.campaignId;
+  $: campaignId = $page.params.campaignId;
 </script>
 
 <svelte:head>
   <title>Sean Runs Games</title>
 </svelte:head>
 
-<Breadcrumbs />
 <main>
   <div class="max-w-lg flex flex-col gap-4 mx-auto">
     <LandingLink
@@ -31,7 +30,7 @@
   <AdminOnly>
     <div class="w-full mt-8 mx-auto max-w-sm text-center">
       <div class="w-3/5 mx-auto border-b border-solid border-white border-opacity-40 mb-4" />
-      <LinkButton href={`/campaign/${campaignId}/edit`}>Edit campaign</LinkButton>
+      <LinkButton href={`/campaign/${campaignId}/edit`}>Edit campaign &#9881;</LinkButton>
     </div>
   </AdminOnly>
 </main>

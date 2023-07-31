@@ -2,6 +2,7 @@
   "extends": "./.svelte-kit/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "$assets/*": ["./src/assets/*"],
       "$src/*": ["./src/*"],

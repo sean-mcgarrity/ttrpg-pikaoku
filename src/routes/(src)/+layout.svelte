@@ -9,6 +9,7 @@
   let user = null;
 
   import { onMount } from 'svelte';
+  import Breadcrumbs from '$src/components/Breadcrumbs.svelte';
   onMount(async () => {
     const { data } = await supabase.auth.getUser();
     user = data.user;
@@ -20,6 +21,7 @@
 >
   <Header {user} />
   <main class="flex-1 border-0 p-2 sm:p-8 mx-auto max-w-6xl w-full">
+    <Breadcrumbs />
     <slot />
   </main>
   <Footer />
