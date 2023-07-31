@@ -1,21 +1,19 @@
 <script lang="ts">
   import cx from 'classnames';
+  let className = '';
+  export { className as class };
 
-  const colorClasses = {
-    primary: 'bg-green-700 hover:bg-green-600',
-    secondary: 'bg-blue-700 hover:bg-blue-600',
-    danger: 'bg-red-700 hover:bg-red-600'
-  };
-
-  export let color: keyof typeof colorClasses = 'primary';
-  export let onClick: () => void = () => {};
+  export let padded = false;
+  export let type: 'button' | 'submit' = 'button';
 </script>
 
 <button
-  on:click={onClick}
+  {type}
+  on:click
   class={cx(
-    'bg-green-700 px-4 py-2 rounded shadow hover:bg-green-600 font-medium',
-    colorClasses[color]
+    padded ? 'px-4 py-2' : 'px-2 py-1',
+    'text-white hover:bg-white/10 rounded cursor-pointer font-medium tracking-wider',
+    className
   )}
 >
   <slot />

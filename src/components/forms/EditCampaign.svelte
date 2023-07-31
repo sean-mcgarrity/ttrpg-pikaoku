@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import Button from '$src/components/Button.svelte';
   import SwitchField from '$src/components/forms/controls/SwitchField.svelte';
   import TextField from '$src/components/forms/controls/TextField.svelte';
   const campaignId = $page.params.campaignId;
@@ -57,17 +58,12 @@
 </script>
 
 <form on:submit={updateCampaign}>
-  <div class="bg-white bg-opacity-10 rounded px-16 py-8 pb-16 flex flex-col gap-4">
+  <div class="bg-white bg-opacity-10 rounded px-16 py-8 flex flex-col gap-4">
     <TextField label="Title" bind:value={title} />
     <TextField label="Description" bind:value={description} />
     <TextField label="Banner" bind:value={bannerSrc} />
     <TextField label="Passcode" bind:value={passcode} />
     <SwitchField label="Archived" bind:value={archived} />
-    <button
-      type="submit"
-      class="rounded px-4 py-1 mt-4 bg-green-600 mx-auto font-medium text-black"
-    >
-      Save
-    </button>
+    <Button type="submit" class="mx-auto">Save &#128190;</Button>
   </div>
 </form>

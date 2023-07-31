@@ -1,7 +1,14 @@
 <script lang="ts">
+  import Button from '$src/components/Button.svelte';
+
   export let href = '';
+  let className = '';
+  export { className as class };
+  export let padded = false;
 </script>
 
-<a class="text-white hover:bg-white hover:bg-opacity-10 rounded px-4 py-2" {href}>
-  <slot />
+<a {href}>
+  <Button class={className} {padded}>
+    <slot />
+  </Button>
 </a>
