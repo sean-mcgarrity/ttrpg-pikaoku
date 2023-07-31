@@ -4,13 +4,18 @@
   export let value: string;
 </script>
 
-<label class={cx(!label && 'w-full')}>
+<label class={cx(!label && 'w-full h-full')}>
   {#if label}
     <div class="text-white font-medium">{label}</div>
   {/if}
   <input
+    {...$$restProps}
     type="text"
-    class={cx('rounded px-4 py-1 w-full bg-white bg-opacity-80', !label && 'h-full')}
+    class={cx(
+      'rounded px-4 py-1 w-full text-black bg-white bg-opacity-80 placeholder:text-black/40',
+      !label && 'h-full',
+      $$restProps.disabled && 'bg-gray-200 bg-opacity-40 '
+    )}
     bind:value
   />
 </label>

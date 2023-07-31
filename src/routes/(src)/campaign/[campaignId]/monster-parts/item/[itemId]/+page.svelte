@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import AdminOnly from '$src/components/AdminOnly.svelte';
   import Button from '$src/components/Button.svelte';
 
   $: itemId = $page.params.itemId;
@@ -11,7 +12,7 @@
       'A wondrous magical gem that harnesses the essence of time itself. With a mere touch, this small, gleaming stone grants its wielder the ability to manipulate time within a limited sphere.',
     type: 'armor',
     armor: 'Leather',
-    refinements: [
+    changes: [
       {
         amount: 37,
         description: 'Giant Scropion'
@@ -26,13 +27,21 @@
 
 <div class="flex flex-col md:flex-row w-full gap-8">
   <div class="flex-1 flex flex-col gap-4">
-    <div id="overview" class="border-2 border-black/10 shadow overflow-hidden mb-4">
+    <div
+      id="overview"
+      class="border-2 border-black/10 shadow overflow-hidden mb-4 max-w-lg mx-auto"
+    >
       <div class="bg-[#6666cc] flex flex-row text-white">
         <div class="w-full px-4 py-2">
           <h1 class="text-3xl font-bold tracking-wide uppercase">
             {item.name}
           </h1>
-          <div class="font-medium capitalize tracking-wider text-white/80 text-lg">{item.type}</div>
+          <div class="flex flex-row">
+            <div class="font-medium capitalize tracking-wider text-white/80 text-lg">
+              {item.type}
+            </div>
+            <span class="text-white/60 ml-auto">Sell 40GP</span>
+          </div>
         </div>
         <div class="text-6xl font-extrabold px-4 py-2 bg-black/10 flex">
           <div class="m-auto">{itemLevel}</div>
@@ -42,12 +51,6 @@
         <div class="px-4 py-2">
           <div class="flex flex-row gap-4 text-white/80 font-light tracking-wide italic">
             {item.description}
-          </div>
-          <div class="flex flex-row gap-1 mt-2">
-            <div class="">{item.armor}</div>
-            <div class="capitalize">{item.type}</div>
-            <span>AC 14 + DEX (Max 3)</span>
-            <span class="text-white/60 ml-auto">Sell 40GP</span>
           </div>
         </div>
         <div class="border border-white/20 border-solid" />
@@ -171,7 +174,16 @@
             </div>
           </div>
         </div>
-        <div class="p-2 mt-2 bg-black/20 flex flex-row justify-end gap-2 tracking-wide">
+        <div class="border border-white/20 border-solid" />
+        <div class="px-4 py-8 text-center bg-black/10">Unused imbuement slot</div>
+        <div class="border border-white/20 border-solid" />
+        <div class="px-4 py-8 text-center bg-black/10">Unused imbuement slot</div>
+        <div
+          class="p-2 bg-black/25 flex flex-col-reverse sm:flex-row justify-end gap-2 tracking-wide"
+        >
+          <Button class="sm:mr-auto">Edit &#9881;</Button>
+          <Button>Salvage &#9881;</Button>
+          <Button>Sell &#9881;</Button>
           <Button>Imbue &#8682;</Button>
           <Button>Refine &#9874;</Button>
         </div>

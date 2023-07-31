@@ -26,8 +26,18 @@ type MP_Item = {
   id: string;
   name: string;
   description: string;
-  refinements: { description: string; amount: number }[];
+  changes: { description: string; amount: number }[];
 } & (MP_PerceptionItem | MP_SkillItem | MP_ArmorItem | MP_WeaponItem | MP_ShieldItem);
+
+type MP_Imbuement = {
+  id: string;
+  name: string;
+  description: string;
+  requirements: string;
+  benefits: Record<number, string[]>[]
+  item_type: 'weapon' | 'shield' | 'armor' | 'skill' | 'perception';
+  changes: { description: string; amount: number }[];
+}
 
 const t = true;
 

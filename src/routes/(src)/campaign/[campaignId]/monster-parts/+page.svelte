@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import AdminOnly from '$src/components/AdminOnly.svelte';
   import Button from '$src/components/Button.svelte';
   import LinkButton from '$src/components/LinkButton.svelte';
   import CreateMpMonster from '$src/routes/(src)/campaign/[campaignId]/monster-parts/CreateMpMonster.svelte';
@@ -62,7 +63,7 @@
       {/if}
     </div>
     <div>
-      <LinkButton href={`/campaign/${campaignId}/monster-parts/used`}
+      <LinkButton href={`/campaign/${campaignId}/monster-parts/item/used`}
         >See Item Example &#8594;</LinkButton
       >
     </div>
@@ -71,3 +72,8 @@
     <h2>Recent Updates</h2>
   </div>
 </div>
+<AdminOnly>
+  <div class="text-white mt-8 text-center">
+    <LinkButton href={`/campaign/${campaignId}/monster-parts/manage`}>Admin manage</LinkButton>
+  </div>
+</AdminOnly>

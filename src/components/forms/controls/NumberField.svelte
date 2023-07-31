@@ -2,15 +2,27 @@
   import cx from 'classnames';
   export let label: string = null;
   export let value: number;
+  export let unit: string = null;
 </script>
 
 <label class={cx(!label && 'w-full')}>
   {#if label}
     <div class="text-white font-medium">{label}</div>
   {/if}
-  <input
-    type="number"
-    class={cx('rounded px-4 py-1 w-full bg-white bg-opacity-80', !label && 'h-full')}
-    bind:value
-  />
+  <div class="flex flex-row w-full h-full">
+    <input
+      type="number"
+      class={cx(
+        'rounded-l px-4 py-1 w-full text-black bg-white bg-opacity-80',
+        !unit && 'rounded-r',
+        !label && 'h-full'
+      )}
+      bind:value
+    />
+    {#if unit}
+      <span class={cx(!label && 'h-full', 'rounded-r px-2 py-1 bg-white bg-opacity-40 select-none')}
+        >{unit}</span
+      >
+    {/if}
+  </div>
 </label>
