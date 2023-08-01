@@ -6,10 +6,13 @@
   import SwitchField from '$src/components/forms/controls/SwitchField.svelte';
   import TextField from '$src/components/forms/controls/TextField.svelte';
   import ManageTable from '$src/routes/(src)/campaign/[campaignId]/monster-parts/manage/ManageTable.svelte';
-  import { onMount } from 'svelte';
+  import type { SupabaseClient } from '@supabase/supabase-js';
+  import Pagination from '$src/components/layout/Pagination.svelte';
 
-  $: items = [];
-  $: add = true;
+  let supabase: SupabaseClient = $page.data.supabase;
+
+  let items = [];
+  let add = true;
 
   let loading = false;
 
@@ -20,10 +23,31 @@
   let requires = '';
   let autoKey = true;
 
+  let pageNumber = 1;
+  const pageSize = 10;
+  let totalItems = 0;
+
+  $: numOfPages = Math.ceil(totalItems / pageSize);
   $: autoGenKey = name
     .replace(/\s/g, '-')
     .replace(/[^a-zA-Z0-9\-]/g, '')
     .toLowerCase();
+
+  $: console.log('page number', pageNumber);
+
+  const getItems = async () => {
+    loading = true;
+    const { data: result, count } = await supabase
+      .from('mp_base_items')
+      .select('*', { count: 'exact' })
+      .order('name', { ascending: true })
+      .range((pageNumber - 1) * pageSize, pageNumber * pageSize - 1);
+    items = result;
+    totalItems = count;
+    loading = false;
+  };
+
+  $: if (pageNumber) getItems();
 
   const reset = () => {
     key = '';
@@ -38,13 +62,6 @@
     add = false;
   };
 
-  const getItems = async () => {
-    loading = true;
-    const { data } = await $page.data.supabase.from('mp_base_items').select('*');
-    items = data;
-    loading = false;
-  };
-
   const createItem = async () => {
     const newItem = {
       key: autoKey ? autoGenKey : key,
@@ -55,7 +72,7 @@
       requires: requires.split(',')
     };
     loading = true;
-    await $page.data.supabase.from('mp_base_items').insert([newItem]);
+    await supabase.from('mp_base_items').insert([newItem]);
     getItems();
     reset();
     add = false;
@@ -63,13 +80,9 @@
 
   const deleteItem = async (item) => {
     loading = true;
-    await $page.data.supabase.from('mp_base_items').delete().match({ key: item.key });
+    await supabase.from('mp_base_items').delete().eq('key', item.key);
     getItems();
   };
-
-  onMount(() => {
-    getItems();
-  });
 </script>
 
 <ManageTable title="Base Items" buttonText="Add +" on:click={() => (add = true)}>
@@ -137,6 +150,13 @@
           </div>
         </div>
       {/each}
+      {#if numOfPages > 1}
+        <Pagination
+          bind:currentPage={pageNumber}
+          bind:totalPages={numOfPages}
+          onPageChange={(num) => (pageNumber = num)}
+        />
+      {/if}
     </div>
   {:else}
     <div class="text-white/60">No items</div>

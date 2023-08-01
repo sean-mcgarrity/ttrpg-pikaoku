@@ -14,7 +14,7 @@
       type="number"
       class={cx(
         'rounded-l px-4 py-1 w-full text-black bg-white bg-opacity-80',
-        !unit && 'rounded-r',
+        !unit ? 'rounded-r' : 'pr-0',
         !label && 'h-full'
       )}
       bind:value
