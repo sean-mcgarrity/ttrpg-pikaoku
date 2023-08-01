@@ -12,7 +12,7 @@
   on:click
   class={cx(
     padded ? 'px-4 py-2' : 'px-2 py-1',
-    'text-white hover:bg-white/10 rounded cursor-pointer font-medium tracking-wider',
+    'text-white hover:bg-white/10 rounded cursor-pointer font-medium tracking-wider select-none',
     className
   )}
 >

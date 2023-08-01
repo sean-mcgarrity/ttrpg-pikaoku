@@ -1,7 +1,7 @@
 <script lang="ts">
   import cx from 'classnames';
   export let label: string = null;
-  export let value: string;
+  export let value: string = null;
 </script>
 
 <label class={cx(!label && 'w-full h-full')}>
@@ -17,5 +17,6 @@
       $$restProps.disabled && 'bg-gray-200 bg-opacity-40 '
     )}
     bind:value
+    on:change
   />
 </label>

@@ -1,7 +1,7 @@
 <script lang="ts">
   import cx from 'classnames';
   export let label: string = null;
-  export let value: number;
+  export let value: number = null;
   export let unit: string = null;
 </script>
 
@@ -18,6 +18,7 @@
         !label && 'h-full'
       )}
       bind:value
+      on:change
     />
     {#if unit}
       <span class={cx(!label && 'h-full', 'rounded-r px-2 py-1 bg-white bg-opacity-40 select-none')}

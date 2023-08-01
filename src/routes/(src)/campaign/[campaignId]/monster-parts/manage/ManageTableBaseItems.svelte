@@ -139,11 +139,11 @@
         <div class="col-span-3">Requires</div>
       </div>
       {#each items as item}
-        <div class="grid grid-cols-8 gap-4 px-2 py-1 rounded even:bg-black/10">
+        <div class="grid grid-cols-8 gap-4 px-2 py-1 rounded even:bg-black/10 items-center">
           <div>{item.key}</div>
           <div>{item.name}</div>
           <div>{item.cost}</div>
-          <div>{item.type}</div>
+          <div class="capitalize">{item.type}</div>
           <div class="col-span-3">{item.requires.join(',')}</div>
           <div class="flex flex-row justify-end gap-2">
             <Button on:click={() => deleteItem(item)}>Delete</Button>
