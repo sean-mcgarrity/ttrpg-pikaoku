@@ -27,10 +27,7 @@
 
 <div class="flex flex-col md:flex-row w-full gap-8">
   <div class="flex-1 flex flex-col gap-4">
-    <div
-      id="overview"
-      class="border-2 border-black/10 shadow overflow-hidden mb-4 max-w-lg mx-auto"
-    >
+    <div class="border-2 border-black/10 shadow overflow-hidden mb-4 max-w-lg mx-auto">
       <div class="bg-[#6666cc] flex flex-row text-white">
         <div class="w-full px-4 py-2">
           <h1 class="text-3xl font-bold tracking-wide uppercase">
@@ -182,8 +179,6 @@
           class="p-2 bg-black/25 flex flex-col-reverse sm:flex-row justify-end gap-2 tracking-wide"
         >
           <Button class="sm:mr-auto">Edit &#9881;</Button>
-          <Button>Salvage &#9881;</Button>
-          <Button>Sell &#9881;</Button>
           <Button>Imbue &#8682;</Button>
           <Button>Refine &#9874;</Button>
         </div>

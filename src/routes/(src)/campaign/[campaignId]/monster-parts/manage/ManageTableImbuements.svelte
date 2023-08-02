@@ -9,6 +9,7 @@
   import type { SupabaseClient } from '@supabase/supabase-js';
   import Pagination from '$src/components/layout/Pagination.svelte';
   import { goto } from '$app/navigation';
+  import LoadingInsert from '$src/components/layout/LoadingInsert.svelte';
 
   let supabase: SupabaseClient = $page.data.supabase;
   let items = [];
@@ -46,11 +47,7 @@
   on:click={() => goto(`/campaign/${$page.params.campaignId}/monster-parts/manage/add-imbuement`)}
 >
   {#if loading}
-    <div
-      class="animate-pulse absolute inset-0 bg-black bg-opacity-40 m-2 rounded flex flex-row pointer-events-none"
-    >
-      <div class="m-auto px-16 py-8 bg-[#202020]/50 rounded text-lg">LOADING</div>
-    </div>
+    <LoadingInsert />
   {/if}
   {#if items.length}
     <div class="flex flex-col gap-2">

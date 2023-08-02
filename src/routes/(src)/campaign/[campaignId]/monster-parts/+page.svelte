@@ -3,9 +3,13 @@
   import AdminOnly from '$src/components/AdminOnly.svelte';
   import Button from '$src/components/Button.svelte';
   import LinkButton from '$src/components/LinkButton.svelte';
+  import ContentBlock from '$src/components/layout/ContentBlock.svelte';
   import CreateMpMonster from '$src/routes/(src)/campaign/[campaignId]/monster-parts/CreateMpMonster.svelte';
+  import PartysItemsTable from '$src/routes/(src)/campaign/[campaignId]/monster-parts/PartysItemsTable.svelte';
+  import { onMount } from 'svelte';
 
   $: campaignId = $page.params.campaignId;
+  let supabase: SupabaseClient = $page.data.supabase;
 
   let monsters: MP_Monster[] = [
     {
@@ -32,41 +36,47 @@
     monsters = [...monsters, monster];
   };
 
-  let addingMonster = false;
+  let items = [];
+  async function getRefinedItems() {
+    const { data: result } = await supabase
+      .from('refinements')
+      .select(`*, base_item:mp_base_items (*)`)
+      .eq('campaign_id', campaignId)
+      .limit(10)
+      .order('name', { ascending: true });
+    console.log('items', result);
+    items = result;
+  }
+
+  onMount(() => {
+    getRefinedItems();
+  });
 </script>
 
 <div class="text-white flex flex-col md:flex-row gap-4">
   <div class="w-full">
     <h1 class="font-bold mb-4">Monster Parts</h1>
-    <div>
-      <h2>Unused Monsters</h2>
+    <ContentBlock title="Unused Monsters" colorClass="bg-red-500/40" paddingClass="px-2 py-4">
       {#if monsters.length}
-        <div class="flex flex-col gap-2 mb-4">
-          {#each monsters as monster}
-            <div class="bg-white/20 flex rounded overflow-hidden items-center">
-              <div class="px-4 h-full py-2 w-12 text-center bg-white/40 text-black font-bold">
-                {monster.level}
-              </div>
-              <span class="px-4 h-full">
-                {monster.name}
-              </span>
+        {#each monsters as monster}
+          <div class="bg-white/20 flex rounded overflow-hidden items-center cursor-pointer">
+            <div class="px-4 h-full py-2 w-12 text-center bg-white/40 text-black font-bold">
+              {monster.level}
             </div>
-          {/each}
-        </div>
+            <span class="px-4 h-full">
+              {monster.name}
+            </span>
+          </div>
+        {/each}
       {/if}
       {#if monsters.length === 0}
         <div>None</div>
       {/if}
-      <Button on:click={() => (addingMonster = !addingMonster)}>Add Monster</Button>
-      {#if addingMonster}
-        <CreateMpMonster onFinish={addNewMonster} />
-      {/if}
-    </div>
-    <div>
-      <LinkButton href={`/campaign/${campaignId}/monster-parts/item/used`}
-        >See Item Example &#8594;</LinkButton
-      >
-    </div>
+      <svelte:fragment slot="buttons">
+        <LinkButton href={`/campaign/${campaignId}/monster-parts/add-monster`}>Add :D</LinkButton>
+      </svelte:fragment>
+    </ContentBlock>
+    <PartysItemsTable />
   </div>
   <div class="w-full">
     <h2>Recent Updates</h2>

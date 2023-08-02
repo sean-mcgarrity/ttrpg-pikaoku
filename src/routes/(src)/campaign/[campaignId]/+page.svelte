@@ -18,7 +18,7 @@
       title="Monster Parts"
       description="A list of all the campaigns I've run."
       href={`/campaign/${campaignId}/monster-parts`}
-      bgImgSrc="monster-parts-banner"
+      bgImgSrc="/images/monster-parts-banner.webp"
     />
     <LandingLink
       title="Otari Handouts"
