@@ -16,9 +16,3 @@
   font-family: 'Steelfish';
   src: url('./assets/fonts/steelfish.rg-regular.otf') format('opentype');
 }
-
-.monster-parts-banner {
-  background: url('/images/monster-parts-banner.webp');
-  background-position: left top;
-  background-size: cover;
-}

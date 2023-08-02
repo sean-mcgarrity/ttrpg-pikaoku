@@ -17,8 +17,10 @@
     class={cx('rounded px-4 py-1 w-full text-black bg-white bg-opacity-80', !label && 'h-full')}
     bind:value
   >
-    {#each options as option}
-      <option value={option.value}>{option.text}</option>
-    {/each}
+    {#if options.length}
+      {#each options as option}
+        <option value={option.value}>{option.text}</option>
+      {/each}
+    {/if}
   </select>
 </label>
