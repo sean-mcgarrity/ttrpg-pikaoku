@@ -34,7 +34,7 @@
   ].filter((part) => !!part);
 </script>
 
-<div class="text-white my-4 font-light tracking-wide">
+<div class="text-white my-4 font-light tracking-wide -ml-2">
   {#each parts as { href, text }, i}
     {#if i > 0} <span class="font-medium ml-2">/</span> {/if}
     {#if href}

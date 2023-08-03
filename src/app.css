@@ -3,16 +3,16 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Chomsky';
+  font-family: 'Chomsky', sans-serif;
   src: url('./assets/fonts/chomsky.regular.otf') format('opentype');
 }
 
 @font-face {
-  font-family: 'Heathergreen';
+  font-family: 'Heathergreen', sans-serif;
   src: url('./assets/fonts/heathergreen.regular.otf') format('opentype');
 }
 
 @font-face {
-  font-family: 'Steelfish';
+  font-family: 'Steelfish', sans-serif;
   src: url('./assets/fonts/steelfish.rg-regular.otf') format('opentype');
 }

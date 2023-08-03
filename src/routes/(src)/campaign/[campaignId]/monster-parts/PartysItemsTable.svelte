@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import { fade, slide } from 'svelte/transition';
   import LinkButton from '$src/components/LinkButton.svelte';
   import ContentBlock from '$src/components/layout/ContentBlock.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
@@ -37,14 +38,14 @@
 >
   {#if items.length}
     {#each items as item}
-      <a href={`/campaign/${campaignId}/monster-parts/item/${item.id}`}>
+      <a href={`/campaign/${campaignId}/monster-parts/item/${item.id}`} in:slide>
         <div
           class="bg-slate-500/40 py-2 px-4 flex gap-2 items-center rounded-sm shadow hover:brightness-125 cursor-pointer"
         >
           {item.name} - {item.base_item.name} - {Math.ceil(item.base_item.cost / 100)} MP
-          <span class="capitalize text-orange-400 bg-orange-400/10 px-2 py-1 rounded ml-auto"
-            >{item.type}</span
-          >
+          <span class="capitalize text-orange-400 bg-orange-400/10 px-2 py-1 rounded ml-auto">
+            {item.type}
+          </span>
         </div>
       </a>
     {/each}

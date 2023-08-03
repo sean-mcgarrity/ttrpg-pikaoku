@@ -5,7 +5,7 @@
 </script>
 
 <nav class="p-4 lg:px-6 bg-gray-700 border-b border-gray-900 shadow">
-  <div class="max-w-6xl flex items-center justify-between text-white mx-auto px-2">
+  <div class="max-w-6xl flex items-center justify-between text-white mx-auto">
     <div class="font-bold text-2xl uppercase">
       <a class="" href="/">Sean runs Games</a>
     </div>

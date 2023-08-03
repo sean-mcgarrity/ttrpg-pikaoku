@@ -1,15 +1,16 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import Button from '$src/components/Button.svelte';
-  import NumberField from '$src/components/forms/controls/NumberField.svelte';
-  import SelectField from '$src/components/forms/controls/SelectField.svelte';
-  import SwitchField from '$src/components/forms/controls/SwitchField.svelte';
-  import TextField from '$src/components/forms/controls/TextField.svelte';
-  import ManageTable from '$src/routes/(src)/campaign/[campaignId]/monster-parts/manage/ManageTable.svelte';
+  import ManageTable, {
+    type ManageTableColumns,
+    type ManageTableRowAction
+  } from '$src/routes/(src)/campaign/[campaignId]/monster-parts/manage/ManageTable.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
   import Pagination from '$src/components/layout/Pagination.svelte';
   import { goto } from '$app/navigation';
   import LoadingInsert from '$src/components/layout/LoadingInsert.svelte';
+  import { PlusCircle, Trash2Icon } from 'lucide-svelte';
+  import LinkButton from '$src/components/LinkButton.svelte';
 
   let supabase: SupabaseClient = $page.data.supabase;
   let items = [];
@@ -39,13 +40,38 @@
   //   await supabase.from('mp_base_items').delete().eq('key', item.key);
   //   getItems();
   // };
+
+  let columns: ManageTableColumns = [];
+  $: columns = [
+    {
+      label: 'Name',
+      accessor: 'name'
+    },
+    {
+      label: 'Description',
+      accessor: 'description'
+    },
+    {
+      label: 'Requires',
+      accessor: 'requires',
+      span: 1
+    }
+  ];
+
+  $: rowAction = {
+    text: 'Delete',
+    icon: Trash2Icon,
+    onClick: (item) => console.log('delete', item)
+  };
 </script>
 
-<ManageTable
-  title="Imbuements"
-  buttonText="Add +"
-  on:click={() => goto(`/campaign/${$page.params.campaignId}/monster-parts/manage/add-imbuement`)}
->
+<ManageTable title="Imbuements" bind:loading bind:columns bind:rowAction bind:items>
+  <LinkButton
+    slot="header-button"
+    href={`/campaign/${$page.params.campaignId}/monster-parts/manage/add-imbuement`}
+  >
+    Add <PlusCircle class="h-4 w-4 inline" />
+  </LinkButton>
   {#if loading}
     <LoadingInsert />
   {/if}
