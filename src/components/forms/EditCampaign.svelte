@@ -39,7 +39,6 @@
         archived
       })
       .eq('id', campaignId);
-    console.log('result', result);
     if (!error && result) {
       campaign = result;
       title = campaign.name;
@@ -54,7 +53,6 @@
     loadCampaigns();
   }
 
-  $: console.log('campaign', campaign);
 </script>
 
 <form on:submit={updateCampaign}>

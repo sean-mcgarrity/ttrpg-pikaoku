@@ -1,7 +1,5 @@
 <script lang="ts">
   export let user = null;
-
-  console.log('header user', user);
 </script>
 
 <nav class="p-4 lg:px-6 bg-gray-700 border-b border-gray-900 shadow">

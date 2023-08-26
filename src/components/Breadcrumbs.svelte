@@ -1,7 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import LinkButton from '$src/components/LinkButton.svelte';
-  $: console.log('page', $page);
   $: campaignId = $page.params.campaignId;
   $: itemId = $page.params.itemId;
   $: isMonsterParts = $page.url.href.includes('monster-parts');

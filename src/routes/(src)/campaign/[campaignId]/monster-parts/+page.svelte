@@ -6,12 +6,13 @@
   import ContentBlock from '$src/components/layout/ContentBlock.svelte';
   import CreateMpMonster from '$src/routes/(src)/campaign/[campaignId]/monster-parts/CreateMpMonster.svelte';
   import PartysItemsTable from '$src/routes/(src)/campaign/[campaignId]/monster-parts/PartysItemsTable.svelte';
+  import type { SupabaseClient } from '@supabase/supabase-js';
   import { onMount } from 'svelte';
 
   $: campaignId = $page.params.campaignId;
   let supabase: SupabaseClient = $page.data.supabase;
 
-  let monsters: MP_Monster[] = [
+  let monsters: any[] = [
     {
       name: 'Monstro',
       level: 1,
@@ -32,7 +33,7 @@
     }
   ];
 
-  const addNewMonster = (monster: MP_Monster) => {
+  const addNewMonster = (monster: any) => {
     monsters = [...monsters, monster];
   };
 
