@@ -18,7 +18,6 @@
       .select(`*, base_item:mp_base_items (*), changes:refinement_changes (*), imbuements (id)`)
       .eq('id', itemId)
       .single();
-    console.log('result', result);
     refinement = result;
     loading = false;
   }

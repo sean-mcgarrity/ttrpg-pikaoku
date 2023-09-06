@@ -67,9 +67,7 @@
       }
     ]);
     if (error) {
-      console.log(error);
     } else {
-      console.log(data);
       goto(`/campaign/${campaignId}/monster-parts`);
     }
   }
@@ -79,7 +77,6 @@
       .from('mp_base_items')
       .select('*')
       .then(({ data }) => {
-        console.log('base items', data);
         baseItems = data;
         baseItemKey = data[0].key;
       });

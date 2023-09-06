@@ -22,8 +22,6 @@
       }
     ]);
     if (error) {
-      console.log('error', error);
-      return;
     } else {
       afterSubmit();
     }

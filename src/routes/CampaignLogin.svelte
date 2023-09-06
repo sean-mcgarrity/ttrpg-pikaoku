@@ -35,7 +35,6 @@
     if (!error) {
       goto(href);
     } else {
-      console.log('response error', error);
     }
   };
 </script>
@@ -59,7 +58,7 @@
       >
         <form on:submit={signIn} class="mt-4 flex flex-row gap-4 items-center">
           <div>Passcode</div>
-          <TextField bind:value={password} />
+          <TextField type="password" bind:value={password} />
           <Button type="submit">Login <LogIn class="h-4 w-4 inline" /></Button>
         </form>
       </div>

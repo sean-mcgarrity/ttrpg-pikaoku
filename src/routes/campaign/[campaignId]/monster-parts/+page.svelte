@@ -45,7 +45,6 @@
       .eq('campaign_id', campaignId)
       .limit(10)
       .order('name', { ascending: true });
-    console.log('items', result);
     items = result;
   }
 

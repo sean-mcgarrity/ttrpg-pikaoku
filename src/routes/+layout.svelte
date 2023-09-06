@@ -1,17 +1,14 @@
 <script lang="ts">
   import '../app.css';
-
   import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
-
   import { invalidate } from '$app/navigation';
   import { onMount } from 'svelte';
 
   export let data;
-
   let { supabase, session } = data;
   $: ({ supabase, session } = data);
 
-  onMount(() => {
+  onMount(async () => {
     const {
       data: { subscription }
     } = supabase.auth.onAuthStateChange((event, _session) => {

@@ -16,3 +16,9 @@
   font-family: 'Steelfish', sans-serif;
   src: url('./assets/fonts/steelfish.rg-regular.otf') format('opentype');
 }
+
+.lucid-icon,
+.l-icon,
+.lucide-icon:not(.custom-icon) {
+  @apply inline h-4 w-4;
+}

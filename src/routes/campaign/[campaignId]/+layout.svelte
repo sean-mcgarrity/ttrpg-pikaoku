@@ -1,15 +1,16 @@
-<script>
+<script lang="ts">
+  import { onMount } from 'svelte';
+
   import Header from '$components/Header.svelte';
   import Footer from '$components/Footer.svelte';
+  import Breadcrumbs from '$src/components/Breadcrumbs.svelte';
 
   export let data;
-  let { supabase } = data;
-  $: ({ supabase } = data);
+  let { supabase, session } = data;
+  $: ({ supabase, session } = data);
 
   let user = null;
 
-  import { onMount } from 'svelte';
-  import Breadcrumbs from '$src/components/Breadcrumbs.svelte';
   onMount(async () => {
     const { data } = await supabase.auth.getUser();
     user = data.user;

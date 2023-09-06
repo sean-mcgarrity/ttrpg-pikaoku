@@ -1,7 +1,6 @@
 <script>
   import { page } from '$app/stores';
   import AdminOnly from '$src/components/AdminOnly.svelte';
-  import Breadcrumbs from '$src/components/Breadcrumbs.svelte';
   import LandingLink from '$src/components/LandingLink.svelte';
   import LinkButton from '$src/components/LinkButton.svelte';
 

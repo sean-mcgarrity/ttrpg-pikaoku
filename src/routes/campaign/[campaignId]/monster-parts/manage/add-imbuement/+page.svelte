@@ -18,10 +18,6 @@
 
   let stages = [];
 
-  $: console.log(effectType);
-
-  $: console.log('outer stages', stages);
-
   async function createImbuement() {
     const imbuement = {
       name,
@@ -31,7 +27,6 @@
       levels: stages
     };
 
-    console.log('imbuement', imbuement);
     await supabase.from('imbuements').insert([imbuement]);
     goto(`/campaign/${$page.params.campaignId}/monster-parts/manage`);
   }
