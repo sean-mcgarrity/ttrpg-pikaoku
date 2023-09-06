@@ -16,11 +16,9 @@
   });
 </script>
 
-<div
-  class="antialiased bg-gray-800 bg-gradient-to-b from-gray-800 to-gray-900 min-h-screen flex flex-col font-sans"
->
+<div class="antialiased bg-slate-950 min-h-screen flex flex-col font-sans">
   <Header {user} />
-  <main class="flex-1 border-0 p-4 sm:p-0 mx-auto max-w-6xl w-full">
+  <main class="flex-1 border-0 p-4 md:p-4 mx-auto max-w-6xl w-full">
     <Breadcrumbs />
     <slot />
   </main>

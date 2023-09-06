@@ -1,35 +1,35 @@
-type MP_PerceptionItem = {
+export type MP_PerceptionItem = {
   type: 'perception';
 };
 
-type MP_SkillItem = {
+export type MP_SkillItem = {
   type: 'skill';
   skill: string;
 };
 
-type MP_ArmorItem = {
+export type MP_ArmorItem = {
   type: 'armor';
   armor: string;
 };
 
-type MP_WeaponItem = {
+export type MP_WeaponItem = {
   type: 'weapon';
   weapon: string;
 };
 
-type MP_ShieldItem = {
+export type MP_ShieldItem = {
   type: 'shield';
   shield: string;
 };
 
-type MP_Item = {
+export type MP_Item = {
   id: string;
   name: string;
   description: string;
   changes: { description: string; amount: number }[];
 } & (MP_PerceptionItem | MP_SkillItem | MP_ArmorItem | MP_WeaponItem | MP_ShieldItem);
 
-const itemTypes = [
+export const itemTypes = [
   {
     id: 'perception',
     label: 'Perception'
@@ -52,18 +52,20 @@ const itemTypes = [
   }
 ] as const;
 
-type ItemType = (typeof itemTypes)[number]['id'];
+export type ItemType = (typeof itemTypes)[number]['id'];
 
-const AllLevels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] as const;
-type PlayerLevel = (typeof AllLevels)[number];
+export const AllLevels = [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
+] as const;
+export type PlayerLevel = (typeof AllLevels)[number];
 
-type ImbuementLevel = {
+export type ImbuementLevel = {
   level: PlayerLevel;
   preview: string;
   benefits: string[]; // comes in as a semicolon seperated list.
 };
 
-type Imbuement = {
+export type Imbuement = {
   id: string;
   name: string;
   description: string;
@@ -73,13 +75,19 @@ type Imbuement = {
   enabled: boolean;
 };
 
-type Refinement = {};
-
-type StoredRefinement = {
+export type MP_Refinement = {
   id: string;
   name: string;
   description: string;
   type: ItemType;
   campaign_id: string;
   owner_id: string;
+};
+
+export type MP_Refinement_Change = {
+  id: string;
+  refinement_id: string;
+  imbuement_id?: string;
+  amount: number;
+  source_id: string;
 };

@@ -54,6 +54,6 @@
     <div>None</div>
   {/if}
   <svelte:fragment slot="buttons">
-    <LinkButton href={`/campaign/${campaignId}/monster-parts/create-item`}>Create 🛠</LinkButton>
+    <LinkButton href={`/campaign/${campaignId}/monster-parts/item/create`}>Create 🛠</LinkButton>
   </svelte:fragment>
 </ContentBlock>

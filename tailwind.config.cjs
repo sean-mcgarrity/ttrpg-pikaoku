@@ -15,6 +15,9 @@ module.exports = {
         title: ['Chomsky', 'serif'],
         heading: ['serif'],
         body: ['Inter', 'sans-serif']
+      },
+      transitionProperty: {
+        'max-h': 'max-height'
       }
     }
   },

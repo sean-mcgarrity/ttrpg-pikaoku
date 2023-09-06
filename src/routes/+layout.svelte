@@ -1,6 +1,8 @@
 <script lang="ts">
   import '../app.css';
 
+  import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
+
   import { invalidate } from '$app/navigation';
   import { onMount } from 'svelte';
 
@@ -20,6 +22,10 @@
 
     return () => subscription.unsubscribe();
   });
+
+  const queryClient = new QueryClient();
 </script>
 
-<slot />
+<QueryClientProvider client={queryClient}>
+  <slot />
+</QueryClientProvider>

@@ -44,7 +44,7 @@
   $: baseItemOptions = baseItems
     .filter((item) => item.type === type)
     .map((item) => ({
-      text: item.name,
+      text: `${item.name} (${Math.ceil((item.cost || 0) / 100)} MP)`,
       value: item.key
     }));
   let playerCharacters: PlayerCharacters = [];
@@ -61,9 +61,9 @@
         name,
         description,
         base_item: baseItemKey,
-        owner,
+        owner_id: owner,
         type,
-        campaignId: campaignId
+        campaign_id: campaignId
       }
     ]);
     if (error) {

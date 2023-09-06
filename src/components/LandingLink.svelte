@@ -6,7 +6,7 @@
 
 <a {href}>
   <div
-    class={`bg-cover bg-left-top  transition-all duration-150 group relative h-40 py-12 gap-8 border-4 border-black hover:border-white/80 shadow`}
+    class={`bg-cover bg-center  transition-all duration-150 group relative h-60 py-12 gap-8 border-4 border-black hover:border-white/80 shadow`}
     style={bgImgSrc && `background-image: url(${bgImgSrc});`}
   >
     <div

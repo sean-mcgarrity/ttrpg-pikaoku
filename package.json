@@ -34,6 +34,7 @@
   "dependencies": {
     "@supabase/auth-helpers-sveltekit": "^0.10.1",
     "@supabase/supabase-js": "^2.27.0",
+    "@tanstack/svelte-query": "^4.33.0",
     "classnames": "^2.3.2",
     "firebase": "^9.23.0",
     "lucide-svelte": "^0.263.0"
