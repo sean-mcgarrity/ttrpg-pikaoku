@@ -4,8 +4,8 @@
   import Button from '$src/components/Button.svelte';
   import LinkButton from '$src/components/LinkButton.svelte';
   import ContentBlock from '$src/components/layout/ContentBlock.svelte';
-  import CreateMpMonster from '$src/routes/(src)/campaign/[campaignId]/monster-parts/CreateMpMonster.svelte';
-  import PartysItemsTable from '$src/routes/(src)/campaign/[campaignId]/monster-parts/PartysItemsTable.svelte';
+  import CreateMpMonster from './CreateMpMonster.svelte';
+  import PartysItemsTable from './PartysItemsTable.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
   import { onMount } from 'svelte';
 

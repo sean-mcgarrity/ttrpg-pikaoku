@@ -34,14 +34,25 @@
     });
     if (!error) {
       goto(href);
+    }
+  };
+
+  const handleClick = () => {
+    if (isDisabled) {
+      return;
+    }
+
+    if ($page.data.session?.user?.id) {
+      goto(href);
     } else {
+      expanded = true;
     }
   };
 </script>
 
 <div class={cx('inline w-full', isDisabled && 'grayscale pointer-events-none')}>
   <button
-    on:click={() => (expanded = true)}
+    on:click={handleClick}
     class={`w-full bg-cover bg-center transition-all duration-150 group relative h-60 py-12 gap-8 border-4 border-black hover:border-white/80 shadow`}
     style={bgImgSrc && `background-image: url(${bgImgSrc});`}
     disabled={isDisabled}

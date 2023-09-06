@@ -6,7 +6,7 @@
 
 <label class={cx(!label && 'w-full h-full')}>
   {#if label}
-    <div class="text-white font-medium">{label}</div>
+    <div class="text-white font-medium mb-2">{label}</div>
   {/if}
   <input
     {...$$restProps}

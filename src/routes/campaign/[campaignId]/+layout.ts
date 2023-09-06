@@ -1,21 +1,17 @@
 import type { LayoutLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 
-export const load: LayoutLoad = async ({ fetch, data, depends }) => {
-  console.log('yun data', data);
+export const load = async ({ fetch, data, depends, params, parent }) => {
+  const { session, supabase } = await parent();
 
-  const session = await data?.getSession();
-  if (!session || !session.user) {
+  const { campaignId } = params;
+
+  if (!session) {
     throw redirect(303, '/');
   }
 
-  const { supabase } = data.supabase;
-
-  const campaign = await supabase
-    .from('campaigns')
-    .select('*')
-    .eq('id', data.params.campaignId)
-    .single();
-
-  return { campaign };
+  const response = await supabase.from('campaigns').select('*').eq('id', campaignId).single();
+  if (!response.error) {
+    return { ...(data ?? {}), campaign: response.data };
+  }
 };

@@ -5,8 +5,10 @@
   import ContentBlock from '$src/components/layout/ContentBlock.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
   import { onMount } from 'svelte';
+  import { ConstructionIcon } from 'lucide-svelte';
 
   $: campaignId = $page.params.campaignId;
+
   let supabase: SupabaseClient = $page.data.supabase;
 
   let loading = true;
