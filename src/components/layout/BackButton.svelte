@@ -1,10 +1,10 @@
 <script lang="ts">
-  import backArrow from '$assets/icons/back_arrow.png';
+  import { ChevronDown } from 'lucide-svelte';
 </script>
 
 <a
   href="javascript:history.back()"
-  class="hover:bg-white hover:bg-opacity-10 rounded font-bold w-10 h-10 overflow-hidden align-middle justify-center aspect-square inline-flex"
+  class="hover:bg-white hover:bg-opacity-10 rounded align-middle justify-center aspect-square inline-flex mr-2"
 >
-  <img src={backArrow} alt="back" />
+  <ChevronDown class="custom-icon rotate-90 w-6 h-6 aspect-square text-white/80" />
 </a>

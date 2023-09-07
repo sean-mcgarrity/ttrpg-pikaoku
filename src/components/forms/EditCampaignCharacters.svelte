@@ -1,8 +1,8 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import Button from '$src/components/Button.svelte';
-  import NewCharacter from '$src/components/forms/NewCharacter.svelte';
-  import TextField from '$src/components/forms/controls/TextField.svelte';
+  import Button from '$components/Button.svelte';
+  import NewCharacter from '$components/forms/NewCharacter.svelte';
+  import TextField from '$components/forms/controls/TextField.svelte';
   const campaignId = $page.params.campaignId;
 
   let add = false;

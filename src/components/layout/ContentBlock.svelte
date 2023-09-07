@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LoadingInsert from '$src/components/layout/LoadingInsert.svelte';
+  import LoadingInsert from '$components/layout/LoadingInsert.svelte';
   import cx from 'classnames';
   export let title = null;
   export let colorClass = 'bg-blue-600/40';

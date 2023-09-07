@@ -1,13 +1,13 @@
 <script lang="ts">
-  import Button from '$src/components/Button.svelte';
+  import Button from '$components/Button.svelte';
   import {
     calculateImbuementCostForLevel,
     calculateImbuementLevel,
     type Imbuement
-  } from '$src/lib/systems/pf2e_monster_parts';
+  } from '$lib/systems/pf2e_monster_parts';
   import { slide } from 'svelte/transition';
   import { ArrowDownIcon } from 'lucide-svelte';
-  import ProgressBar from '$src/components/monster-parts/ProgressBar.svelte';
+  import ProgressBar from '$components/monster-parts/ProgressBar.svelte';
 
   export let imbuement: Imbuement;
   export let changes: any = [];

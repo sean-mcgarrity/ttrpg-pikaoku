@@ -3,7 +3,7 @@
 
   import CampaignHeader from './CampaignHeader.svelte';
   import Footer from '$components/Footer.svelte';
-  import Breadcrumbs from '$src/components/Breadcrumbs.svelte';
+  import Breadcrumbs from '$components/Breadcrumbs.svelte';
 
   export let data;
   let { supabase, session, campaign } = data;

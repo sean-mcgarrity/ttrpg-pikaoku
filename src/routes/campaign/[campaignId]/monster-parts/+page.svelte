@@ -1,9 +1,9 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import AdminOnly from '$src/components/AdminOnly.svelte';
-  import Button from '$src/components/Button.svelte';
-  import LinkButton from '$src/components/LinkButton.svelte';
-  import ContentBlock from '$src/components/layout/ContentBlock.svelte';
+  import AdminOnly from '$components/AdminOnly.svelte';
+  import Button from '$components/Button.svelte';
+  import LinkButton from '$components/LinkButton.svelte';
+  import ContentBlock from '$components/layout/ContentBlock.svelte';
   import CreateMpMonster from './CreateMpMonster.svelte';
   import PartysItemsTable from './PartysItemsTable.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import SwitchField from '$src/components/forms/controls/SwitchField.svelte';
-  import TextField from '$src/components/forms/controls/TextField.svelte';
+  import SwitchField from '$components/forms/controls/SwitchField.svelte';
+  import TextField from '$components/forms/controls/TextField.svelte';
 
   const campaignId = $page.params.campaignId;
   export let afterSubmit = () => {};

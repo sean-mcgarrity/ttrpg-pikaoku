@@ -1,8 +1,8 @@
 <script>
   import { page } from '$app/stores';
-  import AdminOnly from '$src/components/AdminOnly.svelte';
-  import LandingLink from '$src/components/LandingLink.svelte';
-  import LinkButton from '$src/components/LinkButton.svelte';
+  import AdminOnly from '$components/AdminOnly.svelte';
+  import LandingLink from '$components/LandingLink.svelte';
+  import LinkButton from '$components/LinkButton.svelte';
 
   $: campaignId = $page.params.campaignId;
 </script>

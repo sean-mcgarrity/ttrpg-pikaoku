@@ -1,11 +1,11 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import { slide } from 'svelte/transition';
-  import LinkButton from '$src/components/LinkButton.svelte';
-  import ContentBlock from '$src/components/layout/ContentBlock.svelte';
+  import LinkButton from '$components/LinkButton.svelte';
+  import ContentBlock from '$components/layout/ContentBlock.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
   import { createQuery } from '@tanstack/svelte-query';
-  import { extractData } from '$src/lib/utils/requests';
+  import { extractData } from '$lib/utils/requests';
 
   $: campaignId = $page.params.campaignId;
 

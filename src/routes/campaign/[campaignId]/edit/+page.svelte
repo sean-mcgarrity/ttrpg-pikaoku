@@ -1,7 +1,7 @@
 <script lang="ts">
-  import EditCampaign from '$src/components/forms/EditCampaign.svelte';
-  import EditCampaignCharacters from '$src/components/forms/EditCampaignCharacters.svelte';
-  import BackButton from '$src/components/layout/BackButton.svelte';
+  import EditCampaign from '$components/forms/EditCampaign.svelte';
+  import EditCampaignCharacters from '$components/forms/EditCampaignCharacters.svelte';
+  import BackButton from '$components/layout/BackButton.svelte';
 </script>
 
 <div class="max-w-2xl mx-auto">

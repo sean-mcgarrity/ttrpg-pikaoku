@@ -1,7 +1,7 @@
 <script lang="ts">
   import ImbuementBenefitEditor from '../ImbuementBenefitEditor.svelte';
-  import TextField from '$src/components/forms/controls/TextField.svelte';
-  import Button from '$src/components/Button.svelte';
+  import TextField from '$components/forms/controls/TextField.svelte';
+  import Button from '$components/Button.svelte';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import type { SupabaseClient } from '@supabase/supabase-js';

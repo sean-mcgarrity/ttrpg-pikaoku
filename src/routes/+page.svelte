@@ -1,9 +1,9 @@
 <script lang="ts">
-  import AdminOnly from '$src/components/AdminOnly.svelte';
+  import AdminOnly from '$components/AdminOnly.svelte';
   import CampaignLogin from './CampaignLogin.svelte';
-  import LinkButton from '$src/components/LinkButton.svelte';
+  import LinkButton from '$components/LinkButton.svelte';
   import { createQuery } from '@tanstack/svelte-query';
-  import { extractData } from '$src/lib/utils/requests';
+  import { extractData } from '$lib/utils/requests';
   import { PlusCircle, LogInIcon } from 'lucide-svelte';
 
   export let data;

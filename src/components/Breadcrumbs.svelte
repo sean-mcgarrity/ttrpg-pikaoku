@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import LinkButton from '$src/components/LinkButton.svelte';
+  import LinkButton from '$components/LinkButton.svelte';
   $: campaignId = $page.params.campaignId;
   $: itemId = $page.params.itemId;
   $: isMonsterParts = $page.url.href.includes('monster-parts');
@@ -25,21 +25,17 @@
     $page.url.href.includes('manage/add-base-item') && {
       href: `/campaign/${campaignId}/monster-parts/manage/add-base-item`,
       text: 'Add Base Item'
-    },
-    $page.url.href.includes('manage/add-imbuement') && {
-      href: `/campaign/${campaignId}/monster-parts/manage/add-imbuement`,
-      text: 'Add Imbuements'
     }
   ].filter((part) => !!part);
 </script>
 
-<div class="text-white my-4 font-light tracking-wide -ml-2">
+<div class="text-white my-2 -ml-2">
   {#each parts as { href, text }, i}
     {#if i > 0} <span class="font-medium ml-2">/</span> {/if}
     {#if href}
-      <LinkButton {href}>{text}</LinkButton>
+      <LinkButton {href} class="text-white/60 font-light tracking-wide">{text}</LinkButton>
     {:else}
-      <span class="px-2 py-1 text-white/60">{text}</span>
+      <span class="px-2 py-1 text-white/60 font-light tracking-wide">{text}</span>
     {/if}
   {/each}
 </div>

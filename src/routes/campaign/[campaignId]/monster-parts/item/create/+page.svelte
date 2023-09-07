@@ -1,10 +1,10 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import Button from '$src/components/Button.svelte';
-  import SelectField from '$src/components/forms/controls/SelectField.svelte';
-  import TextField from '$src/components/forms/controls/TextField.svelte';
-  import ContentBlock from '$src/components/layout/ContentBlock.svelte';
+  import Button from '$components/Button.svelte';
+  import SelectField from '$components/forms/controls/SelectField.svelte';
+  import TextField from '$components/forms/controls/TextField.svelte';
+  import ContentBlock from '$components/layout/ContentBlock.svelte';
   import { onMount } from 'svelte';
 
   type BaseItems = {

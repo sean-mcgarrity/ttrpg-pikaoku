@@ -6,9 +6,9 @@
     type ManageTableRowAction
   } from './ManageTable.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
-  import Pagination from '$src/components/layout/Pagination.svelte';
+  import Pagination from '$components/layout/Pagination.svelte';
   import { Trash2Icon, PlusCircle } from 'lucide-svelte';
-  import Button from '$src/components/Button.svelte';
+  import Button from '$components/Button.svelte';
 
   let supabase: SupabaseClient = $page.data.supabase;
 

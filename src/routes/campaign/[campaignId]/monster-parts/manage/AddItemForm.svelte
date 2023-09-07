@@ -1,10 +1,10 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import Button from '$src/components/Button.svelte';
-  import NumberField from '$src/components/forms/controls/NumberField.svelte';
-  import SelectField from '$src/components/forms/controls/SelectField.svelte';
-  import SwitchField from '$src/components/forms/controls/SwitchField.svelte';
-  import TextField from '$src/components/forms/controls/TextField.svelte';
+  import Button from '$components/Button.svelte';
+  import NumberField from '$components/forms/controls/NumberField.svelte';
+  import SelectField from '$components/forms/controls/SelectField.svelte';
+  import SwitchField from '$components/forms/controls/SwitchField.svelte';
+  import TextField from '$components/forms/controls/TextField.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
   import { slide } from 'svelte/transition';
 

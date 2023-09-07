@@ -14,8 +14,8 @@
 </script>
 
 <script lang="ts">
-  import Button from '$src/components/Button.svelte';
-  import LoadingInsert from '$src/components/layout/LoadingInsert.svelte';
+  import Button from '$components/Button.svelte';
+  import LoadingInsert from '$components/layout/LoadingInsert.svelte';
   import cx from 'classnames';
   import { slide } from 'svelte/transition';
 

@@ -1,9 +1,9 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import Button from '$src/components/Button.svelte';
-  import type { MP_Refinement, Imbuement } from '$src/lib/systems/pf2e_monster_parts';
-  import { extractData } from '$src/lib/utils/requests';
-  import RefinementCardImbuement from '$src/routes/campaign/[campaignId]/monster-parts/item/[itemId]/RefinementCardImbuement.svelte';
+  import Button from '$components/Button.svelte';
+  import type { MP_Refinement, Imbuement } from '$lib/systems/pf2e_monster_parts';
+  import { extractData } from '$lib/utils/requests';
+  import RefinementCardImbuement from '$routes/campaign/[campaignId]/monster-parts/item/[itemId]/RefinementCardImbuement.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
   import { createQuery } from '@tanstack/svelte-query';
   import { onMount } from 'svelte';

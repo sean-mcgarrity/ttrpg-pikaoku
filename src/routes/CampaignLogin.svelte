@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import Button from '$src/components/Button.svelte';
-  import TextField from '$src/components/forms/controls/TextField.svelte';
+  import Button from '$components/Button.svelte';
+  import TextField from '$components/forms/controls/TextField.svelte';
   import { LogIn } from 'lucide-svelte';
   import cx from 'classnames';
   import { goto } from '$app/navigation';

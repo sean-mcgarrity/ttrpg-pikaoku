@@ -2,9 +2,9 @@
   type StageMatrix = { level: number; preview: string; benefits: string }[];
   export let onCommit = (value: StageMatrix) => console.log(value);
 
-  import Button from '$src/components/Button.svelte';
-  import NumberField from '$src/components/forms/controls/NumberField.svelte';
-  import TextField from '$src/components/forms/controls/TextField.svelte';
+  import Button from '$components/Button.svelte';
+  import NumberField from '$components/forms/controls/NumberField.svelte';
+  import TextField from '$components/forms/controls/TextField.svelte';
 
   export let stages: StageMatrix = [];
 

@@ -1,8 +1,8 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import Button from '$src/components/Button.svelte';
-  import SwitchField from '$src/components/forms/controls/SwitchField.svelte';
-  import TextField from '$src/components/forms/controls/TextField.svelte';
+  import Button from '$components/Button.svelte';
+  import SwitchField from '$components/forms/controls/SwitchField.svelte';
+  import TextField from '$components/forms/controls/TextField.svelte';
   const campaignId = $page.params.campaignId;
 
   let title = '';
@@ -52,7 +52,6 @@
   $: if ($page.data.session) {
     loadCampaigns();
   }
-
 </script>
 
 <form on:submit={updateCampaign}>

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Button from '$src/components/Button.svelte';
-  import LinkButton from '$src/components/LinkButton.svelte';
+  import Button from '$components/Button.svelte';
+  import LinkButton from '$components/LinkButton.svelte';
   import { createQuery } from '@tanstack/svelte-query';
   import { ArrowDown, LogIn, LogOut } from 'lucide-svelte';
 

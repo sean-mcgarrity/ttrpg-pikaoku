@@ -66,13 +66,16 @@ export type ImbuementLevel = {
 };
 
 export type Imbuement = {
-  id: string;
+  id: number;
   name: string;
   description: string;
   requires: string[];
+  /** @deprecated */
   types: (typeof itemTypes)[number]['id'][];
-  levels: { level: number; preview: string; benefits: string }[];
-  enabled: boolean;
+  type: (typeof itemTypes)[number]['id'];
+  levels: { level: number; preview: string; benefits: string[] }[];
+  /** @deprecated */
+  enabled?: boolean;
 };
 
 export type MP_Refinement = {

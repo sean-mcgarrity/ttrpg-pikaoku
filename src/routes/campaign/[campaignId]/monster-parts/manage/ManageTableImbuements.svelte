@@ -1,16 +1,16 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import Button from '$src/components/Button.svelte';
+  import Button from '$components/Button.svelte';
   import ManageTable, {
     type ManageTableColumns,
     type ManageTableRowAction
   } from './ManageTable.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
-  import Pagination from '$src/components/layout/Pagination.svelte';
+  import Pagination from '$components/layout/Pagination.svelte';
   import { goto } from '$app/navigation';
-  import LoadingInsert from '$src/components/layout/LoadingInsert.svelte';
+  import LoadingInsert from '$components/layout/LoadingInsert.svelte';
   import { PlusCircle, Trash2Icon } from 'lucide-svelte';
-  import LinkButton from '$src/components/LinkButton.svelte';
+  import LinkButton from '$components/LinkButton.svelte';
 
   let supabase: SupabaseClient = $page.data.supabase;
   let items = [];
