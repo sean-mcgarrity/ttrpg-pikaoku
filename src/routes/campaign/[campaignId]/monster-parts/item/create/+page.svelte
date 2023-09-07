@@ -83,6 +83,7 @@
     supabase
       .from('player_characters')
       .select('*')
+      .eq('campaign', campaignId)
       .then(({ data }) => {
         playerCharacters = data;
         owner = data[0].id;

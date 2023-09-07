@@ -1,35 +1,49 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import Button from '$src/components/Button.svelte';
-  import type { MP_Refinement } from '$src/lib/systems/pf2e_monster_parts';
+  import type { MP_Refinement, Imbuement } from '$src/lib/systems/pf2e_monster_parts';
+  import { extractData } from '$src/lib/utils/requests';
+  import RefinementCardImbuement from '$src/routes/campaign/[campaignId]/monster-parts/item/[itemId]/RefinementCardImbuement.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
+  import { createQuery } from '@tanstack/svelte-query';
   import { onMount } from 'svelte';
+
+  type RefinementChange = {
+    amount: number;
+    created_at: string;
+    id: number;
+    imbuement_id: number;
+    refinement_id: number;
+  };
 
   let supabase: SupabaseClient = $page.data.supabase;
   $: itemId = $page.params.itemId;
 
-  let loading = true;
-  let refinement: MP_Refinement = null;
+  // ref: https://d1lss44hh2trtw.cloudfront.net/assets/editorial/2020/07/destiny-2-reverie-dawn-hauberk-armor-stats.jpg
 
-  async function getRefinement() {
-    loading = true;
-    const { data: result } = await supabase
-      .from('full_refinement ')
-      .select(`*, base_item:mp_base_items (*), changes:refinement_changes (*), imbuements (id)`)
-      .eq('id', itemId)
-      .single();
-    refinement = result;
-    loading = false;
-  }
-
-  onMount(() => {
-    getRefinement();
+  const query = createQuery<
+    MP_Refinement & Record<'imbuements', Imbuement[]> & Record<'changes', RefinementChange>
+  >({
+    queryKey: ['refinement', itemId],
+    queryFn: async () =>
+      extractData(
+        await supabase
+          .from('refinements')
+          .select(
+            `*, base_item:mp_base_items (*), changes:refinement_changes (*), imbuements!refinement_imbuements (*)`
+          )
+          .eq('id', itemId)
+          .single()
+      )
   });
 
-  // ref: https://d1lss44hh2trtw.cloudfront.net/assets/editorial/2020/07/destiny-2-reverie-dawn-hauberk-armor-stats.jpg
+  $: refinement = $query.data;
+  $: loading = $query.isLoading;
 
   const itemLevel = 7;
   $: item = refinement;
+
+  $: console.log('refinement', refinement);
 </script>
 
 <div class="flex flex-col md:flex-row w-full gap-8">
@@ -89,6 +103,10 @@
             </div>
             <div class="w-full text-center font-bold text-lg">{(180 / 5) * 4} / 180</div>
           </div>
+          <div class="border border-white/20 border-solid" />
+          {#each refinement.imbuements as imbuement (imbuement.id)}
+            <RefinementCardImbuement {imbuement} changes={refinement.changes} />
+          {/each}
           <div class="border border-white/20 border-solid" />
           <div class="px-4 py-2">
             <div class="flex gap-1 uppercase text-lg tracking-wide">WINGED &#9992;</div>

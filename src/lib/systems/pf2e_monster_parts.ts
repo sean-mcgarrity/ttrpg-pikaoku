@@ -71,7 +71,7 @@ export type Imbuement = {
   description: string;
   requires: string[];
   types: (typeof itemTypes)[number]['id'][];
-  levels: {}[];
+  levels: { level: number; preview: string; benefits: string }[];
   enabled: boolean;
 };
 
@@ -90,4 +90,30 @@ export type MP_Refinement_Change = {
   imbuement_id?: string;
   amount: number;
   source_id: string;
+};
+
+export const IMBUEMENT_COSTS_EQUIPMENT = [
+  0, 20, 35, 60, 100, 160, 250, 360, 500, 700, 1000, 1400, 2000, 3000, 4500, 6500, 10000, 15000,
+  24000, 40000, 70000
+];
+
+export const IMBUEMENT_COSTS_SKILL = [
+  0, 10, 20, 35, 60, 100, 160, 240, 340, 470, 670, 950, 1350, 2000, 3000, 4300, 6500, 10000, 16000,
+  25000, 45000
+];
+
+export const calculateImbuementLevel = (progress: number, imbuementType: ItemType) => {
+  if (['weapon', 'armor'].includes(imbuementType)) {
+    return IMBUEMENT_COSTS_EQUIPMENT.findIndex((cost) => cost > progress) - 1;
+  } else {
+    return IMBUEMENT_COSTS_SKILL.findIndex((cost) => cost > progress) - 1;
+  }
+};
+
+export const calculateImbuementCostForLevel = (level: number, imbuementType: ItemType) => {
+  if (['weapon', 'armor'].includes(imbuementType)) {
+    return IMBUEMENT_COSTS_EQUIPMENT[level];
+  } else {
+    return IMBUEMENT_COSTS_SKILL[level];
+  }
 };

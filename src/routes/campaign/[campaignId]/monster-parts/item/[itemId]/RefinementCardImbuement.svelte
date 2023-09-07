@@ -1,0 +1,70 @@
+<script lang="ts">
+  import Button from '$src/components/Button.svelte';
+  import {
+    calculateImbuementCostForLevel,
+    calculateImbuementLevel,
+    type Imbuement
+  } from '$src/lib/systems/pf2e_monster_parts';
+  import { slide } from 'svelte/transition';
+  import { ArrowDownIcon } from 'lucide-svelte';
+  import ProgressBar from '$src/components/monster-parts/ProgressBar.svelte';
+
+  export let imbuement: Imbuement;
+  export let changes: any = [];
+
+  const progress = changes.reduce((acc, curr) => acc + curr.amount, 0);
+  const imbuementLevel = calculateImbuementLevel(progress, 'armor');
+
+  const highestLevelGained = imbuement.levels.reduce(
+    (acc, curr) => {
+      return curr.level <= imbuementLevel ? curr : acc;
+    },
+    { level: 0, benefits: '' }
+  );
+
+  const nextLevel = imbuement.levels.find((level) => level.level > imbuementLevel);
+  const costOfNextLevel = calculateImbuementCostForLevel(nextLevel.level, 'armor');
+  const percentageToNextLevel = Math.round((progress / costOfNextLevel) * 100);
+  let seeAllLevels = false;
+</script>
+
+<div class="border border-white/20 border-solid" />
+<div class="px-4 py-2">
+  <div class="flex gap-1 uppercase text-xl tracking-wide mb-2">{imbuement.name}</div>
+  {#if highestLevelGained}
+    <ul class="px-8 list-disc">
+      <li>{highestLevelGained.benefits}</li>
+    </ul>
+  {/if}
+  {#if nextLevel}
+    <div class="mt-4 mx-auto px-12">
+      <ProgressBar
+        progress={percentageToNextLevel}
+        min={highestLevelGained.level}
+        max={nextLevel.level}
+        barColor="#6666cc"
+      />
+    </div>
+    <div class="w-full text-center font-bold text-lg">{progress} / {costOfNextLevel}</div>
+  {/if}
+  {#if nextLevel}
+    <div class="px-8">
+      <div class="font-medium text-white/60">level {nextLevel.level}:</div>
+      <div>{nextLevel.preview}</div>
+    </div>
+  {/if}
+  {#if seeAllLevels}
+    <div class="px-8" transition:slide>
+      {#each imbuement.levels.filter((x) => x.level > highestLevelGained.level) as level}
+        <div class="font-medium text-white/60">level {level.level}:</div>
+        <div>{level.preview}</div>
+      {/each}
+    </div>
+  {/if}
+  <div class="text-white/40 mt-2 inline-flex px-6 flex-row mx-auto select-none">
+    <Button on:click={() => (seeAllLevels = !seeAllLevels)} class="text-opacity-50">
+      <div>See All</div>
+      <ArrowDownIcon class={seeAllLevels && 'rotate-180'} />
+    </Button>
+  </div>
+</div>

@@ -8,8 +8,6 @@
   let { supabase } = data;
   $: ({ supabase } = data);
 
-  import { onMount } from 'svelte';
-
   async function signInWithDiscord() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'discord',
@@ -19,9 +17,7 @@
     });
   }
 
-  async function signOut() {
-    const { error } = await supabase.auth.signOut();
-  }
+  const signOut = async () => await supabase.auth.signOut();
 
   const query = createQuery({
     queryKey: ['user'],
@@ -34,7 +30,6 @@
       }
     }
   });
-
 </script>
 
 <div class="min-h-screen bg-slate-950 w-full flex flex-col">

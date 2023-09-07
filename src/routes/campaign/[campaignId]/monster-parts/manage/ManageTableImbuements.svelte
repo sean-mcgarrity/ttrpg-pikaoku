@@ -4,7 +4,7 @@
   import ManageTable, {
     type ManageTableColumns,
     type ManageTableRowAction
-  } from '$src/routes/(src)/campaign/[campaignId]/monster-parts/manage/ManageTable.svelte';
+  } from './ManageTable.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
   import Pagination from '$src/components/layout/Pagination.svelte';
   import { goto } from '$app/navigation';
@@ -68,7 +68,7 @@
 <ManageTable title="Imbuements" bind:loading bind:columns bind:rowAction bind:items>
   <LinkButton
     slot="header-button"
-    href={`/campaign/${$page.params.campaignId}/monster-parts/manage/add-imbuement`}
+    href={`/campaign/${$page.params.campaignId}/monster-parts/manage/imbuements/add`}
   >
     Add <PlusCircle class="h-4 w-4 inline" />
   </LinkButton>

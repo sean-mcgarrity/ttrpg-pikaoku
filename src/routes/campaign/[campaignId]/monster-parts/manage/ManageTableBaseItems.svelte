@@ -4,7 +4,7 @@
   import ManageTable, {
     type ManageTableColumns,
     type ManageTableRowAction
-  } from '$src/routes/(src)/campaign/[campaignId]/monster-parts/manage/ManageTable.svelte';
+  } from './ManageTable.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
   import Pagination from '$src/components/layout/Pagination.svelte';
   import { Trash2Icon, PlusCircle } from 'lucide-svelte';

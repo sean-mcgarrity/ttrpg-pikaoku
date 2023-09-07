@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ImbuementBenefitEditor from './ImbuementBenefitEditor.svelte';
+  import ImbuementBenefitEditor from '../ImbuementBenefitEditor.svelte';
   import TextField from '$src/components/forms/controls/TextField.svelte';
   import Button from '$src/components/Button.svelte';
   import { goto } from '$app/navigation';

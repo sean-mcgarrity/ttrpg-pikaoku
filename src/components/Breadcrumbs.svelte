@@ -9,7 +9,7 @@
     'campaignId' in $page.params && { href: `/campaign/${campaignId}`, text: campaignId },
     $page.url.href.includes('edit') && { text: 'Edit Campaign' },
     isMonsterParts && {
-      href: '/campaign/1/monster-parts',
+      href: `/campaign/${campaignId}/monster-parts`,
       text: 'Monster Parts'
     },
     isMonsterParts &&
