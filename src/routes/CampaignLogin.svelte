@@ -53,7 +53,7 @@
 <div class={cx('inline w-full', isDisabled && 'grayscale pointer-events-none')}>
   <button
     on:click={handleClick}
-    class={`w-full bg-cover bg-center transition-all duration-150 group relative h-60 py-12 gap-8 border-4 border-black hover:border-white/80 shadow`}
+    class={`w-full bg-cover transition-all duration-150 group relative h-48 py-12 gap-8 border-4 border-black hover:border-white/80 shadow bg-center`}
     style={bgImgSrc && `background-image: url(${bgImgSrc});`}
     disabled={isDisabled}
   >

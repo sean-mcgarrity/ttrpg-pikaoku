@@ -17,7 +17,7 @@
     });
   }
 
-  const signOut = async () => await supabase.auth.signOut();
+  const signOut = async () => await supabase.auth.signOut({ scope: 'local' });
 
   const query = createQuery({
     queryKey: ['user'],

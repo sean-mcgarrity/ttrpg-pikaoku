@@ -21,9 +21,10 @@
 </script>
 
 <div class="text-white w-full min-h-screen bg-slate-950">
-  <div class="max-w-4xl mx-auto py-12">
+  <div class="max-w-4xl mx-auto py-12 px-4">
     <div class="w-full mb-4">
-      <h1 class="text-6xl">Sean's Game</h1>
+      <h1 class="text-4xl">Sean's Game</h1>
+      <div class="border-b-2 border-white border-solid w-16 mt-2" />
     </div>
     <div class="flex flex-col gap-4">
       {#if $campaigns.isLoading && !$campaigns.isFetched}

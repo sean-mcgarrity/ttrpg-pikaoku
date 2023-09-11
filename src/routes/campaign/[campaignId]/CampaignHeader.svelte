@@ -5,4 +5,4 @@
   console.log('campaign', campaign);
 </script>
 
-<img class="w-full shadow" alt="Abomination Vaults Logo" src={campaign.banner_src} />
+<img class="w-full shadow max-h-60" alt="Abomination Vaults Logo" src={campaign.banner_src} />
