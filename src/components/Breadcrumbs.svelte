@@ -6,7 +6,10 @@
   $: isMonsterParts = $page.url.href.includes('monster-parts');
   $: parts = [
     $page.url.href.includes('campaign') && { href: '/', text: 'Campaigns' },
-    'campaignId' in $page.params && { href: `/campaign/${campaignId}`, text: campaignId },
+    'campaignId' in $page.params && {
+      href: `/campaign/${campaignId}`,
+      text: $page.data.campaign.slug
+    },
     $page.url.href.includes('edit') && { text: 'Edit Campaign' },
     isMonsterParts && {
       href: `/campaign/${campaignId}/monster-parts`,

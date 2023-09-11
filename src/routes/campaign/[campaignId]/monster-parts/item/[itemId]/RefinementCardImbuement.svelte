@@ -28,16 +28,20 @@
   let seeAllLevels = false;
 </script>
 
-<div class="border border-white/20 border-solid" />
-<div class="px-4 py-2">
-  <div class="flex gap-1 uppercase text-xl tracking-wide mb-2">{imbuement.name}</div>
+<div class="px-4 py-2 flex flex-col gap-2">
+  <div class="flex gap-1 uppercase text-xl tracking-wide">{imbuement.name}</div>
+  {#if imbuement.description}
+    <div class="font-light text-white/60">{imbuement.description}</div>
+  {/if}
   {#if highestLevelGained}
     <ul class="px-8 list-disc">
-      <li>{highestLevelGained.benefits}</li>
+      {#each highestLevelGained.benefits as benefit}
+        <li>{benefit}</li>
+      {/each}
     </ul>
   {/if}
   {#if nextLevel}
-    <div class="mt-4 mx-auto px-12">
+    <div class="mx-auto px-12 w-full">
       <ProgressBar
         progress={percentageToNextLevel}
         min={highestLevelGained.level}
@@ -48,20 +52,26 @@
     <div class="w-full text-center font-bold text-lg">{progress} / {costOfNextLevel}</div>
   {/if}
   {#if nextLevel}
-    <div class="px-8">
-      <div class="font-medium text-white/60">level {nextLevel.level}:</div>
-      <div>{nextLevel.preview}</div>
+    <div class="-mt-2">
+      <div class="font-light text-white/50">Next level:</div>
+      <div class="px-8">
+        <div>{nextLevel.preview}</div>
+      </div>
     </div>
   {/if}
   {#if seeAllLevels}
     <div class="px-8" transition:slide>
       {#each imbuement.levels.filter((x) => x.level > highestLevelGained.level) as level}
         <div class="font-medium text-white/60">level {level.level}:</div>
-        <div>{level.preview}</div>
+        <ul class="px-8 list-disc">
+          {#each level.benefits as benefit}
+            <li class="ml-4">{benefit}</li>
+          {/each}
+        </ul>
       {/each}
     </div>
   {/if}
-  <div class="text-white/40 mt-2 inline-flex px-6 flex-row mx-auto select-none">
+  <div class="text-white/40 inline-flex px-6 flex-row mx-auto select-none mr-auto">
     <Button on:click={() => (seeAllLevels = !seeAllLevels)} class="text-opacity-50">
       <div>See All</div>
       <ArrowDownIcon class={seeAllLevels && 'rotate-180'} />

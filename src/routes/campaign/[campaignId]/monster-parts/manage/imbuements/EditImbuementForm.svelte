@@ -7,17 +7,17 @@
   import type { Imbuement } from '$lib/systems/pf2e_monster_parts';
   import Toggle from '$components/forms/controls/Toggle.svelte';
   import ItemTypeSelector from '$components/monster-parts/ItemTypeSelector.svelte';
+  import TextAreaField from '$components/forms/controls/TextAreaField.svelte';
 
   export let imbuement: Imbuement;
   export let onSave: (imbuement: Partial<Imbuement>) => void;
 
-  let name = '';
-  let description = '';
-  let requires = '';
-  let type;
+  let name = imbuement.name;
+  let description = imbuement.description;
+  let requires = imbuement.requires.join(', ');
+  let type = imbuement.type;
   let effectTypes = ['levelled', 'single'];
-  let isSingleEffect;
-  let effectType = effectTypes[0];
+  let effectType = imbuement.levels.length > 0 ? 'levelled' : 'single';
   let singleEffect = '';
 
   console.log('ITEM TYPE', type);
@@ -28,7 +28,6 @@
       name,
       description,
       requires: requires.split(',').map((r) => r.trim()),
-      // types: types.split(',').map((t) => t.trim()) as any,
       type: 'armor',
       levels: stages,
       enabled: true
@@ -40,34 +39,26 @@
     }
   };
 
-  let stages = [];
+  $: stages = imbuement.levels;
 </script>
 
-<div class="text-white grid grid-cols-2">
-  <div class="flex flex-col max-w-lg gap-4 p-4 bg-blue-600/40 rounded shadow">
-    <TextField bind:value={name} label="Name" />
-    <TextField bind:value={description} label="Description" />
-    <TextField bind:value={requires} label="Requires" />
-    <ItemTypeSelector bind:value={type} />
+<div class="text-white grid grid-cols-2 gap-4">
+  <div class="flex flex-col max-w-lg gap-4">
+    <div class="flex flex-col gap-4 p-4 bg-blue-600/40 rounded shadow">
+      <TextField bind:value={name} label="Name" />
+      <TextAreaField bind:value={description} label="Description" />
+    </div>
+    <div class="flex flex-col max-w-lg gap-4 p-4 bg-blue-600/40 rounded shadow">
+      <TextField bind:value={requires} label="Requires" />
+      <ItemTypeSelector bind:value={type} />
+    </div>
     <div class="flex justify-center mt-4">
       <Button on:click={handleSave}>Save <Save /></Button>
     </div>
   </div>
   <div class="flex flex-col gap-4">
     <div class="max-w-lg p-4 bg-blue-600/20 rounded shadow">
-      <!-- <label for="effect-type">Effect Type</label>
-      {#each effectTypes as et}
-        <label>
-          <input type="radio" bind:group={effectType} value={et} name="effect-type" />
-          <span class="capitalize ml-2">{et}</span>
-        </label>
-      {/each} -->
-      <Toggle
-        bind:value={isSingleEffect}
-        label="Effect type"
-        design="multi"
-        options={effectTypes}
-      />
+      <Toggle bind:value={effectType} label="Effect type" design="multi" options={effectTypes} />
     </div>
     {#if effectType === 'single'}
       <textarea bind:value={singleEffect} class="rounded p-2" placeholder="Effect" />

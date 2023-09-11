@@ -22,12 +22,12 @@
   export let title;
   export let columns: ManageTableColumns = [];
   export let loading = false;
-  export let rowAction: ManageTableRowAction = null;
+  export let rowActions: ManageTableRowAction[] = [];
   export let items = [];
 
   $: rowSpanStyle = `grid-template-columns: repeat(${columns.reduce(
     (acc, cur) => acc + (cur.span ?? 1),
-    !!rowAction ? 1 : 0
+    rowActions.length > 0 ? 1 : 0
   )}, minmax(0, 1fr));`;
 </script>
 
@@ -68,14 +68,16 @@
                   : column.accessor(item)}
               </div>
             {/each}
-            {#if rowAction}
+            {#if rowActions.length > 0}
               <div class="ml-auto">
-                <Button on:click={() => rowAction.onClick(item)}>
-                  {rowAction.text}
-                  {#if rowAction.icon}
-                    <svelte:component this={rowAction.icon} class="h-4 w-4 inline" />
-                  {/if}
-                </Button>
+                {#each rowActions as rowAction (rowAction.text)}
+                  <Button on:click={() => rowAction.onClick(item)}>
+                    {rowAction.text}
+                    {#if rowAction.icon}
+                      <svelte:component this={rowAction.icon} class="h-4 w-4 inline" />
+                    {/if}
+                  </Button>
+                {/each}
               </div>
             {/if}
           </div>

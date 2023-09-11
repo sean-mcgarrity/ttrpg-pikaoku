@@ -3,7 +3,7 @@
   import Button from '$components/Button.svelte';
   import type { MP_Refinement, Imbuement } from '$lib/systems/pf2e_monster_parts';
   import { extractData } from '$lib/utils/requests';
-  import RefinementCardImbuement from '$routes/campaign/[campaignId]/monster-parts/item/[itemId]/RefinementCardImbuement.svelte';
+  import RefinementCardImbuement from './RefinementCardImbuement.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
   import { createQuery } from '@tanstack/svelte-query';
   import { onMount } from 'svelte';

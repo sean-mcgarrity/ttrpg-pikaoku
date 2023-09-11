@@ -69,7 +69,7 @@
   $: rowAction = { text: 'Delete', onClick: deleteItem, icon: Trash2Icon };
 </script>
 
-<ManageTable title="Base Items" bind:loading bind:columns bind:rowAction bind:items>
+<ManageTable title="Base Items" bind:loading bind:columns bind:rowActions={rowAction} bind:items>
   <Button slot="header-button" on:click={() => (add = false)}
     >Add <PlusCircle class="h-4 w-4 inline" /></Button
   >
