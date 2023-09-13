@@ -11,7 +11,7 @@
 
   let supabase: SupabaseClient = $page.data.supabase;
 
-  const query = createQuery({
+  $: query = createQuery({
     queryKey: ['refined-items'],
     queryFn: async () => {
       return extractData(
@@ -22,7 +22,8 @@
           .limit(10)
           .order('name', { ascending: true })
       );
-    }
+    },
+    enabled: !!campaignId
   });
 </script>
 

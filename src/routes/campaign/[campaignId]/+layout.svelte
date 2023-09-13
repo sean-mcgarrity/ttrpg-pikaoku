@@ -10,7 +10,7 @@
   $: ({ supabase, session } = data);
 </script>
 
-<div class="antialiased bg-slate-950 min-h-screen flex flex-col font-sans">
+<div class="antialiased bg-slate-950 min-h-screen flex flex-col font-sans text-white">
   <CampaignHeader {campaign} {session} />
   <main class="flex-1 border-0 p-4 md:p-4 mx-auto max-w-6xl w-full">
     <Breadcrumbs />

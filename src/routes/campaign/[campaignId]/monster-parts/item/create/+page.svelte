@@ -5,6 +5,8 @@
   import SelectField from '$components/forms/controls/SelectField.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
   import ContentBlock from '$components/layout/ContentBlock.svelte';
+  import ItemTypeSelector from '$components/monster-parts/ItemTypeSelector.svelte';
+  import type { ItemType } from '$lib/systems/pf2e_monster_parts.js';
   import { onMount } from 'svelte';
 
   type BaseItems = {
@@ -30,7 +32,7 @@
   let description = '';
   let baseItemKey = '';
   let owner = '';
-  let type = 'armor';
+  let type: ItemType[number] = 'armor';
 
   const typeOptions = [
     { text: 'Armor', value: 'armor' },
@@ -101,7 +103,7 @@
   <ContentBlock title="Create Item">
     <TextField label="Name" bind:value={name} />
     <TextField label="Description" bind:value={description} />
-    <SelectField label="Type" bind:value={type} options={typeOptions} />
+    <ItemTypeSelector bind:value={type} />
     <SelectField label="Base Item" bind:value={baseItemKey} bind:options={baseItemOptions} />
     <SelectField label="Charater" bind:value={owner} bind:options={playerCharacterOptions} />
     <h2>Derived</h2>

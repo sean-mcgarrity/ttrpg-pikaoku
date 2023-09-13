@@ -1,8 +1,8 @@
 <script lang="ts">
   import Button from '$components/Button.svelte';
   import {
-    calculateImbuementCostForLevel,
-    calculateImbuementLevel,
+    getUpgradeCostForLevel,
+    calculateUpgradeLevel,
     type Imbuement
   } from '$lib/systems/pf2e_monster_parts';
   import { slide } from 'svelte/transition';
@@ -12,26 +12,26 @@
   export let imbuement: Imbuement;
   export let changes: any = [];
 
-  const progress = changes.reduce((acc, curr) => acc + curr.amount, 0);
-  const imbuementLevel = calculateImbuementLevel(progress, 'armor');
+  $: progress = changes.reduce((acc, curr) => acc + curr.amount, 0);
+  $: imbuementLevel = calculateUpgradeLevel(progress, 'armor');
 
-  const highestLevelGained = imbuement.levels.reduce(
+  $: highestLevelGained = imbuement.levels.reduce(
     (acc, curr) => {
       return curr.level <= imbuementLevel ? curr : acc;
     },
     { level: 0, benefits: '' }
   );
 
-  const nextLevel = imbuement.levels.find((level) => level.level > imbuementLevel);
-  const costOfNextLevel = calculateImbuementCostForLevel(nextLevel.level, 'armor');
-  const percentageToNextLevel = Math.round((progress / costOfNextLevel) * 100);
+  $: nextLevel = imbuement.levels.find((level) => level.level > imbuementLevel);
+  $: costOfNextLevel = getUpgradeCostForLevel(nextLevel.level, 'armor');
+  $: percentageToNextLevel = Math.round((progress / costOfNextLevel) * 100);
   let seeAllLevels = false;
 </script>
 
-<div class="px-4 py-2 flex flex-col gap-2">
+<div class="p-4 pb-2 flex flex-col gap-2">
   <div class="flex gap-1 uppercase text-xl tracking-wide">{imbuement.name}</div>
   {#if imbuement.description}
-    <div class="font-light text-white/60">{imbuement.description}</div>
+    <div class="font-light text-white/60 italic">{imbuement.description}</div>
   {/if}
   {#if highestLevelGained}
     <ul class="px-8 list-disc">
@@ -52,11 +52,9 @@
     <div class="w-full text-center font-bold text-lg">{progress} / {costOfNextLevel}</div>
   {/if}
   {#if nextLevel}
-    <div class="-mt-2">
-      <div class="font-light text-white/50">Next level:</div>
-      <div class="px-8">
-        <div>{nextLevel.preview}</div>
-      </div>
+    <div class="">
+      <span class="font-light text-white/50">Next:</span>
+      {nextLevel.preview}
     </div>
   {/if}
   {#if seeAllLevels}
@@ -71,7 +69,7 @@
       {/each}
     </div>
   {/if}
-  <div class="text-white/40 inline-flex px-6 flex-row mx-auto select-none mr-auto">
+  <div class="text-white/40 inline-flex px-6 flex-row select-none">
     <Button on:click={() => (seeAllLevels = !seeAllLevels)} class="text-opacity-50">
       <div>See All</div>
       <ArrowDownIcon class={seeAllLevels && 'rotate-180'} />

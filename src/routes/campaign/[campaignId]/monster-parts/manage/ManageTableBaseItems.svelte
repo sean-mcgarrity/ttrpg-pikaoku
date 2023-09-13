@@ -70,7 +70,7 @@
 </script>
 
 <ManageTable title="Base Items" bind:loading bind:columns bind:rowActions={rowAction} bind:items>
-  <Button slot="header-button" on:click={() => (add = false)}
+  <Button slot="header-button" on:click={() => (add = !add)}
     >Add <PlusCircle class="h-4 w-4 inline" /></Button
   >
   <svelte:fragment slot="head">

@@ -4,53 +4,29 @@
   import Button from '$components/Button.svelte';
   import LinkButton from '$components/LinkButton.svelte';
   import ContentBlock from '$components/layout/ContentBlock.svelte';
-  import CreateMpMonster from './CreateMpMonster.svelte';
+  import { extractData } from '$lib/utils/requests';
+  import { createQuery } from '@tanstack/svelte-query';
   import PartysItemsTable from './PartysItemsTable.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
-  import { onMount } from 'svelte';
+  import type { MP_Source } from '$lib/systems/pf2e_monster_parts';
 
   $: campaignId = $page.params.campaignId;
   let supabase: SupabaseClient = $page.data.supabase;
 
-  let monsters: any[] = [
-    {
-      name: 'Monstro',
-      level: 1,
-      revealed: false,
-      flags: []
-    },
-    {
-      name: 'Orc',
-      level: 4,
-      revealed: false,
-      flags: []
-    },
-    {
-      name: 'Warthog',
-      level: 12,
-      revealed: false,
-      flags: []
-    }
-  ];
-
-  const addNewMonster = (monster: any) => {
-    monsters = [...monsters, monster];
-  };
-
-  let items = [];
-  async function getRefinedItems() {
-    const { data: result } = await supabase
-      .from('refinements')
-      .select(`*, base_item:mp_base_items (*)`)
-      .eq('campaign_id', campaignId)
-      .limit(10)
-      .order('name', { ascending: true });
-    items = result;
-  }
-
-  onMount(() => {
-    getRefinedItems();
+  $: sourcesQuery = createQuery<MP_Source[]>({
+    queryKey: ['sources', campaignId],
+    queryFn: async () =>
+      extractData(
+        await supabase
+          .from('mp_sources')
+          .select('*')
+          .gt('remaining', 0)
+          .eq('campaign_id', campaignId)
+      ),
+    enabled: !!campaignId
   });
+
+  $: monsters = $sourcesQuery.data ?? [];
 </script>
 
 <div class="text-white flex flex-col md:flex-row gap-4">
@@ -73,7 +49,7 @@
         <div>None</div>
       {/if}
       <svelte:fragment slot="buttons">
-        <LinkButton href={`/campaign/${campaignId}/monster-parts/add-monster`}>Add :D</LinkButton>
+        <LinkButton href={`/campaign/${campaignId}/monster-parts/monsters/add`}>Add :D</LinkButton>
       </svelte:fragment>
     </ContentBlock>
     <PartysItemsTable />
