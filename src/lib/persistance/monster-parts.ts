@@ -1,5 +1,9 @@
 import { page } from '$app/stores';
-import type { MP_Refinement, MP_UsableSource } from '$lib/systems/pf2e_monster_parts';
+import {
+  getMonsterPartsForLevel,
+  type MP_Refinement,
+  type MP_UsableSource
+} from '$lib/systems/pf2e_monster_parts';
 import { extractData } from '$lib/utils/requests';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { createMutation, createQuery, useQueryClient } from '@tanstack/svelte-query';
@@ -26,10 +30,65 @@ export const getCurrentItem = () => {
   });
 };
 
+export const getRefinementsForCampaign = () => {
+  const currentPage = get(page);
+  const supabase: SupabaseClient = currentPage.data.supabase;
+  const { campaignId } = currentPage.params;
+  return createQuery<MP_Refinement[]>({
+    queryKey: ['refinements'],
+    queryFn: async () =>
+      extractData(
+        await supabase
+          .from('refinements')
+          .select(
+            `*, base_item:mp_base_items (*), changes:refinement_changes (*), imbuements!refinement_imbuements (*)`
+          )
+          .eq('campaign_id', campaignId)
+      )
+  });
+};
+
+export const getSourceFromParam = () => {
+  const currentPage = get(page);
+  const supabase: SupabaseClient = currentPage.data.supabase;
+  const { campaignId, sourceId } = currentPage.params;
+  return createQuery<MP_UsableSource>({
+    queryKey: ['usable_sources', sourceId],
+    queryFn: async () => {
+      if (!sourceId) return null;
+      return extractData(
+        await supabase
+          .from('usable_sources')
+          .select('*')
+          .eq('id', sourceId)
+          .eq('campaign_id', campaignId)
+          .single<MP_UsableSource>()
+      );
+    }
+  });
+};
+
+export const getUsableSources = () => {
+  const currentPage = get(page);
+  const supabase: SupabaseClient = currentPage.data.supabase;
+  const { campaignId } = currentPage.params;
+  return createQuery<MP_UsableSource[]>({
+    queryKey: ['usable_sources'],
+    queryFn: async () =>
+      extractData(
+        await supabase
+          .from('usable_sources')
+          .select('*')
+          .gt('usable', 0)
+          .eq('campaign_id', campaignId)
+      )
+  });
+};
+
 export const getSourcesForItems = (requirements: string[]) => {
   const currentPage = get(page);
   const supabase: SupabaseClient = currentPage.data.supabase;
-  const itemId = currentPage.params.itemId;
+  const { itemId, campaignId } = currentPage.params;
   return createQuery<MP_UsableSource[]>({
     queryKey: ['usable_sources', itemId],
     queryFn: async () =>
@@ -38,6 +97,7 @@ export const getSourcesForItems = (requirements: string[]) => {
           .from('usable_sources')
           .select('*')
           .gt('usable', 0)
+          .eq('campaign_id', campaignId)
           .overlaps('enables', requirements)
       ),
     enabled: !!itemId
@@ -65,6 +125,32 @@ export const insertRefinementChange = () => {
         refinement_id: itemId,
         imbuement_id: imbuementId,
         amount
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['refinements', itemId]);
+        queryClient.invalidateQueries(['usable_sources', itemId]);
+      }
+    }
+  );
+};
+
+export const createMpSource = () => {
+  const queryClient = useQueryClient();
+  const currentPage = get(page);
+  const supabase: SupabaseClient = currentPage.data.supabase;
+  const { itemId, campaignId } = currentPage.params;
+  return createMutation(
+    ['create-source'],
+    async ({ name, level, quantity, enables }: Partial<MP_UsableSource>) => {
+      return supabase.from('mp_sources').insert({
+        name,
+        level,
+        quantity,
+        enables,
+        remaining: getMonsterPartsForLevel(level),
+        campaign_id: campaignId
       });
     },
     {

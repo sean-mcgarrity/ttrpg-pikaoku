@@ -2,6 +2,7 @@
   import Button from '$components/Button.svelte';
   import { calculateRefinementLevel, type MP_Refinement } from '$lib/systems/pf2e_monster_parts';
   import { whereKeyEq } from '$lib/utils/iterators';
+  import ItemCardHeader from './ItemCardHeader.svelte';
   import RefinementCardImbuement from './RefinementCardImbuement.svelte';
   import RefinementCardRefinement from './RefinementCardRefinement.svelte';
 
@@ -12,22 +13,7 @@
 </script>
 
 <div class="border-2 border-black/10 shadow overflow-hidden mb-4 max-w-lg mx-auto">
-  <div class="bg-[#6666cc] flex flex-row text-white">
-    <div class="w-full px-4 py-2">
-      <h1 class="text-3xl font-bold tracking-wide uppercase">
-        {refinement.name}
-      </h1>
-      <div class="flex flex-row">
-        <div class="font-medium capitalize tracking-wider text-white/80 text-lg">
-          {refinement.type}
-        </div>
-        <span class="text-white/60 ml-auto">Sell {sellCost}GP</span>
-      </div>
-    </div>
-    <div class="text-6xl font-extrabold px-4 py-2 bg-black/10 flex">
-      <div class="m-auto">{itemLevel}</div>
-    </div>
-  </div>
+  <ItemCardHeader item={refinement} />
   <div class=" bg-[#6666cc]/20 text-white flex-col gap-2">
     <div class="px-4 py-2">
       <div class="flex flex-row gap-4 text-white/80 font-light tracking-wide italic">

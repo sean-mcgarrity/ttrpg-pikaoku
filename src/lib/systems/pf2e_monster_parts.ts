@@ -346,3 +346,16 @@ export const getRefinementBenefitsForItem = (refinement: MP_Refinement) => {
   const achievedLevels = typeBenefits.filter((benefit) => benefit.level > level);
   // return
 };
+
+export const getMonsterPartsForLevel = (level: number) => {
+  const monsterPartsValue = [
+    3.5, 5, 7, 12, 18, 27, 45, 65, 100, 140, 200, 275, 390, 560, 840, 1250, 1850, 2800, 4300, 7000,
+    12000, 17500, 24000, 35000, 48000, 70000, 96000
+  ];
+
+  return monsterPartsValue[level + 1];
+};
+
+export const calculateSellCostOfRefinement = (refinement: MP_Refinement) => {
+  return Math.floor(refinement.changes.map((c) => c.amount).reduce((a, b) => a + b, 0) / 2);
+};

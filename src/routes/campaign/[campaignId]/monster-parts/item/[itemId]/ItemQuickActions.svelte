@@ -24,6 +24,9 @@
     Quick actions
   </div>
   {#if $queryMats.isFetched}
+    {#if $queryMats.data.length === 0}
+      <div class="text-white">No quick actions available for this item</div>
+    {/if}
     <div class="flex flex-col gap-2">
       {#each refinementActions as source (source.id)}
         <QuickUseSource

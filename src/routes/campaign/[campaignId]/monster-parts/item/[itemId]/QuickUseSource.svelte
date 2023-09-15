@@ -4,7 +4,6 @@
   import Button from '$components/Button.svelte';
   import { slide } from 'svelte/transition';
   import { Hammer } from 'lucide-svelte';
-  import { page } from '$app/stores';
 
   export let source: MP_UsableSource;
   export let buttonText: string = 'Refine';
@@ -13,6 +12,8 @@
 
   let expanded = false;
   let value = source.usable;
+
+  $: if (value > source.usable) value = source.usable;
 </script>
 
 <div class={cx('shadow bg-red-500/30 rounded overflow-hidden')}>

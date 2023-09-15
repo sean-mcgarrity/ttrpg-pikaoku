@@ -3,12 +3,14 @@
   export let min: number;
   export let max: number;
   export let barColor: string;
+
+  $: console.log('progress', progress);
 </script>
 
-<div class="relative h-2 w-full rounded-full my-2 mx-auto font-medium">
+<div class="relative h-2 w-full rounded-full my-2 mx-auto font-medium select-none">
   <div class="absolute inset-0 bg-black/20" />
   <div
-    class="absolute inset-0 bg-[#4444aa]"
+    class="transition-all duration-500 absolute inset-0 bg-[#4444aa]"
     style={`width: ${progress}%;background-color: ${barColor}`}
   />
   <div

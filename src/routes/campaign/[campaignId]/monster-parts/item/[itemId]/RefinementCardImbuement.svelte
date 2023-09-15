@@ -29,12 +29,12 @@
 </script>
 
 <div class="p-4 pb-2 flex flex-col gap-2">
-  <div class="flex gap-1 uppercase text-xl tracking-wide">{imbuement.name}</div>
+  <div class="flex gap-1 uppercase text-xl tracking-wide font-semibold">{imbuement.name}</div>
   {#if imbuement.description}
     <div class="font-light text-white/60 italic">{imbuement.description}</div>
   {/if}
   {#if highestLevelGained}
-    <ul class="px-8 list-disc">
+    <ul class="px-4 list-disc">
       {#each highestLevelGained.benefits as benefit}
         <li>{benefit}</li>
       {/each}
@@ -60,7 +60,7 @@
   {#if seeAllLevels}
     <div class="px-8" transition:slide>
       {#each imbuement.levels.filter((x) => x.level > highestLevelGained.level) as level}
-        <div class="font-medium text-white/60">level {level.level}:</div>
+        <div class="font-medium text-white/60">Level {level.level}:</div>
         <ul class="px-8 list-disc">
           {#each level.benefits as benefit}
             <li class="ml-4">{benefit}</li>
@@ -69,7 +69,7 @@
       {/each}
     </div>
   {/if}
-  <div class="text-white/40 inline-flex px-6 flex-row select-none">
+  <div class="text-white/40 inline-flex -ml-2 flex-row select-none">
     <Button on:click={() => (seeAllLevels = !seeAllLevels)} class="text-opacity-50">
       <div>See All</div>
       <ArrowDownIcon class={seeAllLevels && 'rotate-180'} />
