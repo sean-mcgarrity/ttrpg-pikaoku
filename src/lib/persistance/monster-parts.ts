@@ -48,6 +48,24 @@ export const getRefinementsForCampaign = () => {
   });
 };
 
+export const updateRefinement = () => {
+  const queryClient = useQueryClient();
+  const currentPage = get(page);
+  const supabase: SupabaseClient = currentPage.data.supabase;
+  const itemId = currentPage.params.itemId;
+  return createMutation(
+    ['refinements', itemId],
+    async (refinement: Partial<MP_Refinement>) => {
+      return supabase.from('refinements').update(refinement).eq('id', itemId);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['refinements', itemId]);
+      }
+    }
+  );
+};
+
 export const getSourceFromParam = () => {
   const currentPage = get(page);
   const supabase: SupabaseClient = currentPage.data.supabase;
@@ -160,4 +178,30 @@ export const createMpSource = () => {
       }
     }
   );
+};
+
+export const getImbuements = () => {
+  const currentPage = get(page);
+  const supabase: SupabaseClient = currentPage.data.supabase;
+  return createQuery<MP_UsableSource[]>({
+    queryKey: ['imbuements'],
+    queryFn: async () =>
+      extractData(await supabase.from('imbuements').select('*').order('name', { ascending: true }))
+  });
+};
+
+export const getImbuementsOfType = (type: string) => {
+  const currentPage = get(page);
+  const supabase: SupabaseClient = currentPage.data.supabase;
+  return createQuery<MP_UsableSource[]>({
+    queryKey: ['imbuements', type],
+    queryFn: async () =>
+      extractData(
+        await supabase
+          .from('imbuements')
+          .select('*')
+          .order('name', { ascending: true })
+          .eq('type', type)
+      )
+  });
 };

@@ -23,6 +23,8 @@
     </div>
   </div>
   <div class="text-6xl font-extrabold px-4 py-2 bg-black/10 flex">
-    <div class="m-auto">{itemLevel}</div>
+    <div class="m-auto font-mono">
+      <span>{itemLevel}</span>
+    </div>
   </div>
 </div>

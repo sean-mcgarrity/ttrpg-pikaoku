@@ -19,7 +19,6 @@
       href={`/campaign/${campaignId}/monster-parts`}
       bgImgSrc="/images/monster-parts-banner.webp"
     />
-    <LandingLink title="Otari Handouts" description="" href="/handouts" />
   </div>
   <AdminOnly>
     <div class="w-full mt-8 mx-auto max-w-sm text-center">

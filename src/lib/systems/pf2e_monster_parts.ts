@@ -1,3 +1,5 @@
+import { whereKeyLte } from '$lib/utils/iterators';
+
 export type MP_PerceptionItem = {
   type: 'perception';
 };
@@ -126,6 +128,7 @@ type RefinementBenefitMatrix = {
   [key in ItemType]: {
     level: number;
     benefits: string[];
+    imbuementSlots: number;
   }[];
 };
 
@@ -133,7 +136,8 @@ export const REFINEMENT_BENEFITS: RefinementBenefitMatrix = {
   weapon: [
     {
       level: 2,
-      benefits: ['Item bonus to attack rolls (+1)', 'Imbuing (1)']
+      benefits: ['Item bonus to attack rolls (+1)', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 4,
@@ -141,7 +145,8 @@ export const REFINEMENT_BENEFITS: RefinementBenefitMatrix = {
         'Item bonus to attack rolls (+1)',
         'Imbuing (1)',
         'Additional damage dice (2 dice, striking)'
-      ]
+      ],
+      imbuementSlots: 1
     },
     {
       level: 10,
@@ -149,7 +154,8 @@ export const REFINEMENT_BENEFITS: RefinementBenefitMatrix = {
         'Item bonus to attack rolls (+2)',
         'Imbuing (2)',
         'Additional damage dice (2 dice, striking)'
-      ]
+      ],
+      imbuementSlots: 2
     },
     {
       level: 12,
@@ -157,7 +163,8 @@ export const REFINEMENT_BENEFITS: RefinementBenefitMatrix = {
         'Item bonus to attack rolls (+2)',
         'Imbuing (2)',
         'Additional damage dice (3 dice, greater striking)'
-      ]
+      ],
+      imbuementSlots: 2
     },
     {
       level: 16,
@@ -165,7 +172,8 @@ export const REFINEMENT_BENEFITS: RefinementBenefitMatrix = {
         'Item bonus to attack rolls (+3)',
         'Imbuing (3)',
         'Additional damage dice (2 dice, greater striking)'
-      ]
+      ],
+      imbuementSlots: 3
     },
     {
       level: 19,
@@ -173,123 +181,151 @@ export const REFINEMENT_BENEFITS: RefinementBenefitMatrix = {
         'Item bonus to attack rolls (+3)',
         'Imbuing (3)',
         'Additional damage dice (4 dice, major striking)'
-      ]
+      ],
+      imbuementSlots: 3
     }
   ],
   armor: [
     {
       level: 5,
-      benefits: ['Item bonus to AC (+1)', 'Imbuing (1)']
+      benefits: ['Item bonus to AC (+1)', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 8,
-      benefits: ['Item bonus to AC (+1)', 'Imbuing (1)', 'Resilient (1)']
+      benefits: ['Item bonus to AC (+1)', 'Imbuing (1)', 'Resilient (1)'],
+      imbuementSlots: 1
     },
     {
       level: 11,
-      benefits: ['Item bonus to AC (+2)', 'Imbuing (2)', 'Resilient (1)']
+      benefits: ['Item bonus to AC (+2)', 'Imbuing (2)', 'Resilient (1)'],
+      imbuementSlots: 2
     },
     {
       level: 14,
-      benefits: ['Item bonus to AC (+2)', 'Imbuing (2)', 'Greater Resilient (2)']
+      benefits: ['Item bonus to AC (+2)', 'Imbuing (2)', 'Greater Resilient (2)'],
+      imbuementSlots: 2
     },
     {
       level: 18,
-      benefits: ['Item bonus to AC (+3)', 'Imbuing (3)', 'Greater Resilient (2)']
+      benefits: ['Item bonus to AC (+3)', 'Imbuing (3)', 'Greater Resilient (2)'],
+      imbuementSlots: 3
     },
     {
       level: 20,
-      benefits: ['Item bonus to AC (+3)', 'Imbuing (3)', 'Major Resilient (3)']
+      benefits: ['Item bonus to AC (+3)', 'Imbuing (3)', 'Major Resilient (3)'],
+      imbuementSlots: 3
     }
   ],
   shield: [
     {
       level: 3,
-      benefits: ['Hardness 5, HP 30, BT 15']
+      benefits: ['Hardness 5, HP 30, BT 15'],
+      imbuementSlots: 0
     },
     {
       level: 4,
-      benefits: ['Hardness 5, HP 30, BT 15', 'Imbuing (1)']
+      benefits: ['Hardness 5, HP 30, BT 15', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 6,
-      benefits: ['Hardness 6, HP 36, BT 18', 'Imbuing (1)']
+      benefits: ['Hardness 6, HP 36, BT 18', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 7,
-      benefits: ['Hardness 7, HP 42, BT 21', 'Imbuing (1)']
+      benefits: ['Hardness 7, HP 42, BT 21', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 8,
-      benefits: ['Hardness 8, HP 48, BT 24', 'Imbuing (1)']
+      benefits: ['Hardness 8, HP 48, BT 24', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 9,
-      benefits: ['Hardness 9, HP 54, BT 27', 'Imbuing (1)']
+      benefits: ['Hardness 9, HP 54, BT 27', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 10,
-      benefits: ['Hardness 10, HP 60, BT 30', 'Imbuing (1)']
+      benefits: ['Hardness 10, HP 60, BT 30', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 12,
-      benefits: ['Hardness 11, HP 66, BT 33', 'Imbuing (1)']
+      benefits: ['Hardness 11, HP 66, BT 33', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 13,
-      benefits: ['Hardness 12, HP 72, BT 36', 'Imbuing (1)']
+      benefits: ['Hardness 12, HP 72, BT 36', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 15,
-      benefits: ['Hardness 13, HP 78, BT 39', 'Imbuing (1)']
+      benefits: ['Hardness 13, HP 78, BT 39', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 16,
-      benefits: ['Hardness 14, HP 84, BT 42', 'Imbuing (1)']
+      benefits: ['Hardness 14, HP 84, BT 42', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 17,
-      benefits: ['Hardness 15, HP 90, BT 45', 'Imbuing (1)']
+      benefits: ['Hardness 15, HP 90, BT 45', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 18,
-      benefits: ['Hardness 16, HP 96, BT 48', 'Imbuing (1)']
+      benefits: ['Hardness 16, HP 96, BT 48', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 19,
-      benefits: ['Hardness 17, HP 102, BT 51', 'Imbuing (1)']
+      benefits: ['Hardness 17, HP 102, BT 51', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 20,
-      benefits: ['Hardness 18, HP 108, BT 54', 'Imbuing (1)']
+      benefits: ['Hardness 18, HP 108, BT 54', 'Imbuing (1)'],
+      imbuementSlots: 1
     }
   ],
   perception: [
     {
       level: 3,
-      benefits: ['Item bonus to Perception checks (+1)', 'Imbuing (1)']
+      benefits: ['Item bonus to Perception checks (+1)', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 9,
-      benefits: ['Item bonus to Perception checks (+2)', 'Imbuing (1)']
+      benefits: ['Item bonus to Perception checks (+2)', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 17,
-      benefits: ['Item bonus to Perception checks (+3)', 'Imbuing (1)']
+      benefits: ['Item bonus to Perception checks (+3)', 'Imbuing (1)'],
+      imbuementSlots: 1
     }
   ],
   skill: [
     {
       level: 3,
-      benefits: ['Item bonus to skill checks (+1)', 'Imbuing (1)']
+      benefits: ['Item bonus to skill checks (+1)', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 9,
-      benefits: ['Item bonus to skill checks (+2)', 'Imbuing (1)']
+      benefits: ['Item bonus to skill checks (+2)', 'Imbuing (1)'],
+      imbuementSlots: 1
     },
     {
       level: 17,
-      benefits: ['Item bonus to skill checks (+3)', 'Imbuing (1)']
+      benefits: ['Item bonus to skill checks (+3)', 'Imbuing (1)'],
+      imbuementSlots: 1
     }
   ]
 };
@@ -340,11 +376,10 @@ export const calculateNextRefinementLevel = (refinement: MP_Refinement) => {
 };
 
 export const getRefinementBenefitsForItem = (refinement: MP_Refinement) => {
-  const itemType = refinement.type;
-  const level = calculateRefinementLevel(refinement);
-  const typeBenefits = REFINEMENT_BENEFITS[itemType.toUpperCase()] ?? [];
-  const achievedLevels = typeBenefits.filter((benefit) => benefit.level > level);
-  // return
+  const itemLevel = calculateRefinementLevel(refinement);
+  const typeBenefits = REFINEMENT_BENEFITS[refinement.type];
+  const achievedLevels = typeBenefits.findLast(whereKeyLte('level', itemLevel));
+  return achievedLevels;
 };
 
 export const getMonsterPartsForLevel = (level: number) => {
@@ -358,4 +393,15 @@ export const getMonsterPartsForLevel = (level: number) => {
 
 export const calculateSellCostOfRefinement = (refinement: MP_Refinement) => {
   return Math.floor(refinement.changes.map((c) => c.amount).reduce((a, b) => a + b, 0) / 2);
+};
+
+export const getImbuementSlots = (refinement: MP_Refinement) => {
+  const benefits = getRefinementBenefitsForItem(refinement);
+  return benefits?.imbuementSlots ?? 0;
+};
+
+export const getUnusedImbuementSlots = (refinement: MP_Refinement) => {
+  const imbuementSlots = getImbuementSlots(refinement);
+  const usedSlots = refinement.imbuements?.length ?? 0;
+  return Math.max(imbuementSlots - usedSlots, 0);
 };
