@@ -29,9 +29,9 @@
   $: futureLevels = typeBenefits.filter(filterByLevelGt(itemLevel));
 </script>
 
-<div class="px-4 py-2 flex flex-col gap-2">
+<div class="px-4 py-2 flex flex-col gap-2 overflow-hidden">
   {#if currentBenefits}
-    <ul class="px-4 list-disc" transition:slide>
+    <ul class="px-4 list-disc" transition:slide|local>
       {#each currentBenefits.benefits as benefit}
         <li>{benefit}</li>
       {/each}
@@ -49,7 +49,7 @@
   </div>
   <div class="w-full text-center font-bold text-lg">{progress} / {upgradeCost}</div>
   {#if seeAllLevels}
-    <div class="px-8" transition:slide>
+    <div class="px-8" transition:slide|local>
       {#each futureLevels as level}
         <div class="font-medium text-white/60">Level {level.level}:</div>
         <ul class="px-8 list-disc">

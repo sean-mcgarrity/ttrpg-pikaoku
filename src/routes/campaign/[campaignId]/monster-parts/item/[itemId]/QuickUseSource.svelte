@@ -27,7 +27,7 @@
     <div class="p-2">{source.usable} MP</div>
   </button>
   {#if expanded}
-    <div class="p-2 bg-black/30 rounded-b flex flex-row gap-4" transition:slide>
+    <div class="p-2 bg-black/30 rounded-b flex flex-row gap-4" transition:slide|local>
       <input
         type="range"
         min="1"

@@ -22,7 +22,7 @@
     <LoadingInsert fullPage={true} />
   {/if}
   {#if $query.data}
-    <div class="flex-1 flex flex-col gap-4">
+    <div class="flex-1 flex flex-col gap-4 w-full">
       {#if !$query.isLoading && !!$query.data}
         <RefinementCard refinement={$query.data}>
           <svelte:fragment slot="buttons">

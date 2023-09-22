@@ -114,6 +114,60 @@ export const Skills = [
   }
 ] as const;
 
+export const Alignments = [
+  {
+    id: 'lawful',
+    name: 'Lawful'
+  },
+  {
+    id: 'chaotic',
+    name: 'Chaotic'
+  },
+  {
+    id: 'evil',
+    name: 'Evil'
+  },
+  {
+    id: 'good',
+    name: 'Good'
+  },
+  {
+    id: 'neutral',
+    name: 'Neutral'
+  }
+] as const;
+
+export const SightTypes = [
+  {
+    id: 'normal',
+    name: 'Normal'
+  },
+  {
+    id: 'darkvision',
+    name: 'Darkvision'
+  },
+  {
+    id: 'low-light-vision',
+    name: 'Low-light Vision'
+  },
+  {
+    id: 'greater-darkvision',
+    name: 'Darkvision'
+  },
+  {
+    id: 'true-seeing',
+    name: 'True Seeing'
+  }
+] as const;
+
+export const SenseTypes = [
+  ...SightTypes,
+  {
+    id: 'scent',
+    name: 'Scent'
+  }
+] as const;
+
 export const DamageTypes = [
   {
     id: 'acid',
@@ -179,24 +233,5 @@ export const DamageTypes = [
     id: 'untyped',
     name: 'Untyped'
   },
-  {
-    id: 'lawful',
-    name: 'Lawful'
-  },
-  {
-    id: 'chaotic',
-    name: 'Chaotic'
-  },
-  {
-    id: 'evil',
-    name: 'Evil'
-  },
-  {
-    id: 'good',
-    name: 'Good'
-  },
-  {
-    id: 'neutral',
-    name: 'Neutral'
-  }
+  ...Alignments
 ] as const;

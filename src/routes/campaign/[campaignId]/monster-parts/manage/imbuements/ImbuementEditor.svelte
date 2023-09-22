@@ -8,17 +8,16 @@
   import TextAreaField from '$components/forms/controls/TextAreaField.svelte';
   import ImbuementLevelEditor from './ImbuementLevelEditor.svelte';
   import { byKeyAsc } from '$lib/utils/iterators';
+  import TraitSelector from '$components/monster-parts/TraitSelector.svelte';
 
   export let imbuement: Imbuement;
   export let onSave: (imbuement: Partial<Imbuement>) => void;
 
   let activeLevel = null;
-  let pane: 'requires' | 'levels' = 'levels';
+  let pane: 'requires' | 'levels' = 'requires';
   let sessionTimeStart = Date.now();
 
   let requires = imbuement.requires.join(', ');
-
-  $: console.log('REQUIRES', requires);
 
   $: handleSave = () => {
     // TODO: Validate the data.
@@ -112,9 +111,7 @@
     {/if}
     {#if pane === 'requires'}
       <div class="p-4 flex flex-col gap-1 divide-y divide-white/20 overflow-y-scroll flex-1">
-        <div class="flex flex-row justify-between">
-          <TextField bind:value={requires} label="Requires" />
-        </div>
+        <TraitSelector bind:selected={imbuement.requires} />
       </div>
     {/if}
   </div>

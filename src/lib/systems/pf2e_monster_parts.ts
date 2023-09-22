@@ -1,4 +1,5 @@
-import { whereKeyLte } from '$lib/utils/iterators';
+import { byKeyAsc, whereKeyLte } from '$lib/utils/iterators';
+import * as pf2eCore from './pf2e_core';
 
 export type MP_PerceptionItem = {
   type: 'perception';
@@ -131,6 +132,27 @@ type RefinementBenefitMatrix = {
     imbuementSlots: number;
   }[];
 };
+
+const sortedDamageTypes = [...pf2eCore.DamageTypes].sort(byKeyAsc('name'));
+const sortedSkills = [...pf2eCore.Skills].sort(byKeyAsc('name'));
+const sortedAbilities = [...pf2eCore.Abilities].sort(byKeyAsc('name'));
+
+export const mpTraits = [
+  ...sortedDamageTypes.map((d) => `resist:${d.id}`),
+  ...sortedDamageTypes.map((d) => `weak:${d.id}`),
+  ...sortedDamageTypes.map((d) => `immune:${d.id}`),
+  ...sortedDamageTypes.map((c) => `attack:${c.id}`),
+  ...sortedDamageTypes.map((c) => `trait:${c.id}`),
+  ...sortedSkills.map((s) => `skill:${s.id}`),
+  ...sortedAbilities.map((a) => `ability:${a.id}`),
+  ...pf2eCore.SenseTypes.map((s) => `sense:${s.id}`),
+  'trait:hardness',
+  'craft:shield',
+  'craft:armor_light',
+  'craft:armor_medium',
+  'craft:armor_heavy',
+  'speed:flight'
+];
 
 export const REFINEMENT_BENEFITS: RefinementBenefitMatrix = {
   weapon: [

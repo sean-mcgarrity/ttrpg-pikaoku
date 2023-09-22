@@ -13,7 +13,7 @@
     {...$$restProps}
     {rows}
     class={cx(
-      'rounded px-4 py-1 w-full bg-black/20',
+      'rounded px-4 py-1 w-full bg-black/20 shadow-inner',
       !label && 'h-full',
       $$restProps.disabled && 'bg-gray-200 bg-opacity-40 '
     )}

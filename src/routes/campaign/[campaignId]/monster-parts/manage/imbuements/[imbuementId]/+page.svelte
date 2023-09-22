@@ -19,7 +19,8 @@
       extractData<Imbuement>(
         await supabase.from('imbuements').select('*').eq('id', imbuementId).single()
       ),
-    onError: (error) => console.log('error', error)
+    onError: (error) => console.log('error', error),
+    refetchOnWindowFocus: false
   });
 
   $: console.log('imbuement', $imbuementQuery.data);

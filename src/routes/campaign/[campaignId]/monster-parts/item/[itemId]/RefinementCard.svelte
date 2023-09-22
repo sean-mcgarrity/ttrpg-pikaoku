@@ -13,7 +13,7 @@
 <div class="border-2 border-black/10 shadow overflow-hidden mb-4 max-w-lg mx-auto w-full">
   <ItemCardHeader item={refinement} />
   <div class=" bg-[#6666cc]/20 text-white flex-col gap-2">
-    <div class="px-4 py-2">
+    <div class="px-4 py-2 w-full">
       <div class="flex flex-row gap-4 text-white/80 font-light tracking-wide italic">
         {refinement.description || 'No description'}
       </div>
