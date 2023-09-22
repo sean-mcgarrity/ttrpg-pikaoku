@@ -23,6 +23,10 @@
   const queryClient = new QueryClient();
 </script>
 
-<QueryClientProvider client={queryClient}>
-  <slot />
-</QueryClientProvider>
+<div class="w-full flex-col bg-slate-950 text-white shadow-inner">
+  <div class="max-w-6xl mx-auto border-x-4 border-black/50 shadow-lg">
+    <QueryClientProvider client={queryClient}>
+      <slot />
+    </QueryClientProvider>
+  </div>
+</div>

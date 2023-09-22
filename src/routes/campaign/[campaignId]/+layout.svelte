@@ -6,11 +6,11 @@
   import Breadcrumbs from '$components/Breadcrumbs.svelte';
 
   export let data;
-  let { supabase, session, campaign } = data;
+  let { session, campaign } = data;
   $: ({ supabase, session } = data);
 </script>
 
-<div class="antialiased bg-slate-950 min-h-screen flex flex-col font-sans text-white">
+<div class="antialiased bg-blue-500/10 min-h-screen flex flex-col font-sans text-white">
   <CampaignHeader {campaign} {session} />
   <main class="flex-1 border-0 p-4 md:p-4 mx-auto max-w-6xl w-full">
     <Breadcrumbs />
