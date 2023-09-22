@@ -73,7 +73,7 @@ export type Imbuement = {
   description: string;
   requires: string[];
   type: (typeof itemTypes)[number]['id'];
-  levels: { level: number; preview: string; benefits: string[] }[];
+  levels: { level: number; preview: string; benefits: string[]; sequenceId?: string }[];
   /** @deprecated */
   enabled?: boolean;
 };

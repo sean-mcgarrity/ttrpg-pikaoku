@@ -56,6 +56,22 @@ export const whereKeyIn =
  *
  */
 
+export const byKeyAsc =
+  <O, K extends keyof O>(key: K) =>
+  (a: O, b: O): number => {
+    if (a[key] > b[key]) return 1;
+    if (a[key] < b[key]) return -1;
+    return 0;
+  };
+
+export const byKeyDesc =
+  <O, K extends keyof O>(key: K) =>
+  (a: O, b: O): number => {
+    if (a[key] > b[key]) return -1;
+    if (a[key] < b[key]) return 1;
+    return 0;
+  };
+
 export const filterByLevelGt =
   <O extends ObjectWithLevel = ObjectWithLevel>(greaterThan: number) =>
   (obj: O): boolean =>

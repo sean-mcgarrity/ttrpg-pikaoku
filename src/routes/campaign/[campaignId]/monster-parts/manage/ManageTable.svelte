@@ -60,7 +60,7 @@
           >
             {#each columns as column}
               <div
-                class={cx(column.classes)}
+                class={cx(column.classes, 'overflow-clip overflow-ellipsis')}
                 style={`grid-column: span ${column.span ?? 1} / span ${column.span ?? 1};`}
               >
                 {typeof column.accessor === 'string'

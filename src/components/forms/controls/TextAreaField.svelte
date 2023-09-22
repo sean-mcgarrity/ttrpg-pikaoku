@@ -7,13 +7,13 @@
 
 <label class={cx(!label && 'w-full h-full')}>
   {#if label}
-    <div class="text-white font-medium mb-2">{label}</div>
+    <div class="font-medium mb-1">{label}</div>
   {/if}
   <textarea
     {...$$restProps}
     {rows}
     class={cx(
-      'rounded px-4 py-1 w-full text-black bg-white bg-opacity-90 placeholder:text-black/40',
+      'rounded px-4 py-1 w-full bg-black/20',
       !label && 'h-full',
       $$restProps.disabled && 'bg-gray-200 bg-opacity-40 '
     )}

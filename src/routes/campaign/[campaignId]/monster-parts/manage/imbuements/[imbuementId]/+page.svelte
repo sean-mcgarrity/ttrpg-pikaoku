@@ -1,5 +1,5 @@
 <script lang="ts">
-  import EditImbuementForm from '../EditImbuementForm.svelte';
+  import EditImbuementForm from '../ImbuementEditor.svelte';
   import type { Imbuement } from '$lib/systems/pf2e_monster_parts';
   import BackButton from '$components/layout/BackButton.svelte';
   import { createMutation, createQuery } from '@tanstack/svelte-query';
@@ -9,16 +9,7 @@
   import { extractData } from '$lib/utils/requests';
   import SomethingWentWrong from '$components/layout/SomethingWentWrong.svelte';
   import { goto } from '$app/navigation';
-
-  const newImbuement: Imbuement = {
-    id: 7920386472380,
-    description: '',
-    name: '',
-    type: 'armor',
-    requires: [],
-    levels: [],
-    enabled: true
-  };
+  import AddImbuement from '../../../item/[itemId]/AddImbuement.svelte';
 
   const { imbuementId } = $page.params;
   const supabase: SupabaseClient = $page.data.supabase;
@@ -55,5 +46,8 @@
     <SomethingWentWrong destination={`/campaign/${$page.data.campaign.id}/monster-parts/manage`} />
   {:else}
     <EditImbuementForm imbuement={$imbuementQuery.data} {onSave} />
+    {#if $updateImbuement.isLoading}
+      <LoadingInsert />
+    {/if}
   {/if}
 </div>

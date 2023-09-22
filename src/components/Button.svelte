@@ -6,6 +6,7 @@
   export let padded = false;
   export let type: 'button' | 'submit' = 'button';
   export let outlined = false;
+  export let disabled = false;
 </script>
 
 <button
@@ -16,7 +17,8 @@
     'bg-transparent text-white hover:bg-white/10 active:bg-blue-200/20 rounded cursor-pointer font-medium tracking-wider select-none',
     'inline-flex flex-row items-center gap-2',
     outlined && 'border border-white justify-between',
-    className
+    className,
+    disabled && 'opacity-30 cursor-not-allowed pointer-events-none'
   )}
 >
   <slot />

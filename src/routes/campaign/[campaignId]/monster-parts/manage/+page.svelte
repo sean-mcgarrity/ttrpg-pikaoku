@@ -1,5 +1,4 @@
 <script>
-  import ManageTable from './ManageTable.svelte';
   import ManageTableBaseItems from './ManageTableBaseItems.svelte';
   import ManageTableImbuements from './ManageTableImbuements.svelte';
 </script>
