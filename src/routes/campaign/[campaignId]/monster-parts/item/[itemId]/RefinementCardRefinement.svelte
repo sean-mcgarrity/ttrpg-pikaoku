@@ -48,6 +48,12 @@
     />
   </div>
   <div class="w-full text-center font-bold text-lg">{progress} / {upgradeCost}</div>
+  <div class="text-white/40 inline-flex -ml-2 flex-row select-none mr-auto">
+    <Button on:click={() => (seeAllLevels = !seeAllLevels)} class="text-opacity-50">
+      <div>See All</div>
+      <ArrowDownIcon class={seeAllLevels && 'rotate-180'} />
+    </Button>
+  </div>
   {#if seeAllLevels}
     <div class="px-8" transition:slide|local>
       {#each futureLevels as level}
@@ -60,10 +66,4 @@
       {/each}
     </div>
   {/if}
-  <div class="text-white/40 inline-flex -ml-2 flex-row select-none mr-auto">
-    <Button on:click={() => (seeAllLevels = !seeAllLevels)} class="text-opacity-50">
-      <div>See All</div>
-      <ArrowDownIcon class={seeAllLevels && 'rotate-180'} />
-    </Button>
-  </div>
 </div>

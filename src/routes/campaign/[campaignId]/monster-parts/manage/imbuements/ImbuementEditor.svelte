@@ -14,18 +14,13 @@
   export let onSave: (imbuement: Partial<Imbuement>) => void;
 
   let activeLevel = null;
-  let pane: 'requires' | 'levels' = 'requires';
+  let pane: 'requires' | 'levels' = 'levels';
   let sessionTimeStart = Date.now();
-
-  let requires = imbuement.requires.join(', ');
 
   $: handleSave = () => {
     // TODO: Validate the data.
     const saveImbuement: Omit<Imbuement, 'id' | 'types'> = {
       ...imbuement,
-      requires: requires.split(',').map((r) => r.trim()),
-      type: 'armor',
-      levels: imbuement.levels,
       enabled: true
     };
 
@@ -33,6 +28,8 @@
       onSave(saveImbuement);
     }
   };
+
+  $: console.log('imbuement', imbuement);
 
   $: addStage = () => {
     const previousStage = imbuement.levels[imbuement.levels.length - 1];
@@ -44,7 +41,7 @@
         sequenceId: seqId,
         level: newImbuementLevel,
         benefits: imbuement.levels.length > 0 ? previousStage.benefits.map((x) => x) : [''],
-        preview: ''
+        preview: imbuement.levels.length > 0 ? previousStage.preview : ''
       }
     ].sort(byKeyAsc('level'));
     activeLevel = seqId;

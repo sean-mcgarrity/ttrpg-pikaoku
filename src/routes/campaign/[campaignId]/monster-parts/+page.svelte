@@ -15,7 +15,6 @@
     <PartysItemsTable />
   </div>
   <div class="w-full">
-    <h2>Recent Updates</h2>
     <UsableMonsters />
   </div>
 </div>

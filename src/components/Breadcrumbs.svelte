@@ -28,6 +28,18 @@
     $page.url.href.includes('manage/add-base-item') && {
       href: `/campaign/${campaignId}/monster-parts/manage/add-base-item`,
       text: 'Add Base Item'
+    },
+    $page.url.href.includes('item/create') && {
+      href: `/campaign/${campaignId}/monster-parts/item/create`,
+      text: 'Creating Item'
+    },
+    $page.url.href.includes('monsters/add') && {
+      href: `/campaign/${campaignId}/monster-parts/monsters/add`,
+      text: 'Creating Monster'
+    },
+    'sourceId' in $page.params && {
+      href: `/campaign/${campaignId}/monster-parts/monsters/${$page.params.sourceId}`,
+      text: 'Updating Monster'
     }
   ].filter((part) => !!part);
 </script>

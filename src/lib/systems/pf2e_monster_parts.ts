@@ -103,6 +103,7 @@ export type MP_Refinement_Change = {
 export type MP_Source = {
   name: string;
   level: number;
+  quantity: number;
   id?: number;
   enables: string[];
 };

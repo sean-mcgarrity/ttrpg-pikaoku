@@ -129,7 +129,7 @@
               )}
               on:click={() => {
                 if (isActive) {
-                  selected = selected.filter((s) => s !== trait);
+                  selected = [...selected.filter((s) => s !== trait)];
                 } else {
                   selected = [...selected, trait];
                 }

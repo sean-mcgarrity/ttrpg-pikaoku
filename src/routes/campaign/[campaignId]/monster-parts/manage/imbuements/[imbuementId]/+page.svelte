@@ -26,10 +26,12 @@
   $: console.log('imbuement', $imbuementQuery.data);
 
   const updateImbuement = createMutation({
-    mutationFn: async (imbuement: Partial<Imbuement>) =>
-      extractData<Imbuement>(
+    mutationFn: async (imbuement: Partial<Imbuement>) => {
+      console.log('update imbuement', imbuement);
+      return extractData<Imbuement>(
         await supabase.from('imbuements').update(imbuement).eq('id', imbuementId).single()
-      ),
+      );
+    },
     onSuccess: () => goto(`/campaign/${$page.data.campaign.id}/monster-parts/manage`)
   });
 

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
+  import { base } from '$app/paths';
   import { page } from '$app/stores';
   import Button from '$components/Button.svelte';
   import SelectField from '$components/forms/controls/SelectField.svelte';
@@ -7,6 +8,7 @@
   import ContentBlock from '$components/layout/ContentBlock.svelte';
   import ItemTypeSelector from '$components/monster-parts/ItemTypeSelector.svelte';
   import type { ItemType } from '$lib/systems/pf2e_monster_parts.js';
+  import { byKeyAsc, whereKeyEq } from '$lib/utils/iterators.js';
   import { onMount } from 'svelte';
 
   type BaseItems = {
@@ -32,15 +34,7 @@
   let description = '';
   let baseItemKey = '';
   let owner = '';
-  let type: ItemType[number] = 'armor';
-
-  const typeOptions = [
-    { text: 'Armor', value: 'armor' },
-    { text: 'Weapon', value: 'weapon' },
-    { text: 'Shield', value: 'shield' },
-    { text: 'Skill Item', value: 'skill' },
-    { text: 'Perception Item', value: 'perception' }
-  ];
+  let type: ItemType = 'armor';
 
   let baseItems: BaseItems = [];
   $: baseItemOptions = baseItems
@@ -56,7 +50,9 @@
   }));
 
   $: baseItem = baseItems.find((item) => item.key === baseItemKey);
-
+  $: type &&
+    baseItems.find(whereKeyEq('key', baseItemKey))?.type !== type &&
+    (baseItemKey = baseItems.find(whereKeyEq('type', type))?.key);
   async function createItem() {
     const { data, error } = await supabase.from('refinements').insert([
       {
@@ -93,23 +89,13 @@
   });
 </script>
 
-<div class="text-white">
-  <div class="pt-8 mb-12 w-[320px] relative flex flex-row justify-between mx-auto">
-    <div class="absolute top-[3.2rem] w-[95%] left-[5px] h-2 bg-blue-800/40" />
-    <div class="h-12 w-12 aspect-square rounded-full bg-blue-800 outline outline-cyan-100" />
-    <div class="h-12 w-12 aspect-square rounded-full bg-blue-800" />
-    <div class="h-12 w-12 aspect-square rounded-full bg-blue-800" />
-  </div>
+<div>
   <ContentBlock title="Create Item">
     <TextField label="Name" bind:value={name} />
     <TextField label="Description" bind:value={description} />
     <ItemTypeSelector bind:value={type} />
     <SelectField label="Base Item" bind:value={baseItemKey} bind:options={baseItemOptions} />
     <SelectField label="Charater" bind:value={owner} bind:options={playerCharacterOptions} />
-    <h2>Derived</h2>
-    <div class="flex flex-col gap-4">
-      Cost: {Math.ceil((baseItem?.cost || 0) / 100)} MP
-    </div>
     <svelte:fragment slot="buttons">
       <Button on:click={createItem}>Create <span class="text-xl">&plus;</span></Button>
     </svelte:fragment>

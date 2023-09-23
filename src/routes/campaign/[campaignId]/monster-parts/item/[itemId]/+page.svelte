@@ -17,7 +17,7 @@
   let tab: 'quick-actions' | 'add-imbuement' | 'edit' = 'quick-actions';
 </script>
 
-<div class="flex flex-col md:flex-row w-full gap-8">
+<div class="grid grid-cols-1 md:grid-cols-2 w-full gap-8">
   {#if $query.isFetching || $query.isLoading}
     <LoadingInsert fullPage={true} />
   {/if}

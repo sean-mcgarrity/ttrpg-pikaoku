@@ -69,7 +69,9 @@
       >
         <form on:submit={signIn} class="mt-4 flex flex-row gap-4 items-center">
           <div>Passcode</div>
-          <TextField type="password" bind:value={password} />
+          <div class="bg-white/40 rounded w-full">
+            <TextField type="password" bind:value={password} />
+          </div>
           <Button type="submit">Login <LogIn class="h-4 w-4 inline" /></Button>
         </form>
       </div>

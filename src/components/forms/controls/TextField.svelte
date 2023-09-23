@@ -9,8 +9,8 @@
     <div class="text-white font-medium mb-1">{label}</div>
   {/if}
   <input
-    {...$$restProps}
     type="text"
+    {...$$restProps}
     class={cx(
       'px-4 py-1 w-full  bg-black/20 rounded shadow-inner',
       !label && 'h-full',

@@ -86,6 +86,24 @@ export const getSourceFromParam = () => {
   });
 };
 
+export const updateSource = () => {
+  const queryClient = useQueryClient();
+  const currentPage = get(page);
+  const supabase: SupabaseClient = currentPage.data.supabase;
+  const sourceId = currentPage.params.sourceId;
+  return createMutation(
+    ['usable_sources', sourceId],
+    async (source: Partial<MP_UsableSource>) => {
+      return supabase.from('usable_sources').update(source).eq('id', sourceId);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['usable_sources']);
+      }
+    }
+  );
+};
+
 export const getUsableSources = () => {
   const currentPage = get(page);
   const supabase: SupabaseClient = currentPage.data.supabase;

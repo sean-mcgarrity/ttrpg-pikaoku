@@ -45,7 +45,7 @@
     },
     {
       label: 'Requires',
-      accessor: 'requires',
+      accessor: (x) => x.requires.join(', '),
       span: 1
     }
   ];
