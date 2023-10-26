@@ -30,14 +30,23 @@
       {/each}
     </div>
     {#if $query.data.length === 0}
-      <div class="text-white text-center my-24 py-8">
-        <p>No-one has made an item yet!</p>
-        <a
-          href={`/campaign/${campaignId}/monster-parts/item/create`}
-          class="text-blue-400 underline"
-          >Be the first
-          <ArrowRight />
-        </a>
+      <div
+        class="text-white text-center my-24 py-8 bg-white/10 border-2 border-white/40 flex flex-row justify-center gap-8 rounded shadow mx-auto px-16"
+      >
+        <img
+          src="https://i.imgur.com/1jtIaYV_d.webp?maxwidth=760&fidelity=grand"
+          class="h-24 grayscale opacity-80"
+          alt=""
+        />
+        <div class="my-auto">
+          <p>No-one has made an item yet!</p>
+          <a
+            href={`/campaign/${campaignId}/monster-parts/item/create`}
+            class="text-blue-300 underline"
+            >Be the first
+            <ArrowRight />
+          </a>
+        </div>
       </div>
     {:else}
       <div class="mx-auto">
