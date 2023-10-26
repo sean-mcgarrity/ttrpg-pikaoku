@@ -3,6 +3,8 @@
   import { whereKeyOverlap } from '$lib/utils/iterators';
   import QuickUseSource from './QuickUseSource.svelte';
   import { getSourcesForItems, insertRefinementChange } from '$lib/persistance/monster-parts';
+  import Heading from '$components/layout/Heading.svelte';
+  import cs from 'classnames';
 
   export let item: MP_Refinement;
 
@@ -14,37 +16,47 @@
   $: refinementActions =
     $queryMats.data?.filter(whereKeyOverlap('enables', item?.base_item.requires ?? [])) ?? [];
   $: refine = insertRefinementChange();
+
+  $: hasImbuementActions =
+    $queryMats.data?.some(
+      whereKeyOverlap('enables', item?.imbuements.map((i) => i.requires).flat() ?? [])
+    ) ?? false;
 </script>
 
 <div class="flex flex-col">
-  <div class="pl-2 mb-2 text-yellow-500 text-2xl font-semibold border-l-4 border-yellow-500">
-    Quick actions
-  </div>
   {#if $queryMats.isFetched}
     {#if $queryMats.data.length === 0}
       <div class="text-white">No quick actions available for this item</div>
     {/if}
-    <div class="flex flex-col gap-2">
-      {#each refinementActions as source (source.id)}
-        <QuickUseSource
-          {source}
-          onClick={(amount) => $refine.mutate({ sourceId: source.id, amount })}
-          actionText="Refine base item"
-        />
-      {/each}
-      {#each item.imbuements as imbuement (imbuement.id)}
-        {#each $queryMats.data?.filter(whereKeyOverlap('enables', item?.imbuements
-              .map((i) => i.requires)
-              .flat() ?? [])) ?? [] as source (source.id)}
-          <QuickUseSource
-            {source}
-            onClick={(amount) =>
-              $refine.mutate({ sourceId: source.id, imbuementId: imbuement.id, amount })}
-            actionText={`Imbue ${imbuement.name}`}
-            buttonText={`Imbue`}
-          />
+    <div class={cs('grid gap-2', hasImbuementActions ? 'grid-cols-2' : 'grid-cols-1')}>
+      <div class={cs('grid gap-2', hasImbuementActions ? 'grid-cols-1' : 'grid-cols-2')}>
+        {#if refinementActions.length > 0}
+          <Heading type="Subsection Heading">Refine Item</Heading>
+          {#each refinementActions as source (source.id)}
+            <QuickUseSource
+              {source}
+              onClick={(amount) => $refine.mutate({ sourceId: source.id, amount })}
+              actionText="Refine base item"
+            />
+          {/each}
+        {/if}
+      </div>
+      <div class="flex flex-col gap-2">
+        <Heading type="Subsection Heading">Improve Imbuements</Heading>
+        {#each item.imbuements as imbuement (imbuement.id)}
+          {#each $queryMats.data?.filter(whereKeyOverlap('enables', item?.imbuements
+                .map((i) => i.requires)
+                .flat() ?? [])) ?? [] as source (source.id)}
+            <QuickUseSource
+              {source}
+              onClick={(amount) =>
+                $refine.mutate({ sourceId: source.id, imbuementId: imbuement.id, amount })}
+              actionText={`Imbue ${imbuement.name}`}
+              buttonText={`Imbue`}
+            />
+          {/each}
         {/each}
-      {/each}
+      </div>
     </div>
   {/if}
 </div>

@@ -13,7 +13,7 @@
   $: console.log('monsters', monsters);
 </script>
 
-<div class="w-full my-8">
+<div class="w-full">
   <Heading type="Section Heading">Usable Monsters</Heading>
   <p class="mb-4">
     The best of your unused monster parts. Slap them on a skill item so they don't go to waste.

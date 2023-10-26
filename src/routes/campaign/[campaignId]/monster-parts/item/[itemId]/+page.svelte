@@ -10,7 +10,6 @@
   import { getUnusedImbuementSlots } from '$lib/systems/pf2e_monster_parts';
   import EditItemForm from './EditItemForm.svelte';
   import RecentItemChanges from './RecentItemChanges.svelte';
-  // ref: https://d1lss44hh2trtw.cloudfront.net/assets/editorial/2020/07/destiny-2-reverie-dawn-hauberk-armor-stats.jpg
   $: query = getCurrentItem();
 
   $: canAddImbuement = $query.isFetched && getUnusedImbuementSlots($query.data) > 0;
@@ -23,12 +22,12 @@
   $: console.log('currnet item query', $query.data);
 </script>
 
-<div class="grid grid-cols-1 md:grid-cols-2 w-full gap-8">
+<div class="flex flex-col w-full gap-8">
   {#if $query.isFetching || $query.isLoading}
     <LoadingInsert fullPage={true} />
   {/if}
   {#if $query.data}
-    <div class="flex-1 flex flex-col gap-4 w-full">
+    <div class="flex-1 flex flex-col gap-4 w-full max-w-md mx-auto">
       {#if !$query.isLoading && !!$query.data}
         <RefinementCard refinement={$query.data}>
           <svelte:fragment slot="buttons">
@@ -39,21 +38,21 @@
             {/if}
           </svelte:fragment>
         </RefinementCard>
-        <RecentItemChanges item={$query.data} />
-      {/if}
-    </div>
-    <div class="flex-1 flex flex-col justify-start gap-4">
-      {#if tab === 'quick-actions'}
-        <ItemQuickActions item={$query.data} />
-      {:else if tab === 'add-imbuement'}
-        <AddImbuement item={$query.data} afterAdd={afterAddImbuement} />
-      {:else if tab === 'edit'}
-        <EditItemForm
-          refinement={$query.data}
-          onCancel={() => (tab = 'quick-actions')}
-          afterSave={() => (tab = 'quick-actions')}
-        />
       {/if}
     </div>
   {/if}
+  {#if $query.data}
+    {#if tab === 'quick-actions'}
+      <ItemQuickActions item={$query.data} />
+    {:else if tab === 'add-imbuement'}
+      <AddImbuement item={$query.data} afterAdd={afterAddImbuement} />
+    {:else if tab === 'edit'}
+      <EditItemForm
+        refinement={$query.data}
+        onCancel={() => (tab = 'quick-actions')}
+        afterSave={() => (tab = 'quick-actions')}
+      />
+    {/if}
+  {/if}
+  <RecentItemChanges item={$query.data} />
 </div>

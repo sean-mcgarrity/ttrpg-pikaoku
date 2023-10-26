@@ -15,7 +15,7 @@
     <slot />
   </h2>
 {:else if type === 'Subsection Heading'}
-  <h3 class="text-2xl font-bold">
+  <h3 class="text-2xl font-bold mb-2">
     <slot />
   </h3>
 {/if}

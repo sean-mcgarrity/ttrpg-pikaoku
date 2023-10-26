@@ -10,29 +10,33 @@
   $: campaignId = $page.params.campaignId;
 </script>
 
-<Heading type="Page Heading">Monster Parts</Heading>
-<div class="text-white flex flex-col md:flex-row gap-4">
-  <div class="w-full">
-    <PartysItemsTable />
+<div class="flex flex-col gap-8">
+  <div class="">
+    <Heading type="Page Heading">Monster Parts Subsystem</Heading>
+    <p>
+      This subsystem is designed to help you keep track of the monster parts your party has
+      collected, and what they can do with them.
+    </p>
   </div>
-</div>
-<div class="flex flex-col sm:flex-row gap-4 justify-around">
-  <LandingLink
-    class="flex-1"
-    title="Imbuements"
-    href={`/campaign/${campaignId}/monster-parts/imbuements`}
-    bgImgSrc="https://i.imgur.com/HWqYImt.jpg"
-  />
-  <LandingLink
-    class="flex-1"
-    title="Monsters"
-    href={`/campaign/${campaignId}/monster-parts/monsters`}
-    bgImgSrc="https://i.imgur.com/OEY4Ixd.jpg"
-  />
-</div>
-<UsableMonsters />
-<AdminOnly>
-  <div class="text-white mt-8 text-center">
-    <LinkButton href={`/campaign/${campaignId}/monster-parts/manage`}>Admin manage</LinkButton>
+  <PartysItemsTable />
+  <div class="flex flex-col sm:flex-row gap-4 justify-around">
+    <LandingLink
+      class="flex-1"
+      title="Imbuements"
+      href={`/campaign/${campaignId}/monster-parts/imbuements`}
+      bgImgSrc="https://i.imgur.com/HWqYImt.jpg"
+    />
+    <LandingLink
+      class="flex-1"
+      title="Monsters"
+      href={`/campaign/${campaignId}/monster-parts/monsters`}
+      bgImgSrc="https://i.imgur.com/OEY4Ixd.jpg"
+    />
   </div>
-</AdminOnly>
+  <UsableMonsters />
+  <AdminOnly>
+    <div class="text-white mt-8 text-center">
+      <LinkButton href={`/campaign/${campaignId}/monster-parts/manage`}>Admin manage</LinkButton>
+    </div>
+  </AdminOnly>
+</div>
