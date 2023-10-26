@@ -34,7 +34,7 @@
   {#if $usableSourcesQ.isSuccess}
     <div class="gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 justify-center">
       {#each $usableSourcesQ.data as monster}
-        <MonsterCard {monster} />
+        <MonsterCard {monster} asLink />
       {/each}
     </div>
   {/if}
@@ -44,7 +44,7 @@
   {#if $unusableSourcesQ.isSuccess}
     <div class="gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 justify-center">
       {#each $unusableSourcesQ.data as monster}
-        <MonsterCard {monster} asLink />
+        <MonsterCard {monster} />
       {/each}
     </div>
   {/if}

@@ -3,8 +3,6 @@
 
   export let monster: MP_UsableSource;
   export let asLink: boolean = false;
-
-  $: console.log('monster image sorce', monster.img_src);
 </script>
 
 {#if asLink}

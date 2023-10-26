@@ -31,11 +31,11 @@
     </div>
     {#if $query.data.length === 0}
       <div
-        class="text-white text-center my-24 py-8 bg-white/10 border-2 border-white/40 flex flex-row justify-center gap-8 rounded shadow mx-auto px-16"
+        class="text-white text-center my-24 py-8 bg-white/10 border-2 border-white/40 flex flex-row justify-center gap-8 rounded-lg shadow mx-auto px-16 select-none"
       >
         <img
           src="https://i.imgur.com/1jtIaYV_d.webp?maxwidth=760&fidelity=grand"
-          class="h-24 grayscale opacity-80"
+          class="h-24 grayscale opacity-80 pointer-events-none"
           alt=""
         />
         <div class="my-auto">
