@@ -6,6 +6,7 @@
   import LinkButton from '$components/LinkButton.svelte';
   import { goto } from '$app/navigation';
   import { createMutation, createQuery } from '@tanstack/svelte-query';
+  import { duplicateImbuement } from '$lib/persistance/monster-parts';
 
   let supabase: SupabaseClient = $page.data.supabase;
   let pageNumber = 1;
@@ -15,7 +16,7 @@
     queryKey: ['imbuements', 'all'],
     queryFn: async () => {
       const { data: result, count } = await supabase
-        .from('imbuements')
+        .from('mp_imbuements')
         .select('*', { count: 'exact' })
         .order('name', { ascending: true })
         .range((pageNumber - 1) * pageSize, pageNumber * pageSize - 1);
@@ -28,10 +29,12 @@
   let deleteImbuement = createMutation<any, any, Record<'id', string>>({
     mutationKey: ['imbuement', 'delete'],
     mutationFn: async ({ id }) => {
-      await supabase.from('imbuements').delete().eq('id', id);
+      await supabase.from('mp_imbuements').delete().eq('id', id);
     },
     onSuccess: () => $getImbuements.refetch()
   });
+
+  let duplicateImbuementMutation = duplicateImbuement();
 
   let columns: ManageTableColumns = [];
   $: columns = [
@@ -51,6 +54,11 @@
   ];
 
   $: rowAction = [
+    {
+      text: 'Dupe',
+      icon: PlusCircle,
+      onClick: (item) => $duplicateImbuementMutation.mutate(item.id)
+    },
     {
       text: 'Edit',
       icon: Edit,

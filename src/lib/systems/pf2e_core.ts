@@ -235,3 +235,78 @@ export const DamageTypes = [
   },
   ...Alignments
 ] as const;
+
+export const CreatureTypes = [
+  {
+    id: 'aberration',
+    name: 'Aberration'
+  },
+  {
+    id: 'animal',
+    name: 'Animal'
+  },
+  {
+    id: 'astral',
+    name: 'Astral'
+  },
+  {
+    id: 'beast',
+    name: 'Beast'
+  },
+  {
+    id: 'celestial',
+    name: 'Celestial'
+  },
+  {
+    id: 'construct',
+    name: 'Construct'
+  },
+  {
+    id: 'dragon',
+    name: 'Dragon'
+  },
+  {
+    id: 'elemental',
+    name: 'Elemental'
+  },
+  {
+    id: 'ethereal',
+    name: 'Ethereal'
+  },
+  {
+    id: 'fey',
+    name: 'Fey'
+  },
+  {
+    id: 'fiend',
+    name: 'Fiend'
+  },
+  {
+    id: 'fungus',
+    name: 'Fungus'
+  },
+  {
+    id: 'humanoid',
+    name: 'Humanoid'
+  },
+  {
+    id: 'monitor',
+    name: 'Monitor'
+  },
+  {
+    id: 'ooze',
+    name: 'Ooze'
+  },
+  {
+    id: 'plant',
+    name: 'Plant'
+  },
+  {
+    id: 'spirit',
+    name: 'Spirit'
+  },
+  {
+    id: 'undead',
+    name: 'Undead'
+  }
+] as const;

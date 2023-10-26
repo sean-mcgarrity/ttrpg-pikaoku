@@ -6,13 +6,13 @@
   } from '$lib/systems/pf2e_monster_parts';
 
   export let item: MP_Refinement;
-  let itemLevel = calculateRefinementLevel(item);
-  let sellCost = calculateSellCostOfRefinement(item);
+  $: itemLevel = calculateRefinementLevel(item);
+  $: sellCost = calculateSellCostOfRefinement(item);
 </script>
 
 <div class="bg-[#6666cc] flex flex-row text-white">
   <div class="w-full px-4 py-2">
-    <h1 class="text-3xl font-bold tracking-wide uppercase">
+    <h1 class="text-2xl font-bold tracking-wide uppercase">
       {item.name}
     </h1>
     <div class="flex flex-row">

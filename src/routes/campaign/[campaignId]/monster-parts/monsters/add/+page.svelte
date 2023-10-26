@@ -19,7 +19,7 @@
   $: handleClick = () => {
     $query.mutate(monster, {
       onSuccess: () => {
-        goto(`/campaign/${campaignId}/monster-parts`);
+        goto(`/campaign/${campaignId}/monster-parts/monsters`);
       }
     });
   };

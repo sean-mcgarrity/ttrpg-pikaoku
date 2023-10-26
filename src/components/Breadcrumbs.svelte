@@ -17,8 +17,7 @@
     },
     isMonsterParts &&
       'itemId' in $page.params && {
-        text: itemId,
-        href: `/campaign/${campaignId}/monster-parts/${itemId}`
+        text: itemId
       },
     isMonsterParts &&
       $page.url.href.includes('manage') && {
@@ -33,9 +32,13 @@
       href: `/campaign/${campaignId}/monster-parts/item/create`,
       text: 'Creating Item'
     },
+    $page.url.href.includes('monster-parts/monsters') && {
+      href: `/campaign/${campaignId}/monster-parts/monsters`,
+      text: 'Monsters'
+    },
     $page.url.href.includes('monsters/add') && {
       href: `/campaign/${campaignId}/monster-parts/monsters/add`,
-      text: 'Creating Monster'
+      text: 'Adding Monster'
     },
     'sourceId' in $page.params && {
       href: `/campaign/${campaignId}/monster-parts/monsters/${$page.params.sourceId}`,
@@ -44,7 +47,7 @@
   ].filter((part) => !!part);
 </script>
 
-<div class="text-white my-2 -ml-2">
+<div class="text-white my-2 -ml-2 select-none">
   {#each parts as { href, text }, i}
     {#if i > 0} <span class="font-medium ml-2">/</span> {/if}
     {#if href}

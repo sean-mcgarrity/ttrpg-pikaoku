@@ -4,7 +4,7 @@
   export let value: string;
   export let options: {
     value: string;
-    text: string;
+    text: string | number;
   }[] = [];
 </script>
 

@@ -25,11 +25,22 @@ export type MP_ShieldItem = {
   shield: string;
 };
 
+export type MP_BaseItem = {
+  key: string;
+  created_at: string;
+  description: string;
+  name: string;
+  type: ItemType;
+  cost: number; // IN CP
+  requires: string[];
+};
+
 export type MP_Item = {
   id: string;
   name: string;
   description: string;
   changes: { description: string; amount: number }[];
+  cost: number;
 } & (MP_PerceptionItem | MP_SkillItem | MP_ArmorItem | MP_WeaponItem | MP_ShieldItem);
 
 export const itemTypes = [
@@ -80,12 +91,13 @@ export type Imbuement = {
 };
 
 export type MP_Refinement = {
-  id: string;
+  id: number;
   name: string;
   description: string;
   type: ItemType;
-  campaign_id: string;
-  owner_id: string;
+  campaign_id: number;
+  owner_id: number;
+  base_item_key: string;
   changes?: MP_Refinement_Change[];
   imbuements?: (Imbuement & Record<'changes', MP_Refinement_Change>)[];
   base_item?: MP_Item & Record<'requires', string[]>;
@@ -106,6 +118,8 @@ export type MP_Source = {
   quantity: number;
   id?: number;
   enables: string[];
+  campaign_id?: number;
+  img_src?: string;
 };
 
 export type MP_UsableSource = MP_Source & {
@@ -355,6 +369,7 @@ export const REFINEMENT_BENEFITS: RefinementBenefitMatrix = {
 
 export const calculateUpgradeLevel = (progress: number, itemType: ItemType) => {
   if (['weapon', 'armor'].includes(itemType)) {
+    // get currnet refinment level
     return UPGRADE_COSTS_WEAPONS_ARMOR.findIndex((cost) => cost > progress) - 1;
   } else {
     return UPGRADE_COSTS_SKILL_SHIELDS.findIndex((cost) => cost > progress) - 1;
@@ -374,8 +389,9 @@ export const getNonImbuementChanges = (refinement: MP_Refinement) => {
 };
 
 export const calculateRefinementProgress = (refinement: MP_Refinement) => {
+  const baseItemCost = refinement.base_item?.cost / 100 ?? 0;
   const changes = getNonImbuementChanges(refinement);
-  return changes.reduce((acc, change) => acc + change.amount, 0);
+  return changes.reduce((acc, change) => acc + change.amount, 0) - baseItemCost;
 };
 
 export const calculateRefinementLevel = (refinement: MP_Refinement) => {

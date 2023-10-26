@@ -2,25 +2,14 @@
   import AdminOnly from '$components/AdminOnly.svelte';
   import CampaignLogin from './CampaignLogin.svelte';
   import LinkButton from '$components/LinkButton.svelte';
-  import { createQuery } from '@tanstack/svelte-query';
-  import { extractData } from '$lib/utils/requests';
   import { PlusCircle, LogInIcon } from 'lucide-svelte';
+  import { getCampaigns } from '$lib/persistance/meta';
 
   export let data;
-  const campaigns = createQuery({
-    queryKey: ['campaigns'],
-    queryFn: async () =>
-      extractData(
-        await data.supabase
-          .from('campaigns')
-          .select('*')
-          .order('created_at', { ascending: false })
-          .filter('archived', 'eq', false)
-      )
-  });
+  const campaigns = getCampaigns();
 </script>
 
-<div class="text-white w-full min-h-screen bg-slate-950">
+<div class="text-white w-full min-h-scree">
   <div class="max-w-4xl mx-auto py-12 px-4">
     <div class="w-full mb-4">
       <h1 class="text-4xl">Sean's Game</h1>

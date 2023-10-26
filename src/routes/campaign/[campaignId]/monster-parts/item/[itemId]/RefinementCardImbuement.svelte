@@ -23,8 +23,11 @@
   );
 
   $: nextLevel = imbuement.levels.find((level) => level.level > imbuementLevel);
-  $: costOfNextLevel = getUpgradeCostForLevel(nextLevel.level, 'armor');
-  $: percentageToNextLevel = Math.round((progress / costOfNextLevel) * 100);
+  $: hasNextLevel = !!nextLevel;
+  $: costOfNextLevel = hasNextLevel
+    ? getUpgradeCostForLevel(nextLevel?.level, 'armor')
+    : getUpgradeCostForLevel(imbuementLevel, 'armor');
+  $: percentageToNextLevel = hasNextLevel ? Math.round((progress / costOfNextLevel) * 100) : 100;
   let seeAllLevels = false;
 </script>
 
@@ -57,6 +60,14 @@
       {nextLevel.preview}
     </div>
   {/if}
+  {#if hasNextLevel}
+    <div class="text-white/40 inline-flex -ml-2 flex-row select-none">
+      <Button on:click={() => (seeAllLevels = !seeAllLevels)} class="text-opacity-50 ">
+        <div>See All</div>
+        <ArrowDownIcon class={seeAllLevels && 'rotate-180'} />
+      </Button>
+    </div>
+  {/if}
   {#if seeAllLevels}
     <div class="px-8" transition:slide|local>
       {#each imbuement.levels.filter((x) => x.level > highestLevelGained.level) as level}
@@ -69,10 +80,4 @@
       {/each}
     </div>
   {/if}
-  <div class="text-white/40 inline-flex -ml-2 flex-row select-none">
-    <Button on:click={() => (seeAllLevels = !seeAllLevels)} class="text-opacity-50">
-      <div>See All</div>
-      <ArrowDownIcon class={seeAllLevels && 'rotate-180'} />
-    </Button>
-  </div>
 </div>

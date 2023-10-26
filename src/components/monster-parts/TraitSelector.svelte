@@ -47,7 +47,10 @@
     weaknesses = [...sortedDamageTypes.map((d) => `weak:${d.id}`)];
     immunities = [...sortedDamageTypes.map((d) => `immune:${d.id}`)];
     attacks = [...sortedDamageTypes.map((c) => `attack:${c.id}`)];
-    traits = [...sortedDamageTypes.map((c) => `trait:${c.id}`)];
+    traits = [
+      ...sortedDamageTypes.map((c) => `trait:${c.id}`),
+      ...pf2eCore.CreatureTypes.map((c) => `trait:${c.id}`)
+    ].sort();
     senses = [...pf2eCore.SenseTypes.map((s) => `sense:${s.id}`)];
     skills = [...sortedSkills.map((s) => `skill:${s.id}`)];
     abilities = [...sortedAbilities.map((a) => `ability:${a.id}`)];

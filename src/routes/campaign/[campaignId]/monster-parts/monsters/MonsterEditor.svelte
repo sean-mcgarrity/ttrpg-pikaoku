@@ -5,10 +5,11 @@
   import Heading from '$components/layout/Heading.svelte';
   import TraitSelector from '$components/monster-parts/TraitSelector.svelte';
   import type { MP_Source } from '$lib/systems/pf2e_monster_parts';
-  import { Save } from 'lucide-svelte';
+  import { Delete, Save } from 'lucide-svelte';
 
   export let monster: MP_Source;
   export let onSave: (monster: Partial<MP_Source>) => void;
+  export let onDelete: () => void = null;
 
   let handleClick = () => {
     if (onSave) {
@@ -18,15 +19,19 @@
 </script>
 
 <div class="flex flex-col gap-4 w-full">
-  <div class="bg-white/10 p-4 rounded">
+  <div class="bg-white/10 p-4 rounded flex flex-col gap-4">
     <TextField label="Name" bind:value={monster.name} />
-    <div class="flex flex-row gap-4 mt-4">
+    <TextField label="Image Source" bind:value={monster.img_src} />
+    <div class="flex flex-row gap-4">
       <IntegerTicker label="Level" min={-4} max={25} bind:value={monster.level} />
       <IntegerTicker label="Quantity" min={1} max={30} bind:value={monster.quantity} />
     </div>
   </div>
   <div class="mx-auto">
-    <Button on:click={handleClick}>Create <Save /></Button>
+    {#if onDelete}
+      <Button on:click={onDelete}>Delete <Delete /></Button>
+    {/if}
+    <Button on:click={handleClick}>Save <Save /></Button>
   </div>
 </div>
 <div class="flex flex-col gap-4 w-full">

@@ -1,34 +1,17 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { base } from '$app/paths';
   import { page } from '$app/stores';
   import Button from '$components/Button.svelte';
   import SelectField from '$components/forms/controls/SelectField.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
   import ContentBlock from '$components/layout/ContentBlock.svelte';
   import ItemTypeSelector from '$components/monster-parts/ItemTypeSelector.svelte';
+  import { getCharactersQuery } from '$lib/persistance/meta.js';
+  import { mutateCreateRefinement, queryMpBaseItems } from '$lib/persistance/monster-parts.js';
   import type { ItemType } from '$lib/systems/pf2e_monster_parts.js';
-  import { byKeyAsc, whereKeyEq } from '$lib/utils/iterators.js';
-  import { onMount } from 'svelte';
+  import { whereKeyEq } from '$lib/utils/iterators.js';
 
-  type BaseItems = {
-    key: string;
-    name: string;
-    type: string;
-    cost: number;
-    requires: string;
-  }[];
-
-  type PlayerCharacters = {
-    id: string;
-    name: string;
-  }[];
-
-  export let data;
-  $: ({ supabase } = data);
   $: campaignId = $page.params.campaignId;
-
-  const step = 'details';
 
   let name = '';
   let description = '';
@@ -36,57 +19,40 @@
   let owner = '';
   let type: ItemType = 'armor';
 
-  let baseItems: BaseItems = [];
-  $: baseItemOptions = baseItems
-    .filter((item) => item.type === type)
-    .map((item) => ({
-      text: `${item.name} (${Math.ceil((item.cost || 0) / 100)} MP)`,
-      value: item.key
-    }));
-  let playerCharacters: PlayerCharacters = [];
-  $: playerCharacterOptions = playerCharacters.map((item) => ({
+  const qMpBaseItems = queryMpBaseItems();
+  const qPlayerCharacters = getCharactersQuery();
+  const mCreateRefinement = mutateCreateRefinement();
+
+  $: baseItemOptions = ($qMpBaseItems.data ?? []).map((item) => ({
+    text: `${item.name} (${Math.ceil((item.cost || 0) / 100)} MP)`,
+    value: item.key
+  }));
+  $: playerCharacterOptions = ($qPlayerCharacters.data ?? []).map((item) => ({
     text: item.name,
-    value: item.id
+    value: item.id.toString()
   }));
 
-  $: baseItem = baseItems.find((item) => item.key === baseItemKey);
+  $: baseItems = $qMpBaseItems.data ?? [];
   $: type &&
     baseItems.find(whereKeyEq('key', baseItemKey))?.type !== type &&
     (baseItemKey = baseItems.find(whereKeyEq('type', type))?.key);
-  async function createItem() {
-    const { data, error } = await supabase.from('refinements').insert([
+
+  $: createItem = () => {
+    $mCreateRefinement.mutate(
       {
         name,
         description,
-        base_item: baseItemKey,
-        owner_id: owner,
-        type,
-        campaign_id: campaignId
+        base_item_key: baseItemKey,
+        owner_id: parseInt(owner),
+        type
+      },
+      {
+        onSuccess: () => {
+          goto(`/campaign/${campaignId}/monster-parts`);
+        }
       }
-    ]);
-    if (error) {
-    } else {
-      goto(`/campaign/${campaignId}/monster-parts`);
-    }
-  }
-
-  onMount(() => {
-    supabase
-      .from('mp_base_items')
-      .select('*')
-      .then(({ data }) => {
-        baseItems = data;
-        baseItemKey = data[0].key;
-      });
-    supabase
-      .from('player_characters')
-      .select('*')
-      .eq('campaign', campaignId)
-      .then(({ data }) => {
-        playerCharacters = data;
-        owner = data[0].id;
-      });
-  });
+    );
+  };
 </script>
 
 <div>

@@ -42,7 +42,7 @@
         />
       {/if}
       <span
-        class="w-full inline-flex px-2 capitalize border-2 border-solid border-transparent peer-checked:border-blue-600 rounded-r"
+        class="w-full inline-flex px-2 capitalize border-2 border-solid border-transparent peer-checked:bg-blue-600 rounded-r"
       >
         <span class="my-auto">{itemType.label}</span></span
       >

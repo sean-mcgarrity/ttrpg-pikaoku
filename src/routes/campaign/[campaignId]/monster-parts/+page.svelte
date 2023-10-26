@@ -18,6 +18,18 @@
     <UsableMonsters />
   </div>
 </div>
+<div>
+  <a
+    href={`
+    /campaign/${campaignId}/monster-parts/imbuements
+  `}
+    class="text-white text-center block bg-gray-800 p-4 rounded shadow transform transition duration-300 hover:scale-105"
+  >
+    <div class="text-2xl">
+      <div>All Imbuements</div>
+    </div></a
+  >
+</div>
 <AdminOnly>
   <div class="text-white mt-8 text-center">
     <LinkButton href={`/campaign/${campaignId}/monster-parts/manage`}>Admin manage</LinkButton>

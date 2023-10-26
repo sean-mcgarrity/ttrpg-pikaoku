@@ -17,7 +17,7 @@
     queryKey: ['imbuement', imbuementId],
     queryFn: async () =>
       extractData<Imbuement>(
-        await supabase.from('imbuements').select('*').eq('id', imbuementId).single()
+        await supabase.from('mp_imbuements').select('*').eq('id', imbuementId).single()
       ),
     onError: (error) => console.log('error', error),
     refetchOnWindowFocus: false
@@ -29,7 +29,7 @@
     mutationFn: async (imbuement: Partial<Imbuement>) => {
       console.log('update imbuement', imbuement);
       return extractData<Imbuement>(
-        await supabase.from('imbuements').update(imbuement).eq('id', imbuementId).single()
+        await supabase.from('mp_imbuements').update(imbuement).eq('id', imbuementId).single()
       );
     },
     onSuccess: () => goto(`/campaign/${$page.data.campaign.id}/monster-parts/manage`)

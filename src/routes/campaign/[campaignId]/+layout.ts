@@ -1,4 +1,3 @@
-import type { LayoutLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ fetch, data, depends, params, parent }) => {

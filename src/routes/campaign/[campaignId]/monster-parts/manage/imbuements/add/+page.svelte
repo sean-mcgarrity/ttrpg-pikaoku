@@ -19,7 +19,7 @@
 
   async function createImbuement(imbuement: Imbuement) {
     const { id, ...withoutId } = imbuement;
-    await supabase.from('imbuements').insert([{ ...withoutId }]);
+    await supabase.from('mp_imbuements').insert([{ ...withoutId }]);
     goto(`/campaign/${$page.params.campaignId}/monster-parts/manage`);
   }
 

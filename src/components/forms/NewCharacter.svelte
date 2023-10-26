@@ -2,6 +2,7 @@
   import { page } from '$app/stores';
   import SwitchField from '$components/forms/controls/SwitchField.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
+  import { mutateCreateCharacter } from '$lib/persistance/meta';
 
   const campaignId = $page.params.campaignId;
   export let afterSubmit = () => {};
@@ -10,21 +11,11 @@
   let title = '';
   let active = true;
 
-  const handleSubmit = async (e) => {
+  const mCreateCharacter = mutateCreateCharacter();
+  $: handleSubmit = async (e) => {
     e.preventDefault();
-    // supabase insert to player_characters
-
-    const { data: result, error } = await $page.data.supabase.from('player_characters').insert([
-      {
-        name: title,
-        active,
-        campaign: campaignId
-      }
-    ]);
-    if (error) {
-    } else {
-      afterSubmit();
-    }
+    $mCreateCharacter.mutate({ name: title, active });
+    afterSubmit();
   };
 </script>
 
@@ -39,10 +30,5 @@
     >
       Save
     </button>
-    <button
-      type="button"
-      class="text-gray-400 px-3 font-bold hover:bg-white hover:bg-opacity-10 rounded"
-      on:click={() => (add = false)}>X</button
-    >
   </div>
 </form>
