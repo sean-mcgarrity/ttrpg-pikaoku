@@ -18,8 +18,7 @@
       const { data: result, count } = await supabase
         .from('mp_imbuements')
         .select('*', { count: 'exact' })
-        .order('name', { ascending: true })
-        .range((pageNumber - 1) * pageSize, pageNumber * pageSize - 1);
+        .order('name', { ascending: true });
       return { result, count };
     }
   });

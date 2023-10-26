@@ -5,6 +5,7 @@
   import { PlusIcon } from 'lucide-svelte';
   import MonsterCard from './MonsterCard.svelte';
   import { page } from '$app/stores';
+  import BackButton from '$components/layout/BackButton.svelte';
 
   $: campaignId = $page.params.campaignId;
 
@@ -12,7 +13,10 @@
   let unusableSourcesQ = getUnusableSources();
 </script>
 
-<Heading type="Page Heading">Campaign Monsters</Heading>
+<Heading type="Page Heading">
+  <BackButton />
+  Campaign Monsters</Heading
+>
 
 <p class="mb-6">
   All the monsters you've slain and retrieved parts from can be found here. You can use these
@@ -40,7 +44,7 @@
   {#if $unusableSourcesQ.isSuccess}
     <div class="gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 justify-center">
       {#each $unusableSourcesQ.data as monster}
-        <MonsterCard {monster} />
+        <MonsterCard {monster} asLink />
       {/each}
     </div>
   {/if}

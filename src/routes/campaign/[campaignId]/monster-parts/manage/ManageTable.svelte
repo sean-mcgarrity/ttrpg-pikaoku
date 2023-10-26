@@ -69,7 +69,7 @@
               </div>
             {/each}
             {#if rowActions.length > 0}
-              <div class="ml-auto">
+              <div class="ml-auto flex flex-col">
                 {#each rowActions as rowAction (rowAction.text)}
                   <Button on:click={() => rowAction.onClick(item)}>
                     {rowAction.text}

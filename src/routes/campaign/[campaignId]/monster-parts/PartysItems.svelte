@@ -4,7 +4,7 @@
   import LinkButton from '$components/LinkButton.svelte';
   import ItemCardHeader from './item/[itemId]/ItemCardHeader.svelte';
   import { getRefinementsForCampaign } from '$lib/persistance/monster-parts';
-  import { HammerIcon } from 'lucide-svelte';
+  import { ArrowRight, HammerIcon, Link2, Navigation } from 'lucide-svelte';
   import Heading from '$components/layout/Heading.svelte';
 
   $: campaignId = $page.params.campaignId;
@@ -12,7 +12,13 @@
   $: query = getRefinementsForCampaign();
 </script>
 
-<Heading type="Section Heading">Party's items</Heading>
+<div class="flex flex-row justify-between">
+  <Heading type="Section Heading">Party's items</Heading>
+  <LinkButton href={`/campaign/${campaignId}/monster-parts/item/create`}
+    >Create item <HammerIcon fill="white" /></LinkButton
+  >
+</div>
+Your party's refined items are listed here. You can add new items or edit existing ones.
 {#if $query.isSuccess}
   <div class=" flex flex-col gap-2">
     {#each $query.data as item}
@@ -25,9 +31,13 @@
       </a>
     {/each}
   </div>
+  {#if $query.data.length === 0}
+    <div class="text-white text-center my-24 py-8">
+      <p>No-one has made an item yet!</p>
+      <a href={`/campaign/${campaignId}/monster-parts/item/create`} class="text-blue-400 underline"
+        >Be the first
+        <ArrowRight />
+      </a>
+    </div>
+  {/if}
 {/if}
-<div class="flex justify-end mt-2">
-  <LinkButton href={`/campaign/${campaignId}/monster-parts/item/create`}
-    >Add <HammerIcon fill="white" /></LinkButton
-  >
-</div>

@@ -19,6 +19,12 @@
       href={`/campaign/${campaignId}/monster-parts`}
       bgImgSrc="/images/monster-parts-banner.webp"
     />
+    <LandingLink
+      title="BASTION BUILDING"
+      description="A list of all the campaigns I've run."
+      href={`#`}
+      bgImgSrc="https://i.imgur.com/WFsKg7W.jpeg"
+    />
   </div>
   <AdminOnly>
     <div class="w-full mt-8 mx-auto max-w-sm text-center">

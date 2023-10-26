@@ -1,7 +1,7 @@
 <script lang="ts">
   import TextField from '$components/forms/controls/TextField.svelte';
   import Button from '$components/Button.svelte';
-  import { ArrowBigUp, ListChecks, Save } from 'lucide-svelte';
+  import { ArrowBigUp, BookDown, ListChecks, Save } from 'lucide-svelte';
 
   import type { Imbuement } from '$lib/systems/pf2e_monster_parts';
   import ItemTypeSelector from '$components/monster-parts/ItemTypeSelector.svelte';
@@ -14,7 +14,7 @@
   export let onSave: (imbuement: Partial<Imbuement>) => void;
 
   let activeLevel = null;
-  let pane: 'requires' | 'levels' = 'levels';
+  let pane: 'requires' | 'levels' | 'templates' = 'levels';
   let sessionTimeStart = Date.now();
 
   $: handleSave = () => {
@@ -71,6 +71,7 @@
     <div class="p-2">
       <Button on:click={() => (pane = 'levels')}>Levels <ArrowBigUp /></Button>
       <Button on:click={() => (pane = 'requires')}>Requirements <ListChecks /></Button>
+      <Button on:click={() => (pane = 'templates')}>Templates <BookDown /></Button>
     </div>
     {#if pane === 'levels'}
       <div class="p-2 flex flex-col gap-1 flex-1">
@@ -109,6 +110,11 @@
     {#if pane === 'requires'}
       <div class="p-4 flex flex-col gap-1 divide-y divide-white/20 overflow-y-scroll flex-1">
         <TraitSelector bind:selected={imbuement.requires} />
+      </div>
+    {/if}
+    {#if pane === 'templates'}
+      <div class="p-4 flex flex-col gap-1 divide-y divide-white/20 overflow-y-scroll flex-1">
+        I fucking wish
       </div>
     {/if}
   </div>

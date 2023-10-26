@@ -13,6 +13,8 @@
     }))
     .filter((change) => !!change.imbuementName || !change.imbuement_id)
     .sort((a, b) => b.createdAtDate - a.createdAtDate);
+
+  $: console.log('changes', changes);
 </script>
 
 {#if changes}

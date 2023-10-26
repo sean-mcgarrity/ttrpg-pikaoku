@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import BackButton from '$components/layout/BackButton.svelte';
   import Heading from '$components/layout/Heading.svelte';
   import { extractData } from '$lib/utils/requests';
   import type { SupabaseClient } from '@supabase/supabase-js';
@@ -19,7 +20,10 @@
 </script>
 
 <div>
-  <Heading type="Page Heading">All Imbuements</Heading>
+  <Heading type="Page Heading">
+    <BackButton />
+    All Imbuements</Heading
+  >
   <p>Below lists all imbuements, a summary of their effects, and what traits they require.</p>
 
   <div class="mt-4">
@@ -27,7 +31,7 @@
       <div>Loading...</div>
     {:else if $imbuementsQuery.isError}
       <div>Error: {$imbuementsQuery.error.message}</div>
-    {:else if $imbuementsQuery.isSuccess}
+    {:else if $imbuementsQuery.isSuccess && $imbuementsQuery.data}
       <div class="grid grid-cols-2 gap-3">
         {#each $imbuementsQuery.data as imb}
           <div class="bg-white/90 rounded text-black p-2 flex flex-col gap-1">

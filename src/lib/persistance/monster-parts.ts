@@ -63,7 +63,7 @@ export const updateRefinement = () => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(['refinements', itemId]);
+        queryClient.refetchQueries(['refinements']);
       }
     }
   );
@@ -151,7 +151,7 @@ export const getUsableSourcesPreview = () => {
           .gt('usable', 0)
           .eq('campaign_id', campaignId)
           .order('usable', { ascending: false })
-          .limit(5)
+          .limit(4)
       )
   });
 };
