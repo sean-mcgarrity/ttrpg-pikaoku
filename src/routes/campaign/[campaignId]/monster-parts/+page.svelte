@@ -19,7 +19,7 @@
     </p>
   </div>
   <PartysItemsTable />
-  <div class="flex flex-col sm:flex-row gap-4 justify-around">
+  <div class="flex flex-col sm:flex-row gap-4 justify-around mt-12 max-w-3xl w-full mx-auto">
     <LandingLink
       class="flex-1"
       title="Imbuements"
@@ -33,7 +33,6 @@
       bgImgSrc="https://i.imgur.com/OEY4Ixd.jpg"
     />
   </div>
-  <UsableMonsters />
   <AdminOnly>
     <div class="text-white mt-8 text-center">
       <LinkButton href={`/campaign/${campaignId}/monster-parts/manage`}>Admin manage</LinkButton>
