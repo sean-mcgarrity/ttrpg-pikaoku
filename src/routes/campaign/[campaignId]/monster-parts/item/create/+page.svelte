@@ -25,10 +25,6 @@
   const qPlayerCharacters = getCharactersQuery();
   const mCreateRefinement = mutateCreateRefinement();
 
-  $: baseItemOptions = ($qMpBaseItems.data ?? []).map((item) => ({
-    text: `${item.name} (${Math.ceil((item.cost || 0) / 100)} MP)`,
-    value: item.key
-  }));
   $: playerCharacterOptions = ($qPlayerCharacters.data ?? []).map((item) => ({
     text: item.name,
     value: item.id.toString()
@@ -58,6 +54,12 @@
   let seeAllLevels = false;
   $: typeBenefits = REFINEMENT_BENEFITS[type].filter((b) => b.benefits.length > 0);
   $: futureLevels = typeBenefits.filter(filterByLevelGt(0));
+  $: baseItemOptions = ($qMpBaseItems.data ?? [])
+    .filter((item) => item.type === type)
+    .map((item) => ({
+      text: `${item.name} (${Math.ceil((item.cost || 0) / 100)} MP)`,
+      value: item.key
+    }));
 </script>
 
 <div>
@@ -84,7 +86,7 @@
       </div>
     {/if}
     <SelectField label="Base Item" bind:value={baseItemKey} bind:options={baseItemOptions} />
-    <SelectField label="Charater" bind:value={owner} bind:options={playerCharacterOptions} />
+    <SelectField label="Character" bind:value={owner} bind:options={playerCharacterOptions} />
     <svelte:fragment slot="buttons">
       <Button on:click={createItem}>Create <span class="text-xl">&plus;</span></Button>
     </svelte:fragment>

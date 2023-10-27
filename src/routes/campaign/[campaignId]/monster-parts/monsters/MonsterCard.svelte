@@ -8,11 +8,15 @@
 {#if asLink}
   <a
     href={`/campaign/${monster.campaign_id}/monster-parts/monsters/${monster.id}`}
-    class="w-full transform transition duration-300 hover:scale-105 bg-white text-black overflow-hidden rounded shadow"
+    class="w-full transform transition duration-300 hover:scale-105 bg-white text-black overflow-hidden rounded shadow select-none"
   >
     <div class="w-full flex flex-row h-full py-2">
       <div class="w-2/5 my-auto">
-        <img src={monster.img_src} class="w-full h-[80px] object-center object-contain" alt="" />
+        <img
+          src={monster.img_src}
+          class="w-full h-[80px] object-center object-contain pointer-events-none"
+          alt=""
+        />
       </div>
       <div class="overflow-hidden flex flex-col">
         <div class="w-full py-2 font-semibold flex flex-row px-2">
@@ -34,7 +38,11 @@
   <div class="w-full bg-white text-black overflow-hidden rounded shadow">
     <div class="w-full flex flex-row h-full py-2">
       <div class="w-2/5 my-auto">
-        <img src={monster.img_src} class="w-full h-[80px] object-center object-contain" alt="" />
+        <img
+          src={monster.img_src}
+          class="w-full h-[80px] object-center object-contain pointer-events-none"
+          alt=""
+        />
       </div>
       <div class="overflow-hidden flex flex-col">
         <div class="w-full py-2 font-semibold flex flex-row px-2">
