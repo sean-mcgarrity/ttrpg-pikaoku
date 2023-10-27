@@ -22,7 +22,7 @@
   $: console.log('currnet item query', $query.data);
 </script>
 
-<div class="flex flex-col w-full gap-8">
+<div class="flex flex-col w-full gap-8 mb-8">
   {#if $query.isFetching || $query.isLoading}
     <LoadingInsert fullPage={true} />
   {/if}
@@ -31,7 +31,11 @@
       {#if !$query.isLoading && !!$query.data}
         <RefinementCard refinement={$query.data}>
           <svelte:fragment slot="buttons">
-            <Button class="sm:mr-auto" on:click={() => (tab = 'edit')}>Edit <PencilRuler /></Button>
+            <Button
+              class="sm:mr-auto"
+              on:click={() => (tab = tab === 'edit' ? 'quick-actions' : 'edit')}
+              >Edit <PencilRuler /></Button
+            >
             {#if canAddImbuement}
               <Button on:click={() => (tab = 'add-imbuement')}>Add Imbuement <Navigation2 /></Button
               >
@@ -54,5 +58,5 @@
       />
     {/if}
   {/if}
-  <RecentItemChanges item={$query.data} />
 </div>
+<RecentItemChanges item={$query.data} />

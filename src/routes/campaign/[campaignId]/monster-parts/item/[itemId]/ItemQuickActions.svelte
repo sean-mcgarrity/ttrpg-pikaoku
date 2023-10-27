@@ -41,6 +41,7 @@
     moreThanThreeRefinements && expandRefinements
       ? refinementActions
       : refinementActions.slice(0, 3);
+  $: nextThreeRefinments = refinementActions.slice(3, 6);
   $: imbuements =
     moreThanThreeImbuements && expandImbuements
       ? imbuementOptions
@@ -61,13 +62,17 @@
             of your base item, unlocking additional properties and imbuement slots.
           </p>
         </div>
-        <div>
-          <Heading type="Subsection Heading">Improve Imbuements</Heading>
-          <p class="text-sm">
-            Or, consume a monster that has special abilities to Imbue your item with new powers that
-            allow you to deal more damage or gain access to spells.
-          </p>
-        </div>
+        {#if imbuements.length > 0}
+          <div>
+            <Heading type="Subsection Heading">Improve Imbuements</Heading>
+            <p class="text-sm">
+              Or, consume a monster that has special abilities to Imbue your item with new powers
+              that allow you to deal more damage or gain access to spells.
+            </p>
+          </div>
+        {:else}
+          <div />
+        {/if}
         <div class="flex flex-col gap-2">
           {#each refinements as source (source.id)}
             <QuickUseSource
@@ -89,28 +94,39 @@
           {/if}
         </div>
       {/if}
-      <div class="flex flex-col gap-2">
-        {#each imbuements as source (source.id)}
-          <QuickUseSource
-            {source}
-            onClick={(amount) =>
-              $refine.mutate({ sourceId: source.id, imbuementId: source.imbuement.id, amount })}
-            actionText={`${source.imbuement.name}`}
-            buttonText={`Imbue`}
-          />
-        {/each}
-        {#if moreThanThreeImbuements}
-          <Button class="text-center" on:click={() => (expandImbuements = !expandImbuements)}>
-            {#if !expandImbuements}
-              See All
-              <ArrowDown />
-            {:else}
-              Collapse
-              <ArrowUp />
-            {/if}
-          </Button>
-        {/if}
-      </div>
+      {#if imbuements.length > 0}
+        <div class="flex flex-col gap-2">
+          {#each imbuements as source (source.id)}
+            <QuickUseSource
+              {source}
+              onClick={(amount) =>
+                $refine.mutate({ sourceId: source.id, imbuementId: source.imbuement.id, amount })}
+              actionText={`${source.imbuement.name}`}
+              buttonText={`Imbue`}
+            />
+          {/each}
+          {#if moreThanThreeImbuements}
+            <Button class="text-center" on:click={() => (expandImbuements = !expandImbuements)}>
+              {#if !expandImbuements}
+                See All
+                <ArrowDown />
+              {:else}
+                Collapse
+                <ArrowUp />
+              {/if}
+            </Button>
+          {/if}
+        </div>
+      {:else}
+        <div class="flex flex-col gap-2">
+          {#each nextThreeRefinments as source (source.id)}
+            <QuickUseSource
+              {source}
+              onClick={(amount) => $refine.mutate({ sourceId: source.id, amount })}
+              actionText="Refine base item"
+            />
+          {/each}
+        </div>{/if}
     </div>
   {/if}
 </div>

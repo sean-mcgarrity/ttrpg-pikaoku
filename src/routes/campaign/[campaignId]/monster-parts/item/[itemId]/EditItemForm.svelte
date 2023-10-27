@@ -30,9 +30,9 @@
   $: console.log('imbuements', imbuements);
 </script>
 
-<div class="flex flex-col gap-2">
+<div class="flex flex-col gap-2 max-w-lg w-full mx-auto bg-white/10 rounded p-8">
   <h3 class="text-xl font-semibold">Edit item</h3>
-  <TextField label="Name" bind:value={name} />
+  <TextField label="Name" bind:value={name} autofocus />
   <TextAreaField label="Description" bind:value={description} />
   {#if imbuements.length > 0}
     <div class="flex flex-col gap-2">

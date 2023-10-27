@@ -20,7 +20,7 @@
 </script>
 
 <button
-  transition:slide
+  transition:slide|local
   class="w-full bg-white text-black overflow-hidden rounded shadow text-left transform transition duration-300 hover:scale-105"
   on:click={() => {
     console.log('we also in here');
