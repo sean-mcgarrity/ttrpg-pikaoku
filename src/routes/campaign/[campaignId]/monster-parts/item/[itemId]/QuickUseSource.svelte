@@ -2,7 +2,7 @@
   import cx from 'classnames';
   import type { Imbuement, MP_UsableSource } from '$lib/systems/pf2e_monster_parts';
   import Button from '$components/Button.svelte';
-  import { slide } from 'svelte/transition';
+  import { scale, slide } from 'svelte/transition';
   import { Hammer } from 'lucide-svelte';
   import Modal from '$components/Modals/Modal.svelte';
   import Heading from '$components/layout/Heading.svelte';
@@ -20,6 +20,7 @@
 </script>
 
 <button
+  transition:slide
   class="w-full bg-white text-black overflow-hidden rounded shadow text-left transform transition duration-300 hover:scale-105"
   on:click={() => {
     console.log('we also in here');
