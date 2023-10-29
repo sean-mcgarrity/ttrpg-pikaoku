@@ -7,6 +7,7 @@
   export let type: 'button' | 'submit' = 'button';
   export let outlined = false;
   export let disabled = false;
+  export let dark = false;
 </script>
 
 <button
@@ -14,7 +15,10 @@
   on:click
   class={cx(
     padded ? 'px-4 py-2' : 'px-2 py-1',
-    'bg-transparent text-white hover:bg-white/10 active:bg-blue-200/20 rounded cursor-pointer font-medium tracking-wider select-none',
+    dark
+      ? 'text-white bg-slate-950 hover:bg-slate-800 active:bg-slate-700'
+      : 'text-white bg-transparent hover:bg-white/10 active:bg-blue-200/20',
+    'rounded cursor-pointer font-medium tracking-wider select-none',
     'inline-flex flex-row items-center gap-2',
     outlined && 'border border-white justify-between',
     className,

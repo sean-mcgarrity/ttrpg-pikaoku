@@ -92,16 +92,15 @@
     />
     <p class="font-bold text-4xl">{value} MP</p>
 
-    <div class="mt-6">
+    <div class="mt-6 text-black">
       <Button
-        class=" bg-gray-600 hover:bg-gray-500"
+        dark
         on:click={() => {
-          console.log('we in here');
           showModal = false;
         }}>Cancel</Button
       >
       <Button
-        class=" bg-blue-950 hover:bg-blue-900"
+        dark
         on:click={() => {
           showModal = false;
           onClick(value);
