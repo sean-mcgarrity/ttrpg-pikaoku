@@ -6,11 +6,21 @@
   import MonsterCard from './MonsterCard.svelte';
   import { page } from '$app/stores';
   import BackButton from '$components/layout/BackButton.svelte';
+  import TextField from '$components/forms/controls/TextField.svelte';
 
   $: campaignId = $page.params.campaignId;
 
   let usableSourcesQ = getUsableSources();
   let unusableSourcesQ = getUnusableSources();
+
+  let searchFilter = '';
+  $: searchFilterLc = searchFilter.toLowerCase();
+
+  $: filteredUsableSourcesQ = ($usableSourcesQ.data ?? []).filter(
+    (source) =>
+      source.name.toLowerCase().includes(searchFilterLc) ||
+      source.enables.some((trait) => trait.toLowerCase().includes(searchFilterLc))
+  );
 </script>
 
 <Heading type="Page Heading">
@@ -22,6 +32,9 @@
   All the monsters you've slain and retrieved parts from can be found here. You can use these
   monsters to create new items or imbue your items with powerful effects.
 </p>
+<div class="max-w-md w-full my-4 rounded mr-auto bg-white/10 p-4">
+  <TextField label="Filter" bind:value={searchFilter} class="mb-4" />
+</div>
 
 <div class="mb-8">
   <div class="flex flex-row justify-between">
@@ -33,7 +46,7 @@
   </div>
   {#if $usableSourcesQ.isSuccess}
     <div class="gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 justify-center">
-      {#each $usableSourcesQ.data as monster}
+      {#each filteredUsableSourcesQ as monster}
         <MonsterCard {monster} asLink />
       {/each}
     </div>
