@@ -107,10 +107,10 @@ export const mutateCreateCharacter = () => {
   return createMutation({
     mutationKey: ['campaigns', campaignId, 'characters'],
     mutationFn: async (character: Partial<PlayerCharacter>) => {
-      return supabase.from('player_characters').insert(character);
+      return supabase.from('player_characters').insert({ ...character, campaign: campaignId });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['campaigns', campaignId, 'characters']);
     }
   });
-}
+};

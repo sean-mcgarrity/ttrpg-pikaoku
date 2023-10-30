@@ -63,7 +63,6 @@
       <NewCharacter
         afterSubmit={() => {
           add = false;
-          loadCharacters();
         }}
         onCancel={() => (add = false)}
       />
