@@ -3,17 +3,23 @@
   import {
     getUpgradeCostForLevel,
     calculateUpgradeLevel,
-    type Imbuement
+    type Imbuement,
+    type MP_Refinement,
+    calculateRefinementLevel
   } from '$lib/systems/pf2e_monster_parts';
   import { slide } from 'svelte/transition';
   import { ArrowDownIcon } from 'lucide-svelte';
   import ProgressBar from '$components/monster-parts/ProgressBar.svelte';
 
+  export let refinement: MP_Refinement;
   export let imbuement: Imbuement;
   export let changes: any = [];
 
   $: progress = changes.reduce((acc, curr) => acc + curr.amount, 0);
-  $: imbuementLevel = calculateUpgradeLevel(progress, 'armor');
+  $: imbuementLevel = Math.min(
+    calculateUpgradeLevel(progress, 'armor'),
+    calculateRefinementLevel(refinement)
+  );
 
   $: highestLevelGained = imbuement.levels.reduce(
     (acc, curr) => {
@@ -27,7 +33,10 @@
   $: costOfNextLevel = hasNextLevel
     ? getUpgradeCostForLevel(nextLevel?.level, 'armor')
     : getUpgradeCostForLevel(imbuementLevel, 'armor');
-  $: percentageToNextLevel = hasNextLevel ? Math.round((progress / costOfNextLevel) * 100) : 100;
+  $: percentageToNextLevel = Math.min(
+    hasNextLevel ? Math.round((progress / costOfNextLevel) * 100) : 100,
+    100
+  );
   let seeAllLevels = false;
 </script>
 

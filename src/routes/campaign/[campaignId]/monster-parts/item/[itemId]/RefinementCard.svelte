@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getUnusedImbuementSlots, type MP_Refinement } from '$lib/systems/pf2e_monster_parts';
   import { whereKeyEq } from '$lib/utils/iterators';
-  import ItemCardHeader from './ItemCardHeader.svelte';
+  import ItemCardHeader from './RefinementCardHeader.svelte';
   import RefinementCardImbuement from './RefinementCardImbuement.svelte';
   import RefinementCardRefinement from './RefinementCardRefinement.svelte';
 
@@ -23,6 +23,7 @@
     <div class="border border-white/20 border-solid" />
     {#each refinement.imbuements as imbuement}
       <RefinementCardImbuement
+        {refinement}
         {imbuement}
         changes={refinement.changes.filter(whereKeyEq('imbuement_id', imbuement.id))}
       />

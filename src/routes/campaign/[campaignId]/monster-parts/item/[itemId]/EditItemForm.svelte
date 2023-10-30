@@ -2,6 +2,7 @@
   import Button from '$components/Button.svelte';
   import TextAreaField from '$components/forms/controls/TextAreaField.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
+  import CharacterSelect from '$components/monster-parts/CharacterSelect.svelte';
   import { deleteRefinementImbuement, updateRefinement } from '$lib/persistance/monster-parts';
   import type { MP_Refinement } from '$lib/systems/pf2e_monster_parts';
   import { X } from 'lucide-svelte';
@@ -14,11 +15,17 @@
 
   let name = refinement.name;
   let description = refinement.description;
+  let ownerId = refinement.owner_id.toString();
 
   const removeImbuement = deleteRefinementImbuement();
 
   $: handleSave = async () => {
-    await $mutation.mutateAsync({ id: refinement.id, name, description });
+    await $mutation.mutateAsync({
+      id: refinement.id,
+      name,
+      description,
+      owner_id: parseInt(ownerId) || refinement.owner_id
+    });
     afterSave();
   };
 
@@ -34,6 +41,7 @@
   <h3 class="text-xl font-semibold">Edit item</h3>
   <TextField label="Name" bind:value={name} autofocus />
   <TextAreaField label="Description" bind:value={description} />
+  <CharacterSelect bind:ownerId />
   {#if imbuements.length > 0}
     <div class="flex flex-col gap-2">
       <h4 class="text-lg font-semibold">Imbuements</h4>
