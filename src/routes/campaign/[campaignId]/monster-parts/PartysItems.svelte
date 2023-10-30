@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import { slide } from 'svelte/transition';
   import LinkButton from '$components/LinkButton.svelte';
-  import ItemCardHeader from './item/[itemId]/ItemCardHeader.svelte';
+  import ItemCardHeader from './item/[itemId]/RefinementCardHeader.svelte';
   import { getRefinementsForCampaign } from '$lib/persistance/monster-parts';
   import { ArrowRight, HammerIcon, Link2, Navigation } from 'lucide-svelte';
   import Heading from '$components/layout/Heading.svelte';

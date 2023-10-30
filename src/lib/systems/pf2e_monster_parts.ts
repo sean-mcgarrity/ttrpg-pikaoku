@@ -101,6 +101,7 @@ export type MP_Refinement = {
   changes?: MP_Refinement_Change[];
   imbuements?: (Imbuement & Record<'changes', MP_Refinement_Change>)[];
   base_item?: MP_Item & Record<'requires', string[]>;
+  owner?: { id: number; name: string; active: boolean };
 };
 
 export type MP_Refinement_Change = {

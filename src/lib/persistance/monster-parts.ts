@@ -24,7 +24,7 @@ export const getCurrentItem = () => {
         await supabase
           .from('mp_refinements')
           .select(
-            `*, base_item:mp_base_items (*), changes:mp_refinement_changes (*), imbuements:mp_imbuements!mp_refinement_imbuements (*)`
+            `*, base_item:mp_base_items (*), changes:mp_refinement_changes (*), imbuements:mp_imbuements!mp_refinement_imbuements (*), owner:player_characters (*)`
           )
           .eq('id', itemId)
           .single<MP_Refinement>()
@@ -44,7 +44,7 @@ export const getRefinementsForCampaign = () => {
         await supabase
           .from('mp_refinements')
           .select(
-            `*, base_item:mp_base_items (*), changes:mp_refinement_changes (*), imbuements:mp_imbuements!mp_refinement_imbuements (*)`
+            `*, base_item:mp_base_items (*), changes:mp_refinement_changes (*), imbuements:mp_imbuements!mp_refinement_imbuements (*), owner:player_characters (*)`
           )
           .eq('campaign_id', campaignId)
       )

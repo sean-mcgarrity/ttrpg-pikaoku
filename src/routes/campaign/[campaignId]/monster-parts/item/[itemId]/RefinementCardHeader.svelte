@@ -17,9 +17,10 @@
     </h1>
     <div class="flex flex-row">
       <div class="font-medium capitalize tracking-wider text-white/80 text-lg">
+        {item.owner?.name}'s
         {item.base_item.name}
       </div>
-      <span class="text-white/60 ml-auto mt-auto">Sell {sellCost}GP</span>
+      <!-- <span class="text-white/60 ml-auto mt-auto">Sell {sellCost}GP</span> -->
     </div>
   </div>
   <div class="text-6xl font-extrabold px-4 py-2 bg-black/10 flex">
