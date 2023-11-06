@@ -5,7 +5,7 @@ export function extractData<T>(response: PostgrestSingleResponse<T>) {
     return null;
   }
   if (response.error) {
-    throw new Error(response.error.message);
+    throw response.error;
   }
   return response.data;
 }

@@ -12,9 +12,15 @@
   import BigButton from '$components/BigButton.svelte';
   import RefinePane from './RefinePane.svelte';
   import ImbuePane from './ImbuePane.svelte';
-  $: query = getCurrentItem();
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
+  let query = getCurrentItem();
 
-  $: canAddImbuement = $query.isFetched && getUnusedImbuementSlots($query.data) > 0;
+  $: if ($query.isError && $query.error['code'] === 'PGRST116') {
+    goto(`/campaign/${$page.params.campaignId}/monster-parts`);
+  }
+
+  $: canAddImbuement = $query.isSuccess && getUnusedImbuementSlots($query.data) > 0;
   let tab: 'edit' | 'none' | 'refine' | 'imbue' | 'add-imbuement' | 'changes' = 'none';
 
   $: changeTab = (newTab: typeof tab) => {
@@ -26,7 +32,7 @@
   {#if $query.isFetching || $query.isLoading}
     <LoadingInsert fullPage={true} />
   {/if}
-  {#if $query.data}
+  {#if $query.data && $query.isSuccess}
     <div class="flex-1 flex flex-col gap-4 w-full max-w-md mx-auto">
       {#if !$query.isLoading && !!$query.data}
         <RefinementCard refinement={$query.data}>
@@ -44,9 +50,7 @@
         </RefinementCard>
       {/if}
     </div>
-  {/if}
-  <div class="flex flex-col">
-    {#if $query.data}
+    <div class="flex flex-col">
       {#if tab !== 'none'}
         <Button on:click={() => (tab = 'none')} class="mx-auto mb-4">Cancel</Button>
       {/if}
@@ -73,6 +77,6 @@
       {:else if tab === 'changes'}
         <RecentItemChanges item={$query.data} />
       {/if}
-    {/if}
-  </div>
+    </div>
+  {/if}
 </div>

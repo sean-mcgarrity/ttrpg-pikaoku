@@ -1,11 +1,17 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
   import Button from '$components/Button.svelte';
   import TextAreaField from '$components/forms/controls/TextAreaField.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
   import CharacterSelect from '$components/monster-parts/CharacterSelect.svelte';
-  import { deleteRefinementImbuement, updateRefinement } from '$lib/persistance/monster-parts';
+  import {
+    deleteRefinement,
+    deleteRefinementImbuement,
+    updateRefinement
+  } from '$lib/persistance/monster-parts';
   import type { MP_Refinement } from '$lib/systems/pf2e_monster_parts';
-  import { Save, X } from 'lucide-svelte';
+  import { Save, Trash2, X } from 'lucide-svelte';
 
   export let refinement: MP_Refinement;
   export let afterSave: () => void = () => {};
@@ -14,9 +20,13 @@
 
   let name = refinement.name;
   let description = refinement.description;
-  let ownerId = refinement.owner_id.toString();
+  let ownerId = refinement.owner_id?.toString();
 
   const removeImbuement = deleteRefinementImbuement();
+
+  let deleteRefinementMutation = deleteRefinement();
+
+  $: campaignIdFromParams = $page.params.campaignId;
 
   $: handleSave = async () => {
     await $mutation.mutateAsync({
@@ -46,7 +56,7 @@
 </div>
 
 {#if imbuements.length > 0}
-  <div class="flex flex-col gap-2 my-6 px-6">
+  <div class="flex flex-col gap-2 mt-6 px-6">
     <h4 class="text-lg font-semibold">Imbuements</h4>
     {#each imbuements as imbuement (imbuement.id)}
       <div class="bg-black/80 px-4 py-2 rounded">
@@ -69,3 +79,19 @@
     {/each}
   </div>
 {/if}
+
+<div class="flex flex-row gap-2 justify-center mt-6">
+  <Button
+    on:click={() => {
+      if (confirm(`Are you sure you want to delete ${refinement.name}?`)) {
+        $deleteRefinementMutation.mutate(refinement.id, {
+          onSuccess: () => {
+            goto(`/campaign/${campaignIdFromParams}/monster-parts`);
+          }
+        });
+      }
+    }}
+    >Delete Refinement
+    <Trash2 />
+  </Button>
+</div>

@@ -1,3 +1,4 @@
+import { goto } from '$app/navigation';
 import { page } from '$app/stores';
 import {
   getMonsterPartsForLevel,
@@ -14,10 +15,10 @@ import { get } from 'svelte/store';
 export const getCurrentItem = () => {
   const currentPage = get(page);
   const supabase: SupabaseClient = currentPage.data.supabase;
-  const itemId = parseInt(currentPage.params.itemId);
   return createQuery<MP_Refinement>({
-    queryKey: ['refinements', itemId],
+    queryKey: ['refinements', parseInt(currentPage.params.itemId)],
     queryFn: async () => {
+      const itemId = parseInt(currentPage.params.itemId);
       if (!itemId) return null;
       return extractData(
         await supabase
@@ -28,7 +29,8 @@ export const getCurrentItem = () => {
           .eq('id', itemId)
           .single<MP_Refinement>()
       );
-    }
+    },
+    retry: false
   });
 };
 
@@ -393,6 +395,25 @@ export const insertRefinementImbuement = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['refinements']);
+      }
+    }
+  );
+};
+
+export const deleteRefinement = () => {
+  const queryClient = useQueryClient();
+  const currentPage = get(page);
+  const supabase: SupabaseClient = currentPage.data.supabase;
+
+  return createMutation(
+    ['delete_refinement'],
+    async (refinementId: number) => {
+      return supabase.from('mp_refinements').delete().eq('id', refinementId);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['refinements']);
+        queryClient.invalidateQueries(['usable_sources']);
       }
     }
   );
