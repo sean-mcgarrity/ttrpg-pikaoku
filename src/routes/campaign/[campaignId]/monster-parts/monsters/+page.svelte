@@ -7,6 +7,7 @@
   import { page } from '$app/stores';
   import BackButton from '$components/layout/BackButton.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
+  import { isAdmin } from '$lib/utils/auth';
 
   $: campaignId = $page.params.campaignId;
 
@@ -21,6 +22,8 @@
       source.name.toLowerCase().includes(searchFilterLc) ||
       source.enables.some((trait) => trait.toLowerCase().includes(searchFilterLc))
   );
+
+  $: admin = isAdmin($page.data.session);
 </script>
 
 <Heading type="Page Heading">
@@ -57,7 +60,7 @@
   {#if $unusableSourcesQ.isSuccess}
     <div class="gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 justify-center">
       {#each $unusableSourcesQ.data as monster}
-        <MonsterCard {monster} />
+        <MonsterCard {monster} asLink={admin} />
       {/each}
     </div>
   {/if}
