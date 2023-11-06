@@ -36,8 +36,6 @@
       <div class="border border-white/20 border-solid" />
       <div class="px-4 py-8 text-center bg-black/10">Unused imbuement slot</div>
     {/if}
-    <div class="p-2 bg-black/25 flex flex-col-reverse sm:flex-row justify-end gap-2 tracking-wide">
-      <slot name="buttons" />
-    </div>
+    <div class="bg-black/40 h-4" />
   </div>
 </div>

@@ -5,11 +5,10 @@
   import CharacterSelect from '$components/monster-parts/CharacterSelect.svelte';
   import { deleteRefinementImbuement, updateRefinement } from '$lib/persistance/monster-parts';
   import type { MP_Refinement } from '$lib/systems/pf2e_monster_parts';
-  import { X } from 'lucide-svelte';
+  import { Save, X } from 'lucide-svelte';
 
   export let refinement: MP_Refinement;
   export let afterSave: () => void = () => {};
-  export let onCancel: () => void = () => {};
 
   const mutation = updateRefinement();
 
@@ -29,12 +28,7 @@
     afterSave();
   };
 
-  $: handleCancel = () => {
-    onCancel();
-  };
-
   $: imbuements = refinement.imbuements;
-  $: console.log('imbuements', imbuements);
 </script>
 
 <div class="flex flex-col gap-2 max-w-lg w-full mx-auto bg-white/10 rounded p-8">
@@ -42,30 +36,36 @@
   <TextField label="Name" bind:value={name} autofocus />
   <TextAreaField label="Description" bind:value={description} />
   <CharacterSelect bind:ownerId />
-  {#if imbuements.length > 0}
-    <div class="flex flex-col gap-2">
-      <h4 class="text-lg font-semibold">Imbuements</h4>
-      <ul class="list-disc w-3/5 ml-10">
-        {#each imbuements as imbuement (imbuement.id)}
-          <li class="list-item">
-            <span class="inline-flex justify-between w-full">
-              <span class="my-auto">{imbuement.name}</span>
-              <Button
-                on:click={() => {
-                  $removeImbuement.mutate({
-                    refinementId: refinement.id,
-                    imbuementId: imbuement.id
-                  });
-                }}>Remove <X /></Button
-              >
-            </span>
-          </li>
-        {/each}
-      </ul>
-    </div>
-  {/if}
-  <div class="flex flex-row gap-2">
-    <Button on:click={handleSave}>Save</Button>
-    <Button on:click={handleCancel}>Cancel</Button>
+
+  <div class="flex flex-row gap-2 justify-center">
+    <Button on:click={handleSave}
+      >Save
+      <Save />
+    </Button>
   </div>
 </div>
+
+{#if imbuements.length > 0}
+  <div class="flex flex-col gap-2 my-6 px-6">
+    <h4 class="text-lg font-semibold">Imbuements</h4>
+    {#each imbuements as imbuement (imbuement.id)}
+      <div class="bg-black/80 px-4 py-2 rounded">
+        <span class="inline-flex justify-between w-full">
+          <span class="my-auto text-ellipsis overflow-hidden whitespace-nowrap"
+            >{imbuement.name}</span
+          >
+          <Button
+            on:click={() => {
+              if (confirm(`Are you sure you want to remove ${imbuement.name}?`)) {
+                $removeImbuement.mutate({
+                  refinementId: refinement.id,
+                  imbuementId: imbuement.id
+                });
+              }
+            }}><X /></Button
+          >
+        </span>
+      </div>
+    {/each}
+  </div>
+{/if}

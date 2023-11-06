@@ -10,7 +10,6 @@
 
   const sourcesQuery = getUsableSourcesPreview();
   $: monsters = $sourcesQuery.data ?? [];
-  $: console.log('monsters', monsters);
 </script>
 
 <div class="w-full">

@@ -19,8 +19,6 @@
   });
 
   let activeImbuement: Imbuement = null;
-
-  $: console.log('imbuementys', $imbuementsQuery.data);
 </script>
 
 <div>

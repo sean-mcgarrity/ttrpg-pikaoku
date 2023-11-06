@@ -3,8 +3,6 @@
   export let min: number;
   export let max: number;
   export let barColor: string;
-
-  $: console.log('progress', progress);
 </script>
 
 <div class="relative h-2 w-full rounded-full my-2 mx-auto font-medium select-none">

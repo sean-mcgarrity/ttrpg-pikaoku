@@ -110,6 +110,7 @@ export type MP_Refinement_Change = {
   imbuement_id?: number;
   amount: number;
   source_id: string;
+  source?: MP_Source;
   created_at?: string;
 };
 

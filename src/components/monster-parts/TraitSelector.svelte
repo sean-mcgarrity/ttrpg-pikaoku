@@ -24,7 +24,6 @@
 
   export let selected: string[];
   let expandedPane: (typeof panes)[number] = null;
-  $: console.log('selected', selected);
 
   let resistances = [];
   let weaknesses = [];

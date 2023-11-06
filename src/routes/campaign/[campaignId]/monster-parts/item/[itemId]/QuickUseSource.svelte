@@ -1,8 +1,7 @@
 <script lang="ts">
-  import cx from 'classnames';
   import type { Imbuement, MP_UsableSource } from '$lib/systems/pf2e_monster_parts';
   import Button from '$components/Button.svelte';
-  import { scale, slide } from 'svelte/transition';
+  import { slide } from 'svelte/transition';
   import { Hammer } from 'lucide-svelte';
   import Modal from '$components/Modals/Modal.svelte';
   import Heading from '$components/layout/Heading.svelte';
@@ -13,9 +12,7 @@
   export let onClick: (amount: number) => void;
 
   let value = source.usable;
-
   $: if (value > source.usable) value = source.usable;
-
   let showModal = false;
 </script>
 
@@ -23,7 +20,6 @@
   transition:slide|local
   class="w-full bg-white text-black overflow-hidden rounded shadow text-left transform transition duration-300 hover:scale-105"
   on:click={() => {
-    console.log('we also in here');
     showModal = true;
   }}
 >
@@ -61,7 +57,7 @@
     <Heading type="Subsection Heading">Ready to {buttonText}?</Heading>
     <div class="flex flex-row mb-4">
       <div class="w-1/3">
-        <img src={source.img_src} class="" />
+        <img src={source.img_src} class="" alt="" />
       </div>
       <div class="flex-1 my-auto">
         {#if buttonText === 'Refine'}

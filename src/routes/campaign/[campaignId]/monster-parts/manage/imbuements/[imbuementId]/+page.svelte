@@ -23,11 +23,8 @@
     refetchOnWindowFocus: false
   });
 
-  $: console.log('imbuement', $imbuementQuery.data);
-
   const updateImbuement = createMutation({
     mutationFn: async (imbuement: Partial<Imbuement>) => {
-      console.log('update imbuement', imbuement);
       return extractData<Imbuement>(
         await supabase.from('mp_imbuements').update(imbuement).eq('id', imbuementId).single()
       );

@@ -29,8 +29,6 @@
     }
   };
 
-  $: console.log('imbuement', imbuement);
-
   $: addStage = () => {
     const previousStage = imbuement.levels[imbuement.levels.length - 1];
     const newImbuementLevel = imbuement.levels.length === 0 ? 1 : previousStage.level + 1;

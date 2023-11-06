@@ -15,7 +15,6 @@ export const getCurrentItem = () => {
   const currentPage = get(page);
   const supabase: SupabaseClient = currentPage.data.supabase;
   const itemId = parseInt(currentPage.params.itemId);
-  console.log('calling current item query', itemId);
   return createQuery<MP_Refinement>({
     queryKey: ['refinements', itemId],
     queryFn: async () => {
@@ -24,7 +23,7 @@ export const getCurrentItem = () => {
         await supabase
           .from('mp_refinements')
           .select(
-            `*, base_item:mp_base_items (*), changes:mp_refinement_changes (*), imbuements:mp_imbuements!mp_refinement_imbuements (*), owner:player_characters (*)`
+            `*, base_item:mp_base_items (*), changes:mp_refinement_changes (*, source:mp_sources (*)), imbuements:mp_imbuements!mp_refinement_imbuements (*), owner:player_characters (*)`
           )
           .eq('id', itemId)
           .single<MP_Refinement>()
@@ -177,7 +176,6 @@ export const getSourcesForItems = (requirements: string[]) => {
   const currentPage = get(page);
   const supabase: SupabaseClient = currentPage.data.supabase;
   const { itemId, campaignId } = currentPage.params;
-  console.log('current refinment requirements', requirements);
   return createQuery<MP_UsableSource[]>({
     queryKey: ['usable_sources', itemId],
     queryFn: async () =>
@@ -332,6 +330,24 @@ export const deleteRefinementImbuement = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(['refinements']);
+      }
+    }
+  );
+};
+
+export const deleteRefinementChange = () => {
+  const queryClient = useQueryClient();
+  const currentPage = get(page);
+  const supabase: SupabaseClient = currentPage.data.supabase;
+  return createMutation(
+    ['remove_change'],
+    async (changeId: number) => {
+      return supabase.from('mp_refinement_changes').delete().eq('id', changeId);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['refinements']);
+        queryClient.invalidateQueries(['usable_sources']);
       }
     }
   );
