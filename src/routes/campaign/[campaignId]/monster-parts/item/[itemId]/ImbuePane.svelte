@@ -4,6 +4,7 @@
   import QuickUseSource from './QuickUseSource.svelte';
   import { getSourcesForItems, insertRefinementChange } from '$lib/persistance/monster-parts';
   import Heading from '$components/layout/Heading.svelte';
+  import { FileWarning } from 'lucide-svelte';
 
   export let item: MP_Refinement;
 
@@ -42,6 +43,14 @@
           actionText="Refine base item"
         />
       {/each}
+    {:else}
+      <div class="mb-4">
+        <Heading type="Subsection Heading">Imbue Item</Heading>
+        <FileWarning class="custom-icon w-20 h-20 text-white/80 mx-auto mb-4 mt-8" />
+        <p class="text-sm text-center max-w-xs mx-auto">
+          You don't have any monster parts that can be used to imbue this item.
+        </p>
+      </div>
     {/if}
   {/if}
 </div>
