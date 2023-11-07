@@ -1,4 +1,5 @@
 <script lang="ts">
+  import cs from 'classnames';
   import { page } from '$app/stores';
   import Modal from '$components/Modals/Modal.svelte';
   import BackButton from '$components/layout/BackButton.svelte';
@@ -7,6 +8,7 @@
   import { extractData } from '$lib/utils/requests';
   import type { SupabaseClient } from '@supabase/supabase-js';
   import { createQuery } from '@tanstack/svelte-query';
+  import { Info, InfoIcon } from 'lucide-svelte';
   import { get } from 'svelte/store';
 
   let imbuementsQuery = createQuery({
@@ -14,11 +16,21 @@
     queryFn: async () => {
       const currentPage = get(page);
       const supabase: SupabaseClient = currentPage.data.supabase;
-      return extractData(await supabase.from('mp_imbuements').select());
+      return extractData<Imbuement[]>(await supabase.from('mp_imbuements').select().order('name'));
     }
   });
 
   let activeImbuement: Imbuement = null;
+
+  const categories = ['attribute', null, 'energy', 'defensive', 'spell', 'bane'];
+  const categoryDescription = {
+    attribute: 'Imbue a weapon with a bonus to an attribute',
+    energy:
+      'Imbue a weapon with additional damage based on the energy type, either by dealing more damage, apply conditions, or channelling on-theme spells',
+    defensive: 'Imbue a shield or armour with a defensive bonus',
+    spell: 'Imbue a weapon with the ability to cast spells',
+    bane: 'Improve a weapon when fighting a specific enemy type'
+  };
 </script>
 
 <div>
@@ -30,24 +42,35 @@
     Below lists all imbuements, a summary of their effects, and what traits they require. Click an
     imbuement to see more details.
   </p>
-
   <div class="mt-4">
     {#if $imbuementsQuery.isLoading}
       <div>Loading...</div>
     {:else if $imbuementsQuery.isError}
       <div>Error: {$imbuementsQuery.error.message}</div>
     {:else if $imbuementsQuery.isSuccess && $imbuementsQuery.data}
-      <div class="grid grid-cols-3 gap-2">
-        {#each $imbuementsQuery.data as imb}
-          <button
-            on:click={() => {
-              activeImbuement = imb;
-            }}
-            class="bg-white/90 rounded text-black p-2 flex flex-col gap-1 text-left"
-          >
-            <div class="font-bold">{imb.name}</div>
-            <div>{imb.description}</div>
-          </button>
+      <div class="flex flex-col gap-4">
+        {#each categories as category}
+          <div class="flex flex-col gap-1">
+            <div class="capitalize text-xl">{category ?? 'Other'}</div>
+            <div>{categoryDescription[category] ?? 'This is a mismash.'}</div>
+            <div class="grid grid-cols-3 gap-3">
+              {#each $imbuementsQuery.data.filter((x) => x.category === category) as imb}
+                <button
+                  on:click={() => {
+                    activeImbuement = imb;
+                  }}
+                  disabled={!imb.implemented}
+                  class={cs(
+                    'bg-white/90 rounded text-black p-2 flex flex-col gap-1 text-left transform transition duration-300',
+                    'disabled:opacity-40 enabled:hover:scale-105'
+                  )}
+                >
+                  <div class="font-bold">{imb.name}</div>
+                  <div>{imb.implemented ? imb.description : 'NOT IMPELEMENTED'}</div>
+                </button>
+              {/each}
+            </div>
+          </div>
         {/each}
       </div>
     {/if}

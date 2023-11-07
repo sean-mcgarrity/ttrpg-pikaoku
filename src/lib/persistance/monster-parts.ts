@@ -113,7 +113,7 @@ export const getUsableSourceById = (sourceId: number | string) => {
         await supabase
           .from('usable_sources')
           .select('*')
-          .eq('id', parseInt(sourceId))
+          .eq('id', sourceId)
           .single<MP_UsableSource>()
       );
     }
