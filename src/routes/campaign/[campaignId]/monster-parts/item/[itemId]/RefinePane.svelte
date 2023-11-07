@@ -5,6 +5,7 @@
   import { getSourcesForItems, insertRefinementChange } from '$lib/persistance/monster-parts';
   import Heading from '$components/layout/Heading.svelte';
   import { FileWarning } from 'lucide-svelte';
+  import { getCampaignId } from '$lib/utils/contextual-helpers';
 
   export let item: MP_Refinement;
 

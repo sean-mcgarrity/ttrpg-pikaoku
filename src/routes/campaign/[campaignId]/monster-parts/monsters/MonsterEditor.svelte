@@ -1,11 +1,13 @@
 <script lang="ts">
   import Button from '$components/Button.svelte';
+  import LinkButton from '$components/LinkButton.svelte';
   import IntegerTicker from '$components/forms/controls/IntegerTicker.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
   import Heading from '$components/layout/Heading.svelte';
   import TraitSelector from '$components/monster-parts/TraitSelector.svelte';
   import type { MP_Source } from '$lib/systems/pf2e_monster_parts';
-  import { Delete, Save } from 'lucide-svelte';
+  import { getCampaignId } from '$lib/utils/contextual-helpers';
+  import { Delete, Save, Undo } from 'lucide-svelte';
 
   export let monster: MP_Source;
   export let onSave: (monster: Partial<MP_Source>) => void;
@@ -28,6 +30,12 @@
     </div>
   </div>
   <div class="mx-auto">
+    {#if monster.id}
+      <LinkButton href="/campaign/{getCampaignId()}/monster-parts/monsters/{monster.id}"
+        >Cancel
+        <Undo />
+      </LinkButton>
+    {/if}
     {#if onDelete}
       <Button on:click={onDelete}>Delete <Delete /></Button>
     {/if}

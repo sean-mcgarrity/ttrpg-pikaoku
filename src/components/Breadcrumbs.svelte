@@ -40,10 +40,16 @@
       href: `/campaign/${campaignId}/monster-parts/monsters/add`,
       text: 'Adding Monster'
     },
-    'sourceId' in $page.params && {
-      href: `/campaign/${campaignId}/monster-parts/monsters/${$page.params.sourceId}`,
-      text: 'Updating Monster'
-    }
+    'sourceId' in $page.params &&
+      !$page.url.href.includes('/edit') && {
+        href: `/campaign/${campaignId}/monster-parts/monsters/${$page.params.sourceId}`,
+        text: 'Viewing Monster'
+      },
+    'sourceId' in $page.params &&
+      $page.url.href.includes('/edit') && {
+        href: `/campaign/${campaignId}/monster-parts/monsters/${$page.params.sourceId}`,
+        text: 'Editing Monster'
+      }
   ].filter((part) => !!part);
 </script>
 

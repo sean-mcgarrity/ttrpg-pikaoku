@@ -1,49 +1,38 @@
 <script lang="ts">
-  import Heading from '$components/layout/Heading.svelte';
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
-  import { deleteMpSource, getSourceFromParam, updateSource } from '$lib/persistance/monster-parts';
-  import MonsterEditor from '../MonsterEditor.svelte';
-  import { goto } from '$app/navigation';
+  import {
+    deleteMpSource,
+    getUsableSourceById,
+    updateSource
+  } from '$lib/persistance/monster-parts';
   import { page } from '$app/stores';
+  import LinkButton from '$components/LinkButton.svelte';
+  import { getCampaignId } from '$lib/utils/contextual-helpers';
+  import MonsterInfoCard from './MonsterInfoCard.svelte';
+  import BackButton from '$components/layout/BackButton.svelte';
+  import { StepBack } from 'lucide-svelte';
 
-  const query = getSourceFromParam();
+  $: query = getUsableSourceById($page.params.sourceId);
 
   const mutation = updateSource();
 
-  $: deleteSourceM = deleteMpSource();
   $: monster = $query.data;
-
-  $: handleClick = () => {
-    $mutation.mutate(monster, {
-      onSuccess: () => {
-        goto(`/campaign/${$page.params.campaignId}/monster-parts/monsters`);
-      }
-    });
-  };
-
-  $: handleDelete = () => {
-    $deleteSourceM.mutate($query.data.id, {
-      onSuccess: () => {
-        goto(`/campaign/${$page.params.campaignId}/monster-parts/monsters`);
-      }
-    });
-  };
 </script>
 
-<div class="relative">
-  {#if $query.isFetching}
-    <LoadingInsert />
-  {/if}
-  {#if $query.isLoading}
-    <Heading type="Page Heading">Edit ...</Heading>
-  {:else}
-    <Heading type="Page Heading">Edit {monster.name}</Heading>
-  {/if}
+<div class="relative pt-4">
   <div class="flex flex-col sm:flex-row gap-4 w-full">
-    {#if $query.isLoading}
-      <LoadingInsert />
-    {:else if $query.isFetched && !!$query.data}
-      <MonsterEditor bind:monster onSave={handleClick} onDelete={handleDelete} />
-    {/if}
+    <div class="flex flex-col justify-center items-center w-full gap-4">
+      <LinkButton href={`/campaign/${getCampaignId()}/monster-parts/monsters`}
+        ><StepBack /> Back to all monsters</LinkButton
+      >
+      {#if $query.isFetching || $query.isLoading}
+        <LoadingInsert />
+      {:else if $query.isFetched && !!$query.data}
+        <MonsterInfoCard {monster} />
+        <LinkButton href="/campaign/{getCampaignId()}/monster-parts/monsters/{monster.id}/edit"
+          >Edit</LinkButton
+        >
+      {/if}
+    </div>
   </div>
 </div>
