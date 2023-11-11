@@ -116,8 +116,27 @@ export const getUsableSourceById = (sourceId: number | string) => {
           .eq('id', sourceId)
           .single<MP_UsableSource>()
       );
-    }
+    },
+    retry: 2
   });
+};
+
+export const revealSource = (sourceId) => {
+  const queryClient = useQueryClient();
+  const currentPage = get(page);
+  const supabase: SupabaseClient = currentPage.data.supabase;
+  return createMutation(
+    ['reveal_source', sourceId],
+    async () => {
+      return supabase.from('mp_sources').update({ revealed: true }).eq('id', sourceId);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['usable_sources']);
+        queryClient.invalidateQueries(['mp_sources']);
+      }
+    }
+  );
 };
 
 export const updateSource = () => {

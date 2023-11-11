@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { MP_UsableSource } from '$lib/systems/pf2e_monster_parts';
+  import cs from 'classnames';
 
   export let monster: MP_UsableSource;
   export let asLink: boolean = false;
@@ -8,7 +9,10 @@
 {#if asLink}
   <a
     href={`/campaign/${monster.campaign_id}/monster-parts/monsters/${monster.id}`}
-    class="w-full transform transition duration-300 hover:scale-105 bg-white text-black overflow-hidden rounded shadow select-none"
+    class={cs(
+      'w-full transform transition duration-300 hover:scale-105 bg-white text-black overflow-hidden rounded shadow select-none',
+      !monster.revealed && 'border-4 border-purple-800 border-solid bg-gray-400'
+    )}
   >
     <div class="w-full flex flex-row h-full py-2">
       <div class="w-2/5 my-auto">

@@ -124,6 +124,7 @@ export type MP_Source = {
   enables: string[];
   campaign_id?: number;
   img_src?: string;
+  revealed?: boolean;
 };
 
 export type MP_UsableSource = MP_Source & {

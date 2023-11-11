@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { mpTraits } from '$lib/systems/pf2e_monster_parts';
   import { onMount } from 'svelte';
   import * as pf2eCore from '$lib/systems/pf2e_core';
   import { byKeyAsc } from '$lib/utils/iterators';
@@ -9,17 +8,17 @@
   import { ChevronDown, CopyX } from 'lucide-svelte';
 
   const panes = [
-    'crafts',
-    'attacks',
+    'traits',
+    'abilities',
     'senses',
     'skills',
-    'resistances',
-    'weaknesses',
+    'attacks',
     'immunities',
-    'abilities',
-    'hardness',
-    'traits',
-    'speeds'
+    'weaknesses',
+    'resistances',
+    'crafts',
+    'speeds',
+    'hardness'
   ] as const;
 
   export let selected: string[];
