@@ -15,7 +15,7 @@
   <div class="z-0">
     <CampaignHeader {campaign} {session} />
   </div>
-  <main class="flex-1 border-0 p-4 md:p-4 mx-auto max-w-6xl w-full z-0">
+  <main class="flex-1 border-0 p-4 md:p-4 mx-auto max-w-3xl w-full z-0">
     <Breadcrumbs />
     <slot />
     <Footer />

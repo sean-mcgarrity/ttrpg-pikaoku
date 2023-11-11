@@ -4,7 +4,8 @@
   import LinkButton from '$components/LinkButton.svelte';
   import ItemCardHeader from './item/[itemId]/RefinementCardHeader.svelte';
   import { getRefinementsForCampaign } from '$lib/persistance/monster-parts';
-  import { ArrowRight, HammerIcon, Link2, Navigation } from 'lucide-svelte';
+  import { ArrowRight, HammerIcon } from 'lucide-svelte';
+  import GhostLoaderPatyItem from './GhostLoaderPatyItem.svelte';
   import Heading from '$components/layout/Heading.svelte';
 
   $: campaignId = $page.params.campaignId;
@@ -17,7 +18,15 @@
     <Heading type="Section Heading">Party's items</Heading>
     <p>Your party's refined items are listed here. You can add new items or edit existing ones.</p>
   </div>
-  {#if $query.isSuccess}
+  {#if $query.isInitialLoading}
+    <div class=" flex flex-col gap-2 max-w-lg w-full mx-auto">
+      <GhostLoaderPatyItem />
+      <GhostLoaderPatyItem />
+      <GhostLoaderPatyItem />
+      <GhostLoaderPatyItem />
+      <GhostLoaderPatyItem />
+    </div>
+  {:else if $query.isSuccess}
     <div class=" flex flex-col gap-2 max-w-lg w-full mx-auto">
       {#each $query.data as item}
         <a
