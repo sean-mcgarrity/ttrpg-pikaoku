@@ -1,20 +1,13 @@
 <script lang="ts">
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
-  import {
-    deleteMpSource,
-    getUsableSourceById,
-    updateSource
-  } from '$lib/persistance/monster-parts';
+  import { getUsableSourceById } from '$lib/persistance/monster-parts';
   import { page } from '$app/stores';
   import LinkButton from '$components/LinkButton.svelte';
   import { getCampaignId } from '$lib/utils/contextual-helpers';
   import MonsterInfoCard from './MonsterInfoCard.svelte';
-  import BackButton from '$components/layout/BackButton.svelte';
   import { StepBack } from 'lucide-svelte';
 
   $: query = getUsableSourceById($page.params.sourceId);
-
-  const mutation = updateSource();
 
   $: monster = $query.data;
 </script>

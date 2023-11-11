@@ -4,7 +4,6 @@
   import LinkButton from '$components/LinkButton.svelte';
   import PartysItemsTable from './PartysItems.svelte';
   import Heading from '$components/layout/Heading.svelte';
-  import UsableMonsters from './UsableMonsters.svelte';
   import LandingLink from '$components/LandingLink.svelte';
 
   $: campaignId = $page.params.campaignId;
