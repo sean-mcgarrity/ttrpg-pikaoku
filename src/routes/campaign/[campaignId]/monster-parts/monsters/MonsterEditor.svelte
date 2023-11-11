@@ -13,6 +13,12 @@
   export let onSave: (monster: Partial<MP_Source>) => void;
   export let onDelete: () => void = null;
 
+  let handleDelete = () => {
+    if (onDelete && confirm('Are you sure you want to delete this monster?')) {
+      onDelete();
+    }
+  };
+
   let handleClick = () => {
     if (onSave) {
       onSave(monster);
@@ -37,7 +43,7 @@
       </LinkButton>
     {/if}
     {#if onDelete}
-      <Button on:click={onDelete}>Delete <Delete /></Button>
+      <Button on:click={handleDelete}>Delete <Delete /></Button>
     {/if}
     <Button on:click={handleClick}>Save <Save /></Button>
   </div>

@@ -20,7 +20,9 @@
   let deleteRefinementMutation = deleteRefinementChange();
 
   $: handleDelete = (id: number) => {
-    $deleteRefinementMutation.mutate(id);
+    if (confirm('Are you sure you want to delete this change?')) {
+      $deleteRefinementMutation.mutate(id);
+    }
   };
 
   $: console.log('changes', changes);
