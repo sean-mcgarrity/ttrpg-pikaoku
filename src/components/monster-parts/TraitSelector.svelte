@@ -39,7 +39,7 @@
   onMount(() => {
     const sortedDamageTypes = [...pf2eCore.DamageTypes].sort(byKeyAsc('name'));
     const sortedSkills = [...pf2eCore.Skills].sort(byKeyAsc('name'));
-    const sortedAbilities = [...pf2eCore.Abilities].sort(byKeyAsc('name'));
+    const sortedAbilities = [...pf2eCore.Abilities];
 
     resistances = [...sortedDamageTypes.map((d) => `resist:${d.id}`)];
     weaknesses = [...sortedDamageTypes.map((d) => `weak:${d.id}`)];
