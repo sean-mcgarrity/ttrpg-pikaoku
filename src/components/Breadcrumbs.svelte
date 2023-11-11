@@ -10,7 +10,7 @@
       href: `/campaign/${campaignId}`,
       text: $page.data.campaign.slug
     },
-    $page.url.href.includes('edit') && { text: 'Edit Campaign' },
+    $page.url.href.match(/campaign\/\d+\/edit/i) && { text: 'Edit Campaign' },
     isMonsterParts && {
       href: `/campaign/${campaignId}/monster-parts`,
       text: 'Monster Parts'
