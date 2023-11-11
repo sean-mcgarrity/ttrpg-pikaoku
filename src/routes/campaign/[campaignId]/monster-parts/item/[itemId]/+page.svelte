@@ -4,7 +4,7 @@
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
   import { getCurrentItem } from '$lib/persistance/monster-parts';
   import Button from '$components/Button.svelte';
-  import { Navigation2, PencilRuler } from 'lucide-svelte';
+  import { Navigation2, PencilRuler, X } from 'lucide-svelte';
   import AddImbuement from './AddImbuement.svelte';
   import { getUnusedImbuementSlots } from '$lib/systems/pf2e_monster_parts';
   import EditItemForm from './EditItemForm.svelte';
@@ -14,6 +14,8 @@
   import ImbuePane from './ImbuePane.svelte';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
+  import { fade, slide } from 'svelte/transition';
+
   let query = getCurrentItem();
 
   $: if ($query.isError && $query.error['code'] === 'PGRST116') {
@@ -28,12 +30,12 @@
   };
 </script>
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex flex-row gap-4">
   {#if $query.isFetching || $query.isLoading}
     <LoadingInsert fullPage={true} />
   {/if}
   {#if $query.data && $query.isSuccess}
-    <div class="flex-1 flex flex-col gap-4 w-full max-w-md mx-auto">
+    <div class="flex flex-col gap-4 max-w-sm min-w-sm min-w-[24rem] w-full">
       {#if !$query.isLoading && !!$query.data}
         <RefinementCard refinement={$query.data}>
           <svelte:fragment slot="buttons">
@@ -50,12 +52,14 @@
         </RefinementCard>
       {/if}
     </div>
-    <div class="flex flex-col">
-      {#if tab !== 'none'}
-        <Button on:click={() => (tab = 'none')} class="mx-auto mb-4">Cancel</Button>
-      {/if}
+    <div class="flex flex-col w-full">
       {#if tab === 'none'}
-        <div class="flex flex-col gap-2 justify-center items-center pt-4 w-full max-w-xs mx-auto">
+        <div
+          class="flex flex-col gap-2 justify-center items-center pt-4 w-full"
+          out:fade={{ duration: 75 }}
+          in:fade={{ duration: 75, delay: 75 }}
+        >
+          <Button class="pointer-events-none invisible mx-auto">Cancel</Button>
           <BigButton on:click={() => changeTab('refine')}>Refine</BigButton>
           {#if $query.data?.imbuements?.length > 0}
             <BigButton on:click={() => changeTab('imbue')}>Imbue</BigButton>
@@ -66,16 +70,27 @@
           <BigButton on:click={() => changeTab('changes')}>Changes</BigButton>
           <BigButton on:click={() => changeTab('edit')}>Edit</BigButton>
         </div>
-      {:else if tab === 'refine'}
-        <RefinePane item={$query.data} />
-      {:else if tab === 'imbue'}
-        <ImbuePane item={$query.data} />
-      {:else if tab === 'add-imbuement'}
-        <AddImbuement item={$query.data} afterAdd={() => (tab = 'none')} />
-      {:else if tab === 'edit'}
-        <EditItemForm refinement={$query.data} afterSave={() => (tab = 'quick-actions')} />
-      {:else if tab === 'changes'}
-        <RecentItemChanges item={$query.data} />
+      {:else}
+        <div
+          class="flex flex-col w-full"
+          in:fade={{
+            duration: 75,
+            delay: 75
+          }}
+        >
+          <Button on:click={() => (tab = 'none')} class="mx-auto mb-4">Cancel <X /></Button>
+          {#if tab === 'refine'}
+            <RefinePane item={$query.data} />
+          {:else if tab === 'imbue'}
+            <ImbuePane item={$query.data} />
+          {:else if tab === 'add-imbuement'}
+            <AddImbuement item={$query.data} afterAdd={() => (tab = 'none')} />
+          {:else if tab === 'edit'}
+            <EditItemForm refinement={$query.data} afterSave={() => (tab = 'quick-actions')} />
+          {:else if tab === 'changes'}
+            <RecentItemChanges item={$query.data} />
+          {/if}
+        </div>
       {/if}
     </div>
   {/if}
