@@ -25,12 +25,18 @@ dependencies:
     version: 0.263.0(svelte@3.55.1)
 
 devDependencies:
+  '@playwright/test':
+    specifier: ^1.39.0
+    version: 1.39.0
   '@sveltejs/adapter-auto':
     specifier: 2.0.0
     version: 2.0.0(@sveltejs/kit@1.5.0)
   '@sveltejs/kit':
     specifier: 1.5.0
     version: 1.5.0(svelte@3.55.1)(vite@4.4.6)
+  '@types/node':
+    specifier: ^20.9.0
+    version: 20.9.0
   autoprefixer:
     specifier: ^10.4.14
     version: 10.4.14(postcss@8.4.27)
@@ -75,7 +81,7 @@ devDependencies:
     version: 5.2.2
   vite:
     specifier: ^4.4.6
-    version: 4.4.6(@types/node@20.4.4)
+    version: 4.4.6(@types/node@20.9.0)
   vitest:
     specifier: ^0.34.3
     version: 0.34.3
@@ -784,7 +790,7 @@ packages:
     engines: {node: ^8.13.0 || >=10.10.0}
     dependencies:
       '@grpc/proto-loader': 0.7.8
-      '@types/node': 20.4.4
+      '@types/node': 20.9.0
     dev: false
 
   /@grpc/proto-loader@0.6.13:
@@ -923,6 +929,14 @@ packages:
     dependencies:
       mkdirp: 1.0.4
       rimraf: 3.0.2
+    dev: true
+
+  /@playwright/test@1.39.0:
+    resolution: {integrity: sha512-3u1iFqgzl7zr004bGPYiN/5EZpRUSFddQBra8Rqll5N0/vfpqlP9I9EXqAoGacuAbX6c9Ulg/Cjqglp5VkK6UQ==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      playwright: 1.39.0
     dev: true
 
   /@polka/url@1.0.0-next.21:
@@ -1083,7 +1097,7 @@ packages:
       svelte: 3.55.1
       tiny-glob: 0.2.9
       undici: 5.18.0
-      vite: 4.4.6(@types/node@20.4.4)
+      vite: 4.4.6(@types/node@20.9.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -1098,7 +1112,7 @@ packages:
       '@sveltejs/vite-plugin-svelte': 2.4.2(svelte@3.55.1)(vite@4.4.6)
       debug: 4.3.4
       svelte: 3.55.1
-      vite: 4.4.6(@types/node@20.4.4)
+      vite: 4.4.6(@types/node@20.9.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -1116,7 +1130,7 @@ packages:
       magic-string: 0.30.1
       svelte: 3.55.1
       svelte-hmr: 0.15.2(svelte@3.55.1)
-      vite: 4.4.6(@types/node@20.4.4)
+      vite: 4.4.6(@types/node@20.9.0)
       vitefu: 0.2.4(vite@4.4.6)
     transitivePeerDependencies:
       - supports-color
@@ -1165,8 +1179,10 @@ packages:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
     dev: true
 
-  /@types/node@20.4.4:
-    resolution: {integrity: sha512-CukZhumInROvLq3+b5gLev+vgpsIqC2D0deQr/yS1WnxvmYLlJXZpaQrQiseMY+6xusl79E04UjWoqyr+t1/Ew==}
+  /@types/node@20.9.0:
+    resolution: {integrity: sha512-nekiGu2NDb1BcVofVcEKMIwzlx4NjHlcjhoxxKBNLtz15Y1z7MYf549DFvkHSId02Ax6kGwWntIBPC3l/JZcmw==}
+    dependencies:
+      undici-types: 5.26.5
 
   /@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
@@ -1183,7 +1199,7 @@ packages:
   /@types/websocket@1.0.5:
     resolution: {integrity: sha512-NbsqiNX9CnEfC1Z0Vf4mE1SgAJ07JnRYcNex7AJ9zAVzmiGHmjKFEk7O4TJIsgv2B1sLEb6owKFZrACwdYngsQ==}
     dependencies:
-      '@types/node': 20.4.4
+      '@types/node': 20.9.0
     dev: false
 
   /@vitest/expect@0.34.3:
@@ -3129,6 +3145,22 @@ packages:
       pathe: 1.1.1
     dev: true
 
+  /playwright-core@1.39.0:
+    resolution: {integrity: sha512-+k4pdZgs1qiM+OUkSjx96YiKsXsmb59evFoqv8SKO067qBA+Z2s/dCzJij/ZhdQcs2zlTAgRKfeiiLm8PQ2qvw==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dev: true
+
+  /playwright@1.39.0:
+    resolution: {integrity: sha512-naE5QT11uC/Oiq0BwZ50gDmy8c8WLPRTEWuSSFVG2egBka/1qMoSqYQcROMT9zLwJ86oPofcTH2jBY/5wWOgIw==}
+    engines: {node: '>=16'}
+    hasBin: true
+    dependencies:
+      playwright-core: 1.39.0
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
   /postcss-import@15.1.0(postcss@8.4.27):
     resolution: {integrity: sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==}
     engines: {node: '>=14.0.0'}
@@ -3318,7 +3350,7 @@ packages:
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
       '@types/long': 4.0.2
-      '@types/node': 20.4.4
+      '@types/node': 20.9.0
       long: 4.0.0
     dev: false
 
@@ -3337,7 +3369,7 @@ packages:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 20.4.4
+      '@types/node': 20.9.0
       long: 5.2.3
     dev: false
 
@@ -3983,6 +4015,9 @@ packages:
     resolution: {integrity: sha512-bRn3CsoojyNStCZe0BG0Mt4Nr/4KF+rhFlnNXybgqt5pXHNFRlqinSoQaTrGyzE4X8aHplSb+TorH+COin9Yxw==}
     dev: true
 
+  /undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
+
   /undici@5.18.0:
     resolution: {integrity: sha512-1iVwbhonhFytNdg0P4PqyIAXbdlVZVebtPDvuM36m66mRw4OGrCm2MYynJv/UENFLdP13J1nPVQzVE2zTs1OeA==}
     engines: {node: '>=12.18'}
@@ -4051,7 +4086,7 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /vite-node@0.34.3(@types/node@20.4.4):
+  /vite-node@0.34.3(@types/node@20.9.0):
     resolution: {integrity: sha512-+0TzJf1g0tYXj6tR2vEyiA42OPq68QkRZCu/ERSo2PtsDJfBpDyEfuKbRvLmZqi/CgC7SCBtyC+WjTGNMRIaig==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -4061,7 +4096,7 @@ packages:
       mlly: 1.4.1
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 4.4.6(@types/node@20.4.4)
+      vite: 4.4.6(@types/node@20.9.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -4073,7 +4108,7 @@ packages:
       - terser
     dev: true
 
-  /vite@4.4.6(@types/node@20.4.4):
+  /vite@4.4.6(@types/node@20.9.0):
     resolution: {integrity: sha512-EY6Mm8vJ++S3D4tNAckaZfw3JwG3wa794Vt70M6cNJ6NxT87yhq7EC8Rcap3ahyHdo8AhCmV9PTk+vG1HiYn1A==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -4101,7 +4136,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.4.4
+      '@types/node': 20.9.0
       esbuild: 0.18.16
       postcss: 8.4.27
       rollup: 3.26.3
@@ -4116,7 +4151,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 4.4.6(@types/node@20.4.4)
+      vite: 4.4.6(@types/node@20.9.0)
 
   /vitest@0.34.3:
     resolution: {integrity: sha512-7+VA5Iw4S3USYk+qwPxHl8plCMhA5rtfwMjgoQXMT7rO5ldWcdsdo3U1QD289JgglGK4WeOzgoLTsGFu6VISyQ==}
@@ -4151,7 +4186,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.5
       '@types/chai-subset': 1.3.3
-      '@types/node': 20.4.4
+      '@types/node': 20.9.0
       '@vitest/expect': 0.34.3
       '@vitest/runner': 0.34.3
       '@vitest/snapshot': 0.34.3
@@ -4170,8 +4205,8 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.0
       tinypool: 0.7.0
-      vite: 4.4.6(@types/node@20.4.4)
-      vite-node: 0.34.3(@types/node@20.4.4)
+      vite: 4.4.6(@types/node@20.9.0)
+      vite-node: 0.34.3(@types/node@20.9.0)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
