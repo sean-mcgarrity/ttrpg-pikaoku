@@ -1,16 +1,23 @@
 <script lang="ts">
-  import {
-    calculateRefinementLevel,
-    calculateSellCostOfRefinement,
-    type MP_Refinement
-  } from '$lib/systems/pf2e_monster_parts';
+  import { calculateRefinementLevel, type MP_Refinement } from '$lib/systems/pf2e_monster_parts';
+  import cs from 'classnames';
 
   export let item: MP_Refinement;
   $: itemLevel = calculateRefinementLevel(item);
-  $: sellCost = calculateSellCostOfRefinement(item);
 </script>
 
-<div class="bg-[#6666cc] flex flex-row text-white">
+<div
+  class={cs(
+    {
+      'bg-refinement-armor': item.type === 'armor',
+      'bg-refinement-weapon': item.type === 'weapon',
+      'bg-refinement-skill': item.type === 'skill',
+      'bg-refinement-perception': item.type === 'perception',
+      'bg-refinement-shield': item.type === 'shield'
+    },
+    'flex flex-row text-white'
+  )}
+>
   <div class="w-full px-4 py-2">
     <h1 class="text-2xl font-bold tracking-wide uppercase">
       {item.name}

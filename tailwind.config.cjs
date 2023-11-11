@@ -8,7 +8,14 @@ module.exports = {
         hotPink: '#FF1966',
         dark: '#111111',
         light: '#FAFAFA',
-        offblack: '#333333'
+        offblack: '#333333',
+        refinement: {
+          armor: '#aa8844',
+          weapon: '#aa4444',
+          skill: '#4444aa',
+          perception: '#8844aa',
+          shield: '#44aaaa'
+        }
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

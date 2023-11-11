@@ -11,6 +11,7 @@
   import { filterByLevelGt, reduceToHighestLevelLte } from '$lib/utils/iterators';
   import { ArrowDownIcon } from 'lucide-svelte';
   import { slide } from 'svelte/transition';
+  import cs from 'classnames';
 
   export let refinement: MP_Refinement;
 
@@ -27,6 +28,8 @@
   $: typeBenefits = REFINEMENT_BENEFITS[refinement.type].filter((b) => b.benefits.length > 0);
   $: currentBenefits = typeBenefits.reduce(reduceToHighestLevelLte(itemLevel), null);
   $: futureLevels = typeBenefits.filter(filterByLevelGt(itemLevel));
+
+  $: itemType = refinement.type;
 </script>
 
 <div class="px-4 py-2 flex flex-col gap-2 overflow-hidden">
@@ -44,7 +47,13 @@
       progress={progressPercentage}
       min={itemLevel}
       max={itemLevel + 1}
-      barColor="#3080f0"
+      progressClass={cs({
+        'bg-refinement-armor': itemType === 'armor',
+        'bg-refinement-weapon': itemType === 'weapon',
+        'bg-refinement-skill': itemType === 'skill',
+        'bg-refinement-perception': itemType === 'perception',
+        'bg-refinement-shield': itemType === 'shield'
+      })}
     />
   </div>
   <div class="w-full text-center font-bold text-lg">{progress} / {upgradeCost}</div>

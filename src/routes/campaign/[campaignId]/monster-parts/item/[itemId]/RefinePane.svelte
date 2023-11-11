@@ -5,7 +5,6 @@
   import { getSourcesForItems, insertRefinementChange } from '$lib/persistance/monster-parts';
   import Heading from '$components/layout/Heading.svelte';
   import { FileWarning } from 'lucide-svelte';
-  import { getCampaignId } from '$lib/utils/contextual-helpers';
 
   export let item: MP_Refinement;
 
@@ -17,14 +16,12 @@
   $: refinementActions =
     $queryMats.data?.filter(whereKeyOverlap('enables', item?.base_item.requires ?? [])) ?? [];
   $: refine = insertRefinementChange();
-
-  $: console.log(refinementActions);
 </script>
 
-<div class="flex flex-col">
+<div class="flex flex-col gap-2">
   {#if $queryMats.isFetched}
     {#if refinementActions.length > 0}
-      <div class="mb-4">
+      <div class="mb-2">
         <Heading type="Subsection Heading">Refine Item</Heading>
         <p class="text-sm">
           Click one of your collected monster parts below to consume them and increase the level of

@@ -58,7 +58,7 @@
         progress={percentageToNextLevel}
         min={highestLevelGained.level}
         max={nextLevel.level}
-        barColor="#6666cc"
+        barColor="#DAA520"
       />
     </div>
     <div class="w-full text-center font-bold text-lg">{progress} / {costOfNextLevel}</div>
