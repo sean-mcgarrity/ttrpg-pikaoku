@@ -1,7 +1,7 @@
 <script lang="ts">
   import EditCampaign from '$components/forms/EditCampaign.svelte';
-  import EditCampaignCharacters from '$components/forms/EditCampaignCharacters.svelte';
   import BackButton from '$components/layout/BackButton.svelte';
+  import CampaignCharcatersEditor from './AdminCampaignCharacters.svelte';
 </script>
 
 <div class="max-w-2xl mx-auto">
@@ -11,6 +11,6 @@
   </h1>
   <div class="flex flex-col gap-8">
     <EditCampaign />
-    <EditCampaignCharacters />
+    <CampaignCharcatersEditor />
   </div>
 </div>

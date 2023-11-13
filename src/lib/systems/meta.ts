@@ -16,4 +16,6 @@ export interface PlayerCharacter {
   active: boolean;
   campaign_id: number;
   created_at: string;
+  img_src: string;
+  status: 'dead' | 'alive';
 }
