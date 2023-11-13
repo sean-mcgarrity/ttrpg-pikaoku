@@ -10,7 +10,8 @@
     "check:watch": "svelte-check --tsconfig ./jsconfig.json --watch",
     "lint": "prettier --check .",
     "format": "prettier --write .",
-    "test": "vitest"
+    "test": "vitest",
+    "update-types": "npx supabase gen types typescript --project-id \"$PROJECT_REF\" > types/supabase.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.39.0",
