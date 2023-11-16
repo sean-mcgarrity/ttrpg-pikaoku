@@ -11,7 +11,7 @@
     "lint": "prettier --check .",
     "format": "prettier --write .",
     "test": "vitest",
-    "update-types": "npx supabase gen types typescript --project-id \"$PROJECT_REF\" > types/supabase.ts"
+    "update-types": "npx supabase gen types typescript --project-id \"$PROJECT_REF\" > types/database/index.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.39.0",
