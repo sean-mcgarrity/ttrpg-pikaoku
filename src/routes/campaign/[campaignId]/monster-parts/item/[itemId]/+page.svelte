@@ -14,7 +14,7 @@
   import ImbuePane from './ImbuePane.svelte';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import { fade, slide } from 'svelte/transition';
+  import { fade } from 'svelte/transition';
 
   let query = getCurrentItem();
 

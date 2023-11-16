@@ -7,18 +7,18 @@ import {
   type MP_Refinement,
   type MP_UsableSource
 } from '$lib/systems/pf2e_monster_parts';
-import { extractData } from '$lib/utils/requests';
+import { extractData, getSupabase } from '$lib/utils/requests';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { createMutation, createQuery, useQueryClient } from '@tanstack/svelte-query';
 import { get } from 'svelte/store';
 
 export const getCurrentItem = () => {
   const currentPage = get(page);
-  const supabase: SupabaseClient = currentPage.data.supabase;
-  return createQuery<MP_Refinement>({
-    queryKey: ['refinements', parseInt(currentPage.params.itemId)],
+  const itemId = parseInt(currentPage.params.itemId);
+  const supabase = getSupabase();
+  return createQuery({
+    queryKey: ['refinements', itemId],
     queryFn: async () => {
-      const itemId = parseInt(currentPage.params.itemId);
       if (!itemId) return null;
       return extractData(
         await supabase

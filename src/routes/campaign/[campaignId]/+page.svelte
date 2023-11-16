@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import AdminOnly from '$components/AdminOnly.svelte';
-  import LandingLink from '$components/LandingLink.svelte';
+  import LandingLink from '$components/BigLink.svelte';
   import LinkButton from '$components/LinkButton.svelte';
   import { getCharactersQuery } from '$lib/persistance/meta';
 
@@ -35,11 +35,17 @@
   </div>
   <div class="w-full flex flex-col gap-4 mx-auto">
     <LandingLink
+      size="md"
       title="Monster Parts"
       href={`/campaign/${campaignId}/monster-parts`}
       bgImgSrc="/images/monster-parts-banner.webp"
     />
-    <LandingLink title="BASTION BUILDING" href={`#`} bgImgSrc="https://i.imgur.com/WFsKg7W.jpeg" />
+    <LandingLink
+      size="md"
+      title="BASTION BUILDING"
+      href={`/campaign/${campaignId}/bastions`}
+      bgImgSrc="https://i.imgur.com/WFsKg7W.jpeg"
+    />
   </div>
   <AdminOnly>
     <div class="w-full mt-8 mx-auto max-w-sm text-center">

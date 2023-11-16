@@ -2,5 +2,7 @@ import { page } from '$app/stores';
 import { get } from 'svelte/store';
 
 export const getCampaignId = () => {
-  return get(page).params.campaignId;
+  const fromQuery = get(page).params.campaignId;
+  if (fromQuery) return parseInt(fromQuery);
+  throw new Error('Campaign ID not found in query params');
 };
