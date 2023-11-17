@@ -386,6 +386,7 @@ export interface Database {
         Row: {
           campaign_id: number
           created_at: string
+          description: string
           id: number
           name: string
           pinned: boolean
@@ -393,6 +394,7 @@ export interface Database {
         Insert: {
           campaign_id: number
           created_at?: string
+          description?: string
           id?: number
           name?: string
           pinned?: boolean
@@ -400,6 +402,7 @@ export interface Database {
         Update: {
           campaign_id?: number
           created_at?: string
+          description?: string
           id?: number
           name?: string
           pinned?: boolean
