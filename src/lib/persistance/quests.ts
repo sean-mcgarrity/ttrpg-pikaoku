@@ -72,6 +72,7 @@ export const getQuestQuery = (questId: string | number) => {
 
 type CreateNoteParams = Database['public']['Tables']['quest_note']['Insert'];
 export const addQuestNoteMutation = () => {
+  const queryClient = useQueryClient();
   return createMutation<unknown, unknown, CreateNoteParams>({
     mutationKey: ['quests', 'add-note'],
     mutationFn: async (input) => {
@@ -80,7 +81,7 @@ export const addQuestNoteMutation = () => {
       if (response.error) {
         throw response.error;
       }
-      useQueryClient().refetchQueries(['quests']);
+      queryClient.invalidateQueries(['quests']);
       return extractData(response);
     }
   });
