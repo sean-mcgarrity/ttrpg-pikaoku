@@ -1,9 +1,11 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import AdminOnly from '$components/AdminOnly.svelte';
+  import BackTo from '$components/BackTo.svelte';
   import LandingLink from '$components/BigLink.svelte';
   import LinkButton from '$components/LinkButton.svelte';
   import { getCharactersQuery } from '$lib/persistance/meta';
+  import QuestsPeek from './QuestsPeek.svelte';
 
   $: campaignId = $page.params.campaignId;
   const charactersQ = getCharactersQuery();
@@ -16,8 +18,10 @@
   <title>Sean Runs Games</title>
 </svelte:head>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-  <div>
+<BackTo href={`/`} text="Campaigns" />
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div class="md:col-span-2 flex flex-col gap-4">
+    <QuestsPeek />
     <ul class="">
       {#if activeCharacters}
         {#each activeCharacters as character}
@@ -35,13 +39,13 @@
   </div>
   <div class="w-full flex flex-col gap-4 mx-auto">
     <LandingLink
-      size="md"
+      size="sm"
       title="Monster Parts"
       href={`/campaign/${campaignId}/monster-parts`}
       bgImgSrc="/images/monster-parts-banner.webp"
     />
     <LandingLink
-      size="md"
+      size="sm"
       title="BASTION BUILDING"
       href={`/campaign/${campaignId}/bastions`}
       bgImgSrc="https://i.imgur.com/WFsKg7W.jpeg"

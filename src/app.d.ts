@@ -10,3 +10,16 @@ declare namespace App {
 
   // interface Platform {}
 }
+
+export type Row<T extends keyof Database['public']['Tables']> =
+  Database['public']['Tables'][T]['Row'];
+export type InsertDto<T extends keyof Database['public']['Tables']> =
+  Database['public']['Tables'][T]['Insert'];
+export type UpdateDto<T extends keyof Database['public']['Tables']> =
+  Database['public']['Tables'][T]['Update'];
+
+export type Tables = Database['public']['Tables'];
+
+export type Quest = Row<'quest'> & {
+  notes?: Row<'quest_note'>[];
+};

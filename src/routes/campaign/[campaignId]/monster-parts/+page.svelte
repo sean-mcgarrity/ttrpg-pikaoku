@@ -5,10 +5,13 @@
   import PartysItemsTable from './PartysItems.svelte';
   import Heading from '$components/layout/Heading.svelte';
   import LandingLink from '$components/BigLink.svelte';
+  import BackTo from '$components/BackTo.svelte';
+  import BackToCampaign from '../BackToCampaign.svelte';
 
   $: campaignId = $page.params.campaignId;
 </script>
 
+<BackToCampaign />
 <div class="flex flex-col gap-8">
   <div class="">
     <Heading type="Page Heading">Monster Parts Subsystem</Heading>

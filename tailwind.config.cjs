@@ -9,6 +9,7 @@ module.exports = {
         dark: '#111111',
         light: '#FAFAFA',
         offblack: '#333333',
+        offwhite: '#FAF9F6',
         refinement: {
           armor: '#aa8844',
           weapon: '#aa4444',

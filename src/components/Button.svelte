@@ -8,6 +8,7 @@
   export let outlined = false;
   export let disabled = false;
   export let dark = false;
+  export let title = null;
 </script>
 
 <button
@@ -24,6 +25,7 @@
     className,
     disabled && 'opacity-30 cursor-not-allowed pointer-events-none'
   )}
+  {title}
 >
   <slot />
 </button>
