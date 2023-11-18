@@ -20,5 +20,7 @@
 
 <form class="flex flex-row gap-2 px-4 items-center" on:submit={handleAdd}>
   <TextField class="sm:col-span-3" bind:value placeholder="New comment..." />
-  <Button disabled={value !== '' && !$m.isIdle}>Add <MessageCircle class="fill-white" /></Button>
+  <Button disabled={value !== '' && !$m.isIdle} type="submit"
+    >Add <MessageCircle class="fill-white" /></Button
+  >
 </form>
