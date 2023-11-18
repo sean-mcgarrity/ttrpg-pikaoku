@@ -2,6 +2,7 @@
   import LinkButton from '$components/LinkButton.svelte';
   import QuestItem from '$components/quests/QuestItem.svelte';
   import { getPinnedQuestsQuery } from '$lib/persistance/quests';
+  import { getCampaignId } from '$lib/utils/contextual-helpers';
   import { ArrowRight, Plus } from 'lucide-svelte';
 
   $: console.log('hello');
@@ -12,7 +13,9 @@
 <div class="">
   <div class="w-full justify-between flex flex-row">
     <h2 class="text-xl mb-2">Quests</h2>
-    <LinkButton href="/campaign/1/quests" class="text-sm">See All <ArrowRight /></LinkButton>
+    <LinkButton href={`/campaign/${getCampaignId()}/quests`} class="text-sm"
+      >See All <ArrowRight /></LinkButton
+    >
   </div>
   {#if $questQuery.error}
     <p class="text-red-500">Error: {$questQuery.error}</p>

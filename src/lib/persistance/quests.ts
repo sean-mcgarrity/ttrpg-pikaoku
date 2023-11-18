@@ -14,8 +14,8 @@ export const getQuestsQuery = () => {
         await supabase
           .from('quest')
           .select('*, notes:quest_note (*)')
-          .order('name')
           .eq('campaign_id', campaignId)
+          .order('name')
       );
     }
   });
