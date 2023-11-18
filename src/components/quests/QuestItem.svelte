@@ -113,7 +113,7 @@
             {note.content}
           </div>
         {:else}
-          <div class="text-white/80 italic">No notes added yet</div>
+          <div class="text-white/80 italic">No updates added yet</div>
         {/each}
       </div>
       <div>
