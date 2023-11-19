@@ -43,18 +43,16 @@
 
   $: pinQuest = async () => {
     await $update.mutateAsync({ id: quest.id, pinned: !quest.pinned });
-    queryClient.refetchQueries(['quests']);
   };
 
   $: updateQuestDetails = async () => {
     await $update.mutateAsync({ id: quest.id, name: quest.name, description: quest.description });
-    queryClient.refetchQueries(['quests']);
+    console.log('after updated quest');
     editing = false;
   };
 
   $: deleteQuest = async () => {
     await $del.mutateAsync(quest.id);
-    queryClient.refetchQueries(['quests']);
   };
 
   $: deleteComment = deleteQuestNoteMutation();

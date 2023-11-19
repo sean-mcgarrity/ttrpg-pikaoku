@@ -95,7 +95,6 @@ export const addQuestNoteMutation = () => {
 
 export const updateQuestMutation = () => {
   const supabase = getSupabase();
-  const queryClient = useQueryClient();
   return createMutation<unknown, unknown, Database['public']['Tables']['quest']['Update']>({
     mutationKey: ['quests', 'update'],
     mutationFn: async (input) => {
@@ -103,8 +102,13 @@ export const updateQuestMutation = () => {
       if (response.error) {
         throw response.error;
       }
-      queryClient.refetchQueries(['quests']);
+
       return extractData(response);
+    },
+    onSuccess: () => {
+      const queryClient = useQueryClient();
+      const campaignId = getCampaignId();
+      queryClient.invalidateQueries(['quests', campaignId]);
     }
   });
 };
