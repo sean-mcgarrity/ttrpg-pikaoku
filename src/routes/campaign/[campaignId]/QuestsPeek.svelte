@@ -24,7 +24,7 @@
     <p class="text-yellow-500">Loading...</p>
   {:else if $questQuery.data}
     <div class="flex flex-col gap-2">
-      {#each $questQuery.data as quest}
+      {#each $questQuery.data as quest (quest.id)}
         <QuestItem {quest} preview />
       {:else}
         <div class="italic text-sm text-white/80">No quests have been pinned</div>

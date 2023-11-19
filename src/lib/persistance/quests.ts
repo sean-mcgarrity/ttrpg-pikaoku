@@ -58,6 +58,7 @@ export const getPinnedQuestsQuery = () => {
           .eq('campaign_id', campaignId)
           .eq('pinned', true)
           .eq('finished', false)
+          .order('name')
       );
     },
     staleTime: 1000 * 60 * 60 * 24
