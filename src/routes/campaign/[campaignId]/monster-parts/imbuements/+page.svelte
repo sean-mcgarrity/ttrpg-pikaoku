@@ -34,10 +34,7 @@
 </script>
 
 <div>
-  <Heading type="Page Heading">
-    <BackButton />
-    All Imbuements</Heading
-  >
+  <Heading type="Page Heading">All Imbuements</Heading>
   <p>
     Below lists all imbuements, a summary of their effects, and what traits they require. Click an
     imbuement to see more details.

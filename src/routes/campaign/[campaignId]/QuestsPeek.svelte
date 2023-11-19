@@ -1,5 +1,6 @@
 <script lang="ts">
   import LinkButton from '$components/LinkButton.svelte';
+  import Heading from '$components/layout/Heading.svelte';
   import QuestItem from '$components/quests/QuestItem.svelte';
   import { getPinnedQuestsQuery } from '$lib/persistance/quests';
   import { getCampaignId } from '$lib/utils/contextual-helpers';
@@ -12,7 +13,7 @@
 
 <div class="">
   <div class="w-full justify-between flex flex-row">
-    <h2 class="text-xl mb-2">Quests</h2>
+    <Heading type="Section Heading">Pinned Quests</Heading>
     <LinkButton href={`/campaign/${getCampaignId()}/quests`} class="text-sm"
       >See All <ArrowRight /></LinkButton
     >

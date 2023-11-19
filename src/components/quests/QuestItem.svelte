@@ -1,13 +1,17 @@
 <script lang="ts">
   import cs from 'classnames';
   import Button from '$components/Button.svelte';
-  import { CheckCircle, ChevronDown, Pencil, Pin, Save, Trash } from 'lucide-svelte';
+  import { CheckCircle, ChevronDown, Pencil, Pin, Save, SaveIcon, Trash } from 'lucide-svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
   import type { Quest } from 'src/app';
   import { slide, fly } from 'svelte/transition';
   import AddQuestNoteForm from './AddQuestNoteForm.svelte';
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
-  import { deleteQuestMutation, updateQuestMutation } from '$lib/persistance/quests';
+  import {
+    deleteQuestMutation,
+    deleteQuestNoteMutation,
+    updateQuestMutation
+  } from '$lib/persistance/quests';
   import { useQueryClient } from '@tanstack/svelte-query';
 
   const queryClient = useQueryClient();
@@ -15,8 +19,24 @@
   export let quest: Quest;
   export let preview = false;
 
+  $: isFinished = quest.finished === true;
+
   let expanded = false;
   let editing = false;
+
+  $: handleEditToggle = (newValue: boolean = null) => {
+    editing = newValue ?? !editing;
+    if (editing === true) {
+      expanded = true;
+    }
+  };
+
+  $: handleExpandToggle = () => {
+    expanded = !expanded;
+    if (expanded === false) {
+      editing = false;
+    }
+  };
 
   let update = updateQuestMutation();
   let del = deleteQuestMutation();
@@ -37,6 +57,11 @@
     queryClient.refetchQueries(['quests']);
   };
 
+  $: deleteComment = deleteQuestNoteMutation();
+  $: handleDeleteComment = async (id: number) => {
+    await $deleteComment.mutateAsync(id);
+  };
+
   $: loading = $update.isLoading && $del.isLoading;
 </script>
 
@@ -55,7 +80,7 @@
           )}
         />
       </Button>
-      <Button on:click={() => (expanded = !expanded)} title="Expand quest details">
+      <Button on:click={handleExpandToggle} title="Expand quest details">
         <ChevronDown
           class={cs('transition-transform duration-300', expanded ? 'rotate-0' : '-rotate-90')}
         />
@@ -72,11 +97,11 @@
       <div class="grid grid-cols-3 gap-2 items-center">
         {#if editing}
           <Button on:click={updateQuestDetails} title="Save changes">
-            <Save class="text-green-800 fill-green-400" />
+            <SaveIcon class="text-green-400" />
           </Button>
         {:else}
-          <Button on:click={() => (editing = true)} title="Edit quest details">
-            <Pencil class="text-blue-700" />
+          <Button on:click={() => handleEditToggle(true)} title="Edit quest details">
+            <Pencil class="text-cyan-400" />
           </Button>
         {/if}
         <Button
@@ -108,9 +133,25 @@
         {/if}
       </div>
       <div class=" text-white/80 px-4 flex flex-col gap-2">
-        {#each quest.notes as note}
-          <div class="bg-offwhite/95 text-offblack rounded-t-xl rounded-br-2xl p-2" in:fly={{}}>
+        {#each quest.notes as note (note.id)}
+          <div
+            class="bg-offwhite/95 text-offblack rounded-t-xl rounded-br-2xl p-2 flex flex-row"
+            transition:fly
+          >
             {note.content}
+            {#if editing}
+              <Button
+                class="ml-auto"
+                on:click={async () => {
+                  if (confirm('Are you sure you want to delete this comment?')) {
+                    await handleDeleteComment(note.id);
+                  }
+                }}
+                title="Delete comment"
+              >
+                <Trash class="text-red-500" />
+              </Button>
+            {/if}
           </div>
         {:else}
           <div class="text-white/80 italic">No updates added yet</div>

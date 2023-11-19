@@ -8,7 +8,7 @@ export const getQuestsQuery = () => {
   const supabase = getSupabase();
   const campaignId = getCampaignId();
   return createQuery({
-    queryKey: ['quests'],
+    queryKey: ['quests', campaignId],
     queryFn: async () => {
       return extractData(
         await supabase
@@ -17,15 +17,17 @@ export const getQuestsQuery = () => {
           .eq('campaign_id', campaignId)
           .order('name')
       );
-    }
+    },
+    staleTime: 1000 * 60 * 60 * 24
   });
 };
 
 type CreateQuestParams = Omit<Database['public']['Tables']['quest']['Insert'], 'campaign_id'>;
 export const createQuestMutation = () => {
   const queryClient = useQueryClient();
+  const campaignId = getCampaignId();
   return createMutation<unknown, unknown, CreateQuestParams>({
-    mutationKey: ['quests', 'create'],
+    mutationKey: ['quests', campaignId, 'create'],
     mutationFn: async (input) => {
       const supabase = getSupabase();
       const campaignId = getCampaignId();
@@ -44,8 +46,9 @@ export const createQuestMutation = () => {
 
 export const getPinnedQuestsQuery = () => {
   const supabase = getSupabase();
+  const campaignId = getCampaignId();
   return createQuery({
-    queryKey: ['quests', 'pinned'],
+    queryKey: ['quests', campaignId, 'pinned'],
     queryFn: async () => {
       const campaignId = getCampaignId();
       return extractData(
@@ -56,7 +59,8 @@ export const getPinnedQuestsQuery = () => {
           .eq('pinned', true)
           .eq('finished', false)
       );
-    }
+    },
+    staleTime: 1000 * 60 * 60 * 24
   });
 };
 
@@ -73,8 +77,9 @@ export const getQuestQuery = (questId: string | number) => {
 type CreateNoteParams = Database['public']['Tables']['quest_note']['Insert'];
 export const addQuestNoteMutation = () => {
   const queryClient = useQueryClient();
+  const campaignId = getCampaignId();
   return createMutation<unknown, unknown, CreateNoteParams>({
-    mutationKey: ['quests', 'add-note'],
+    mutationKey: ['quests', campaignId, 'add-note'],
     mutationFn: async (input) => {
       const supabase = getSupabase();
       const response = await supabase.from('quest_note').insert(input);
@@ -97,7 +102,6 @@ export const updateQuestMutation = () => {
       if (response.error) {
         throw response.error;
       }
-      queryClient.invalidateQueries(['quests', input.id]);
       queryClient.refetchQueries(['quests']);
       return extractData(response);
     }
@@ -111,6 +115,21 @@ export const deleteQuestMutation = () => {
     mutationKey: ['quests', 'delete'],
     mutationFn: async (questId: number) => {
       const response = await supabase.from('quest').delete().eq('id', questId);
+      if (response.error) {
+        throw response.error;
+      }
+      queryClient.invalidateQueries(['quests']);
+    }
+  });
+};
+
+export const deleteQuestNoteMutation = () => {
+  const supabase = getSupabase();
+  const queryClient = useQueryClient();
+  return createMutation({
+    mutationKey: ['quests', 'delete-note'],
+    mutationFn: async (noteId: number) => {
+      const response = await supabase.from('quest_note').delete().eq('id', noteId);
       if (response.error) {
         throw response.error;
       }

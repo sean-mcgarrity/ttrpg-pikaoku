@@ -15,6 +15,8 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { fade } from 'svelte/transition';
+  import BackToCampaign from '../../../BackToCampaign.svelte';
+  import BackToMonsterParts from '../../BackToMonsterParts.svelte';
 
   let query = getCurrentItem();
 

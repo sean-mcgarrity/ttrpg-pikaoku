@@ -26,10 +26,7 @@
   $: admin = isAdmin($page.data.session);
 </script>
 
-<Heading type="Page Heading">
-  <BackButton />
-  Campaign Monsters</Heading
->
+<Heading type="Page Heading">Campaign Monsters</Heading>
 
 <p class="mb-6">
   All the monsters you've slain and retrieved parts from can be found here. You can use these

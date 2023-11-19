@@ -9,6 +9,7 @@
   import AdminOnly from '$components/AdminOnly.svelte';
   import { goto } from '$app/navigation';
   import Button from '$components/Button.svelte';
+  import BackTo from '$components/BackTo.svelte';
 
   $: query = getUsableSourceById($page.params.sourceId);
 
@@ -26,12 +27,10 @@
   };
 </script>
 
+<BackTo href={`/campaign/${getCampaignId()}/monster-parts/monsters`} text="monsters" />
 <div class="relative pt-4">
   <div class="flex flex-col sm:flex-row gap-4 w-full">
     <div class="flex flex-col justify-center items-center w-full gap-4">
-      <LinkButton href={`/campaign/${getCampaignId()}/monster-parts/monsters`}
-        ><StepBack /> Back to all monsters</LinkButton
-      >
       {#if $query.isInitialLoading}
         <LoadingInsert />
       {:else if $query.isFetched && !!$query.data}
