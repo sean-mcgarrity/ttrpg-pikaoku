@@ -120,7 +120,7 @@
   </div>
 
   {#if expanded}
-    <div class="px-4 pt-2 pb-4 flex flex-col gap-4" transition:slide>
+    <div class="px-8 pt-2 pb-4 flex flex-col gap-2" transition:slide|local>
       <div>
         {#if editing}
           <TextField bind:value={quest.description} placeholder="Quest description" />
@@ -130,11 +130,11 @@
           </div>
         {/if}
       </div>
-      <div class=" text-white/80 px-4 flex flex-col gap-2">
+      <div class=" text-white/80 flex flex-col gap-2">
         {#each quest.notes as note (note.id)}
           <div
             class="bg-offwhite/95 text-offblack rounded-t-xl rounded-br-2xl p-2 flex flex-row"
-            transition:fly
+            transition:fly|local
           >
             {note.content}
             {#if editing}
