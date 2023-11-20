@@ -28,9 +28,7 @@
       <ul class="">
         {#if activeCharacters}
           {#each activeCharacters as character}
-            <li
-              class="flex flex-row flex-1 bg-white/10 rounded rounded-l-full overflow-hidden mb-2"
-            >
+            <li class="flex flex-row flex-1 bg-white/10 rounded-lg overflow-hidden mb-2">
               <img
                 class="w-14 h-14 object-cover pointer-events-none"
                 src={character.img_src}
