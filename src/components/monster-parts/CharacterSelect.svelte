@@ -1,6 +1,6 @@
 <script lang="ts">
   import SelectField from '$components/forms/controls/SelectField.svelte';
-  import { getCharactersQuery } from '$lib/persistance/meta';
+  import { getCharactersQuery } from '$lib/persistance/campaign';
 
   const qPlayerCharacters = getCharactersQuery();
   $: playerCharacterOptions = ($qPlayerCharacters.data ?? []).map((item) => ({

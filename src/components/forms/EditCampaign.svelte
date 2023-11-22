@@ -3,7 +3,7 @@
   import SwitchField from '$components/forms/controls/SwitchField.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
-  import { getCurrentCampaign, updateCurrentCampaign } from '$lib/persistance/meta';
+  import { getCurrentCampaign, updateCurrentCampaign } from '$lib/persistance/campaign';
   import { Save } from 'lucide-svelte';
 
   const campaignQuery = getCurrentCampaign();

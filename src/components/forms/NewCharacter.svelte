@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import SwitchField from '$components/forms/controls/SwitchField.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
-  import { mutateCreateCharacter } from '$lib/persistance/meta';
+  import { mutateCreateCharacter } from '$lib/persistance/campaign';
 
   const campaignId = $page.params.campaignId;
   export let afterSubmit = () => {};

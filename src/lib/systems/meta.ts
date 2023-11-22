@@ -1,14 +1,8 @@
-export interface Campaign {
-  id: number;
-  name: string;
-  description: string;
-  archived: boolean;
-  created_at: string;
-  updated_at: string;
-  banner_src: string;
-  email: string;
-  slug: string;
-}
+import type { Row } from 'src/app';
+
+export type Campaign = Row<'campaigns'> & {
+  features: Row<'campaign_features'>[];
+};
 
 export interface PlayerCharacter {
   id: number;

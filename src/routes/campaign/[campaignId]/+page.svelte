@@ -5,7 +5,7 @@
   import LandingLink from '$components/BigLink.svelte';
   import LinkButton from '$components/LinkButton.svelte';
   import Heading from '$components/layout/Heading.svelte';
-  import { getCharactersQuery } from '$lib/persistance/meta';
+  import { getCharactersQuery } from '$lib/persistance/campaign';
   import QuestsPeek from './QuestsPeek.svelte';
 
   $: campaignId = $page.params.campaignId;

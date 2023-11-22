@@ -6,7 +6,7 @@
   import TextField from '$components/forms/controls/TextField.svelte';
   import ContentBlock from '$components/layout/ContentBlock.svelte';
   import ItemTypeSelector from '$components/monster-parts/ItemTypeSelector.svelte';
-  import { getCharactersQuery } from '$lib/persistance/meta.js';
+  import { getCharactersQuery } from '$lib/persistance/campaign.js';
   import { mutateCreateRefinement, queryMpBaseItems } from '$lib/persistance/monster-parts.js';
   import { REFINEMENT_BENEFITS, type ItemType } from '$lib/systems/pf2e_monster_parts.js';
   import { filterByLevelGt, reduceToHighestLevelLte, whereKeyEq } from '$lib/utils/iterators.js';

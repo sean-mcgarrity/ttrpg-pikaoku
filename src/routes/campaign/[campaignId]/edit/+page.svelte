@@ -1,16 +1,17 @@
 <script lang="ts">
   import EditCampaign from '$components/forms/EditCampaign.svelte';
-  import BackButton from '$components/layout/BackButton.svelte';
+  import Heading from '$components/layout/Heading.svelte';
+  import BackToCampaign from '../BackToCampaign.svelte';
   import CampaignCharcatersEditor from './AdminCampaignCharacters.svelte';
+  import FeatureFlagManager from './FeatureFlagManager.svelte';
 </script>
 
-<div class="max-w-2xl mx-auto">
-  <h1 class="text-white mb-4 flex flex-row gap-4">
-    <BackButton />
-    <span class="text-4xl">Edit campaign</span>
-  </h1>
+<BackToCampaign />
+<div class="">
+  <Heading type="Page Heading">Campaign details</Heading>
   <div class="flex flex-col gap-8">
     <EditCampaign />
+    <FeatureFlagManager />
     <CampaignCharcatersEditor />
   </div>
 </div>

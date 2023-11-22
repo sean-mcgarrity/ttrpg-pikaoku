@@ -1,12 +1,11 @@
-import { extractData } from '$lib/utils/requests';
+import { extractData, getSupabase } from '$lib/utils/requests';
 import { createMutation, createQuery, useQueryClient } from '@tanstack/svelte-query';
-import { getSupbase } from './supabase';
 import { page } from '$app/stores';
 import { get } from 'svelte/store';
 import type { PlayerCharacter, Campaign } from '$lib/systems/meta';
 
 export const getCampaigns = () => {
-  const supabase = getSupbase();
+  const supabase = getSupabase();
   return createQuery({
     queryKey: ['campaigns'],
     queryFn: async () =>
@@ -21,11 +20,17 @@ export const getCampaigns = () => {
 };
 
 export const getCampaign = (campaignId: number) => {
-  const supabase = getSupbase();
+  const supabase = getSupabase();
   return createQuery({
     queryKey: ['campaigns', campaignId],
     queryFn: async () =>
-      extractData(await supabase.from('campaigns').select('*').eq('id', campaignId).single())
+      extractData(
+        await supabase
+          .from('campaigns')
+          .select('*, features:campaign_features(*)')
+          .eq('id', campaignId)
+          .single()
+      )
   });
 };
 
@@ -36,27 +41,13 @@ export const getCampaignIdFromRoute = () => {
 };
 
 export const getCurrentCampaign = () => {
-  const campaignId = getCampaignIdFromRoute();
-  const supabase = getSupbase();
-  return createQuery({
-    queryKey: ['campaigns', campaignId],
-    queryFn: async () =>
-      extractData<Campaign>(
-        await supabase
-          .from('campaigns')
-          .select('*')
-          .eq('id', campaignId)
-          .order('created_at', { ascending: false })
-          .single()
-      ),
-    cacheTime: 5 * 60 * 1000,
-    staleTime: 5 * 60 * 1000
-  });
+  const campaignId = parseInt(getCampaignIdFromRoute());
+  return getCampaign(campaignId);
 };
 
 export const updateCurrentCampaign = () => {
   const queryClient = useQueryClient();
-  const supabase = getSupbase();
+  const supabase = getSupabase();
   const campaignId = getCampaignIdFromRoute();
   return createMutation({
     mutationKey: ['campaigns', campaignId],
@@ -70,12 +61,12 @@ export const updateCurrentCampaign = () => {
 };
 
 export const getCharactersQuery = () => {
-  const supabase = getSupbase();
+  const supabase = getSupabase();
   const campaignId = getCampaignIdFromRoute();
   return createQuery({
     queryKey: ['campaigns', campaignId, 'characters'],
     queryFn: async () =>
-      extractData<PlayerCharacter[]>(
+      extractData(
         await supabase
           .from('player_characters')
           .select('*')
@@ -85,9 +76,43 @@ export const getCharactersQuery = () => {
   });
 };
 
+export const enableCampaignFeatureFlag = () => {
+  const queryClient = useQueryClient();
+  const supabase = getSupabase();
+  const campaignId = parseInt(getCampaignIdFromRoute());
+  return createMutation({
+    mutationKey: ['campaigns', campaignId],
+    mutationFn: async (feature: string) => {
+      return supabase.from('campaign_features').insert({ campaign_id: campaignId, feature });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['campaigns', campaignId]);
+    }
+  });
+};
+
+export const disableCampaignFeatureFlag = () => {
+  const queryClient = useQueryClient();
+  const supabase = getSupabase();
+  const campaignId = parseInt(getCampaignIdFromRoute());
+  return createMutation({
+    mutationKey: ['campaigns', campaignId],
+    mutationFn: async (feature: string) => {
+      return supabase
+        .from('campaign_features')
+        .delete()
+        .eq('campaign_id', campaignId)
+        .eq('feature', feature);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['campaigns', campaignId]);
+    }
+  });
+};
+
 export const deleteCharacterMutation = () => {
   const queryClient = useQueryClient();
-  const supabase = getSupbase();
+  const supabase = getSupabase();
   const campaignId = getCampaignIdFromRoute();
   return createMutation({
     mutationKey: ['campaigns', campaignId, 'characters'],
@@ -102,7 +127,7 @@ export const deleteCharacterMutation = () => {
 
 export const mutateCreateCharacter = () => {
   const queryClient = useQueryClient();
-  const supabase = getSupbase();
+  const supabase = getSupabase();
   const campaignId = getCampaignIdFromRoute();
   return createMutation({
     mutationKey: ['campaigns', campaignId, 'characters'],

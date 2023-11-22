@@ -3,7 +3,7 @@
   import CampaignLogin from './CampaignLogin.svelte';
   import LinkButton from '$components/LinkButton.svelte';
   import { PlusCircle, LogInIcon } from 'lucide-svelte';
-  import { getCampaigns } from '$lib/persistance/meta';
+  import { getCampaigns } from '$lib/persistance/campaign';
 
   export let data;
   const campaigns = getCampaigns();

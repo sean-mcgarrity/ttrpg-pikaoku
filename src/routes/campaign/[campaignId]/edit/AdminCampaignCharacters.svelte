@@ -2,7 +2,7 @@
   import Button from '$components/Button.svelte';
   import NewCharacter from '$components/forms/NewCharacter.svelte';
   import Heading from '$components/layout/Heading.svelte';
-  import { deleteCharacterMutation, getCharactersQuery } from '$lib/persistance/meta';
+  import { deleteCharacterMutation, getCharactersQuery } from '$lib/persistance/campaign';
   import { Pencil, Trash, X } from 'lucide-svelte';
 
   const charactersQ = getCharactersQuery();
