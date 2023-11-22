@@ -5,14 +5,21 @@
   import LandingLink from '$components/BigLink.svelte';
   import LinkButton from '$components/LinkButton.svelte';
   import Heading from '$components/layout/Heading.svelte';
+  import IfFeatureFlag from '$components/layout/IfFeatureFlag.svelte';
   import { getCharactersQuery } from '$lib/persistance/campaign';
+  import { hasFeatureFlag } from '$lib/utils/feature-flags';
   import QuestsPeek from './QuestsPeek.svelte';
 
   $: campaignId = $page.params.campaignId;
   const charactersQ = getCharactersQuery();
   $: characters = $charactersQ.data;
   $: activeCharacters = characters?.filter((c) => c.status === 'alive');
-  $: otherCharacters = characters?.filter((c) => c.status === 'dead');
+  // $: otherCharacters = characters?.filter((c) => c.status === 'dead');
+
+  export let data;
+  $: campaign = data.campaign;
+
+  $: console.log('campaign', campaign);
 </script>
 
 <svelte:head>
@@ -42,19 +49,26 @@
     </div>
   </div>
   <div class="w-full flex flex-col gap-4 mx-auto">
-    <LandingLink
-      size="sm"
-      title="Monster Parts"
-      href={`/campaign/${campaignId}/monster-parts`}
-      bgImgSrc="/images/monster-parts-banner.webp"
-    />
-    <LandingLink
-      size="sm"
-      title="BASTION BUILDING"
-      href={`/campaign/${campaignId}/bastions`}
-      bgImgSrc="https://i.imgur.com/WFsKg7W.jpeg"
-    />
-    <LandingLink size="sm" title="Handouts" href="" bgImgSrc="https://i.imgur.com/38Wjk61.jpeg" />
+    <IfFeatureFlag flag="monster-parts">
+      <LandingLink
+        size="sm"
+        title="Monster Parts"
+        href={`/campaign/${campaignId}/monster-parts`}
+        bgImgSrc="/images/monster-parts-banner.webp"
+      />
+    </IfFeatureFlag>
+    <IfFeatureFlag flag="bastions">
+      <LandingLink
+        size="sm"
+        title="BASTION BUILDING"
+        href={`/campaign/${campaignId}/bastions`}
+        bgImgSrc="https://i.imgur.com/WFsKg7W.jpeg"
+      />
+    </IfFeatureFlag>
+    <IfFeatureFlag flag="handouts">
+      <LandingLink size="sm" title="Handouts" href="" bgImgSrc="https://i.imgur.com/38Wjk61.jpeg" />
+    </IfFeatureFlag>
+
     <AdminOnly>
       <div class="w-full mx-auto max-w-sm text-center">
         <LinkButton href={`/campaign/${campaignId}/edit`}>Edit campaign &#9881;</LinkButton>

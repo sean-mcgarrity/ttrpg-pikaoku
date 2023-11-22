@@ -9,7 +9,11 @@ export const load = async ({ fetch, data, depends, params, parent }) => {
     throw redirect(303, '/');
   }
 
-  const response = await supabase.from('campaigns').select('*').eq('id', campaignId).single();
+  const response = await supabase
+    .from('campaigns')
+    .select('*, features:campaign_features(*)')
+    .eq('id', campaignId)
+    .single();
   if (!response.error) {
     return { ...(data ?? {}), campaign: response.data };
   }

@@ -29,6 +29,10 @@
     {
       value: 'quests',
       label: 'Quests'
+    },
+    {
+      value: 'handouts',
+      label: 'Handouts'
     }
   ] as const;
 
