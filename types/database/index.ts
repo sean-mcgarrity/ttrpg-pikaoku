@@ -9,6 +9,35 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      campaign_features: {
+        Row: {
+          campaign_id: number
+          created_at: string
+          feature: string
+          id: number
+        }
+        Insert: {
+          campaign_id: number
+          created_at?: string
+          feature: string
+          id?: number
+        }
+        Update: {
+          campaign_id?: number
+          created_at?: string
+          feature?: string
+          id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_features_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       campaign_members: {
         Row: {
           campaign_id: number
