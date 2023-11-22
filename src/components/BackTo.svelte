@@ -7,8 +7,11 @@
 </script>
 
 <div class="my-2 -ml-2 select-none">
-  <LinkButton {href} class="text-white/60 font-light tracking-wide">
-    <ArrowLeft class="inline-block mr-2" /> Back to
-    {text}</LinkButton
+  <LinkButton {href} class=" font-light tracking-wide">
+    <ArrowLeft class="inline-block text-white" />
+    <span class="text-white/60"
+      >Back to
+      {text}</span
+    ></LinkButton
   >
 </div>

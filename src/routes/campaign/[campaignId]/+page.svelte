@@ -51,7 +51,7 @@
     <LandingLink
       size="sm"
       title="BASTION BUILDING"
-      href=""
+      href={`/campaign/${campaignId}/bastions`}
       bgImgSrc="https://i.imgur.com/WFsKg7W.jpeg"
     />
     <LandingLink size="sm" title="Handouts" href="" bgImgSrc="https://i.imgur.com/38Wjk61.jpeg" />
