@@ -387,6 +387,7 @@ export interface Database {
           campaign_id: number
           created_at: string
           description: string
+          finished: boolean
           id: number
           name: string
           pinned: boolean
@@ -395,6 +396,7 @@ export interface Database {
           campaign_id: number
           created_at?: string
           description?: string
+          finished?: boolean
           id?: number
           name?: string
           pinned?: boolean
@@ -403,6 +405,7 @@ export interface Database {
           campaign_id?: number
           created_at?: string
           description?: string
+          finished?: boolean
           id?: number
           name?: string
           pinned?: boolean
