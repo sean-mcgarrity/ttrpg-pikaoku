@@ -18,8 +18,6 @@
 
   export let data;
   $: campaign = data.campaign;
-
-  $: console.log('campaign', campaign);
 </script>
 
 <svelte:head>

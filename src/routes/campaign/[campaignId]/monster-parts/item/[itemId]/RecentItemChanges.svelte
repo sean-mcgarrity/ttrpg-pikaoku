@@ -24,8 +24,6 @@
       $deleteRefinementMutation.mutate(id);
     }
   };
-
-  $: console.log('changes', changes);
 </script>
 
 {#if changes}

@@ -21,8 +21,6 @@
       return options.map((o) => ({ ...o, imbuement: i }));
     })
     .flat();
-
-  $: console.log('options', imbuementOptions);
 </script>
 
 <div class="flex flex-col gap-2">

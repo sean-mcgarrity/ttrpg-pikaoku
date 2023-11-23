@@ -4,9 +4,7 @@
   import QuestItem from '$components/quests/QuestItem.svelte';
   import { getPinnedQuestsQuery } from '$lib/persistance/quests';
   import { getCampaignId } from '$lib/utils/contextual-helpers';
-  import { ArrowRight, Plus } from 'lucide-svelte';
-
-  $: console.log('hello');
+  import { ArrowRight } from 'lucide-svelte';
 
   const questQuery = getPinnedQuestsQuery();
 </script>
