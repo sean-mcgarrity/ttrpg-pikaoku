@@ -5,6 +5,7 @@
   import { LogIn } from 'lucide-svelte';
   import cx from 'classnames';
   import { goto } from '$app/navigation';
+  import { slide } from 'svelte/transition';
 
   type Campaign = {
     id: string;
@@ -45,7 +46,7 @@
     if ($page.data.session?.user?.id) {
       goto(href);
     } else {
-      expanded = true;
+      expanded = !expanded;
     }
   };
 </script>
@@ -64,17 +65,20 @@
       class="transition-all duration-150 absolute bottom-0 w-full px-6 py-2 group-hover:py-4 bg-black bg-opacity-80 text-white text-left"
     >
       <h2 class="font-bold uppercase tracking-wider">{title}</h2>
-      <div
-        class={cx('transition-all duration-500 overflow-hidden', expanded ? 'max-h-60' : 'max-h-0')}
-      >
-        <form on:submit={signIn} class="mt-4 flex flex-row gap-4 items-center">
-          <div>Passcode</div>
-          <div class="bg-white/40 rounded w-full">
-            <TextField type="password" bind:value={password} />
-          </div>
-          <Button type="submit">Login <LogIn class="h-4 w-4 inline" /></Button>
-        </form>
-      </div>
+      {#if expanded}
+        <div
+          class={cx('overflow-hidden', 'max-h-60')}
+          transition:slide
+        >
+          <form on:submit={signIn} class="mt-4 flex flex-row gap-4 items-center">
+            <div>Passcode</div>
+            <div class="bg-white/40 rounded w-full">
+              <TextField type="password" bind:value={password} />
+            </div>
+            <Button type="submit">Login <LogIn class="h-4 w-4 inline" /></Button>
+          </form>
+        </div>  
+      {/if} 
     </div>
   </button>
 </div>
