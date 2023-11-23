@@ -6,18 +6,22 @@
 
   export let data;
 
-  let {campaigns} = data
+  let { campaigns } = data;
 </script>
 
 <svelte:head>
   <title>Sean's Runs Games</title>
 </svelte:head>
-<div class="text-white w-full min-h-scree">
-  <div class="max-w-4xl mx-auto py-12 px-4">
-    <div class="w-full mb-4">
-      <h1 class="text-4xl">Sean's Game</h1>
-      <div class="border-b-2 border-white border-solid w-16 mt-2" />
-    </div>
+<div class="text-white w-full min-h-screen min-w-[320px] ">
+  <div class="flex flex-col relative">
+    <img src="https://i.imgur.com/yNNtAgU.jpeg" alt="" class="w-full object-contain" />
+    <h1
+      class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 whitespace-nowrap xs:text-3xl md:text-4xl p-2 rounded bg-black/60 font-medium uppercase font-title"
+    >
+      Sean's Game
+    </h1>
+  </div>
+  <div class="max-w-4xl mx-auto pb-12 px-4 pt-12">
     <div class="flex flex-col gap-4">
       {#each campaigns as campaign (campaign.id)}
         <CampaignLogin {campaign} />

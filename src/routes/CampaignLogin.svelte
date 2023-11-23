@@ -24,6 +24,7 @@
 
   let expanded = false;
   let password = '';
+  let error = null;
 
   $: href = `/campaign/${campaign.id}`;
   $: title = campaign.name;
@@ -32,16 +33,20 @@
   $: isDisabled = disabled || !campaign || campaign.archived;
 
   $: signIn = async () => {
-    const respone = await ($page.data.supabase as SupabaseClient<Database>).auth.signInWithPassword({
-    email: campaign.email,
-    password
-  })
-  if (respone.error) {
-    alert(respone.error.message);
-  } else {
-    goto(href);
-  }
-  }
+    const respone = await ($page.data.supabase as SupabaseClient<Database>).auth.signInWithPassword(
+      {
+        email: campaign.email,
+        password
+      }
+    );
+
+    if (respone.error) {
+      alert(respone.error.message);
+    } else {
+      goto(href);
+    }
+    password = '';
+  };
 
   const handleClick = () => {
     if (isDisabled) {
@@ -54,6 +59,8 @@
       expanded = !expanded;
     }
   };
+
+  $: console.log($page.data.session);
 </script>
 
 <div class={cx('inline w-full', isDisabled && 'grayscale pointer-events-none')}>
@@ -71,10 +78,7 @@
     >
       <h2 class="font-bold uppercase tracking-wider">{title}</h2>
       {#if expanded}
-        <div
-          class={cx('overflow-hidden', 'max-h-60')}
-          transition:slide|local
-        >
+        <div class={cx('overflow-hidden', 'max-h-60')} transition:slide|local>
           <form on:submit={signIn} class="mt-4 flex flex-row gap-4 items-center">
             <div>Passcode</div>
             <div class="bg-white/40 rounded w-full">
@@ -82,8 +86,8 @@
             </div>
             <Button type="submit">Login <LogIn class="h-4 w-4 inline" /></Button>
           </form>
-        </div>  
-      {/if} 
+        </div>
+      {/if}
     </div>
   </button>
 </div>

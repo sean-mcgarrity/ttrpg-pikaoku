@@ -7,15 +7,15 @@
 {#if !type}
   NOT ENOUGH INFO
 {:else if type === 'Page Heading'}
-  <h1 class="text-4xl font-semibold mb-4">
+  <h1 class="text-4xl font-semibold mb-4 font-title uppercase">
     <slot />
   </h1>
 {:else if type === 'Section Heading'}
-  <h2 class="text-2xl font-medium mb-2">
+  <h2 class="text-2xl font-medium mb-2 font-title">
     <slot />
   </h2>
 {:else if type === 'Subsection Heading'}
-  <h3 class="text-2xl font-bold mb-2">
+  <h3 class="text-2xl font-bold mb-2 font-title">
     <slot />
   </h3>
 {/if}

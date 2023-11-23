@@ -20,7 +20,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
-        title: ['Chomsky', 'serif'],
+        title: ['Josefin Sans', 'serif'],
         heading: ['serif'],
         body: ['Inter', 'sans-serif']
       },
