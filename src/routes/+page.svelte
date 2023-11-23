@@ -5,6 +5,8 @@
   import { PlusCircle, LogInIcon } from 'lucide-svelte';
   import { getCampaigns } from '$lib/persistance/campaign';
 
+  export const prerender = true;
+
   export let data;
   const campaigns = getCampaigns();
 </script>
