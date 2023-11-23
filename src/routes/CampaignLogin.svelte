@@ -7,6 +7,8 @@
   import { goto } from '$app/navigation';
   import { slide } from 'svelte/transition';
   import { isAdmin } from '$lib/utils/auth';
+  import type { Database } from 'types/database';
+  import type { SupabaseClient } from '@supabase/supabase-js';
 
   type Campaign = {
     id: string;
@@ -29,15 +31,17 @@
 
   $: isDisabled = disabled || !campaign || campaign.archived;
 
-  const signIn = async () => {
-    const { data: response, error } = await $page.data.supabase.auth.signInWithPassword({
-      email: campaign.email,
-      password
-    });
-    if (!error) {
-      goto(href);
-    }
-  };
+  $: signIn = async () => {
+    const respone = await ($page.data.supabase as SupabaseClient<Database>).auth.signInWithPassword({
+    email: campaign.email,
+    password
+  })
+  if (respone.error) {
+    alert(respone.error.message);
+  } else {
+    goto(href);
+  }
+  }
 
   const handleClick = () => {
     if (isDisabled) {
@@ -50,10 +54,6 @@
       expanded = !expanded;
     }
   };
-$: console.log('campaign in here', campaign)
-
-  $: console.log('session', $page.data.session);
-
 </script>
 
 <div class={cx('inline w-full', isDisabled && 'grayscale pointer-events-none')}>
