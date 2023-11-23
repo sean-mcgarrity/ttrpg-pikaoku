@@ -3,6 +3,7 @@
   import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
   import { invalidate } from '$app/navigation';
   import { onMount } from 'svelte';
+  import Footer from '$components/Footer.svelte';
 
   export let data;
   let { supabase, session } = data;
@@ -35,6 +36,7 @@
   >
     <QueryClientProvider client={queryClient}>
       <slot />
+      <Footer />
     </QueryClientProvider>
   </div>
 </div>

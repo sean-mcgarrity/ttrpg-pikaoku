@@ -1,9 +1,15 @@
+import { SupabaseClient, Session } from '@supabase/supabase-js';
 import type { Database } from '../types/database';
 
-declare namespace App {
-  export interface Locals {
-    supabase: import('@supabase/supabase-js').SupabaseClient<Database>;
-    getSession: () => Promise<any>;
+declare global {
+  namespace App {
+    interface Locals {
+      supabase: SupabaseClient<Database>;
+      getSession: () => Promise<Session | null>;
+    }
+    interface PageData {
+      sessino: Session | null;
+    }
   }
 
   // interface PageData {}

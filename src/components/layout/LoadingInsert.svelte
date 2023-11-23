@@ -3,22 +3,28 @@
   import cx from 'classnames';
 
   export let fullPage = false;
+  export let loading = false;
 </script>
 
-<div
-  class={cx('animate-pulse inset-0 bg-black/80 m-2 rounded z-50', fullPage ? 'fixed' : 'absolute ')}
-  transition:fade|local
-/>
-<div
-  class={cx('inset-0 flex flex-row pointer-events-none z-50', fullPage ? 'fixed' : 'absolute ')}
-  transition:fade|local
->
-  <div class="lds-facebook m-auto">
-    <div />
-    <div />
-    <div />
+{#if loading}
+  <div
+    class={cx(
+      'animate-pulse inset-0 bg-black/80 m-2 rounded z-50',
+      fullPage ? 'fixed' : 'absolute '
+    )}
+    transition:fade|local
+  />
+  <div
+    class={cx('inset-0 flex flex-row pointer-events-none z-50', fullPage ? 'fixed' : 'absolute ')}
+    transition:fade|local
+  >
+    <div class="lds-facebook m-auto">
+      <div />
+      <div />
+      <div />
+    </div>
   </div>
-</div>
+{/if}
 
 <style>
   .lds-facebook {

@@ -36,7 +36,7 @@
     "vitest": "^0.34.3"
   },
   "dependencies": {
-    "@supabase/auth-helpers-sveltekit": "^0.10.1",
+    "@supabase/ssr": "^0.0.10",
     "@supabase/supabase-js": "^2.27.0",
     "@tanstack/svelte-query": "^4.33.0",
     "classnames": "^2.3.2",

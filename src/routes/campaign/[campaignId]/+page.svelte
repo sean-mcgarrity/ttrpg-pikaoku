@@ -14,7 +14,6 @@
   const charactersQ = getCharactersQuery();
   $: characters = $charactersQ.data;
   $: activeCharacters = characters?.filter((c) => c.status === 'alive');
-  // $: otherCharacters = characters?.filter((c) => c.status === 'dead');
 
   export let data;
   $: campaign = data.campaign;

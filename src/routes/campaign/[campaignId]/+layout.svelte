@@ -1,7 +1,5 @@
 <script lang="ts">
   import CampaignHeader from './CampaignHeader.svelte';
-  import Footer from '$components/Footer.svelte';
-  import Breadcrumbs from '$components/Breadcrumbs.svelte';
 
   export let data;
   let { session, campaign } = data;
@@ -15,6 +13,6 @@
   </div>
   <main class="flex-1 border-0 p-4 md:p-4 mx-auto max-w-3xl w-full z-0">
     <slot />
-    <Footer />
+    
   </main>
 </div>

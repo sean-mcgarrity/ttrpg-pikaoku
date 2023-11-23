@@ -1,55 +1,59 @@
 <script lang="ts">
+  import { page } from '$app/stores';
+  import BackTo from '$components/BackTo.svelte';
   import Button from '$components/Button.svelte';
-  import LinkButton from '$components/LinkButton.svelte';
-  import { createQuery } from '@tanstack/svelte-query';
-  import { ArrowDown, LogIn, LogOut } from 'lucide-svelte';
+  import Heading from '$components/layout/Heading.svelte';
 
   export let data;
-  let { supabase } = data;
-  $: ({ supabase } = data);
+  $: ({ supabase, session } = data);
+
+  $: afterLogin = $page.data.afterLogin ?? '/';
 
   async function signInWithDiscord() {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    await supabase.auth.signInWithOAuth({
       provider: 'discord',
       options: {
-        redirectTo: '/monster-parts'
+        redirectTo: afterLogin
       }
     });
   }
 
-  const signOut = async () => await supabase.auth.signOut({ scope: 'local' });
-
-  const query = createQuery({
-    queryKey: ['user'],
-    queryFn: async () => {
-      const response = await supabase.auth.getUser();
-      if (response.error) {
-        throw response.error;
-      } else {
-        return response.data.user;
-      }
-    }
-  });
+  $: hasSession = !!session?.access_token;
 </script>
 
 <div class="min-h-screen bg-slate-950 w-full flex flex-col">
   <div class="mx-auto my-auto flex flex-col gap-4">
-    <div class="px-16 py-8 rounded shadow text-white flex flex-col gap-4 min-w-md bg-slate-900">
-      <h1 class="text-4xl font-semibold">Sean's Login</h1>
-      <Button outlined on:click={signInWithDiscord}>
-        <span>Sign in with Discord</span>
-        <LogIn class="l-icon" />
-      </Button>
-      <Button outlined on:click={signOut} class="justify-between">
-        <span>Sign out</span>
-        <LogOut class="l-icon" />
-      </Button>
-      <LinkButton href="/" class="text-black w-full">
-        <ArrowDown class="l-icon rotate-90" /> Back to campaigns
-      </LinkButton>
+    <BackTo href={`/`} text="Campaigns" />
+    <div
+      class="px-16 py-8 rounded shadow text-white flex flex-col gap-4 min-w-md bg-slate-900 text-center"
+    >
+      <Heading type="Page Heading">Login</Heading>
+      {#if hasSession}
+        <p>
+          You are already logged in as <strong>{session.user.user_metadata?.full_name}</strong>.
+        </p>
+      {:else}
+        <p>Sign in below by clicking the massive discord button.</p>
+        <p>
+          If you don't have a discord account, you can create one{' '}
+          <a
+            href="https://discord.com/register"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline"
+          >
+            here
+          </a>
+          .
+        </p>
+        <Button
+          outlined
+          on:click={signInWithDiscord}
+          class="bg-[#5865F2] active:bg-[#5865F2] hover:bg-[#5d65F8] hover:brightness-105 mx-auto"
+        >
+          <img src="/images/discord_logo_white.png" alt="Discord Logo" class=" h-16 p-4 " />
+        </Button>
+      {/if}
     </div>
-    {#if $query.data}
-      <div class="text-white/80 mx-auto">User: {$query.data.email}</div>
-    {/if}
   </div>
 </div>
