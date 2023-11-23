@@ -6,7 +6,11 @@
   import { getCampaigns } from '$lib/persistance/campaign';
 
   export let data;
-  const campaigns = getCampaigns();
+
+  let {campaigns} = data
+
+  $: console.log('data campaigns', data.campaigns)
+
 </script>
 
 <div class="text-white w-full min-h-scree">
@@ -16,19 +20,9 @@
       <div class="border-b-2 border-white border-solid w-16 mt-2" />
     </div>
     <div class="flex flex-col gap-4">
-      {#if $campaigns.isLoading && !$campaigns.isFetched}
-        Loading...
-      {:else if $campaigns.isError}
-        ERROR
-      {:else if $campaigns.data?.length === 0}
-        NO CAMPAIGNS
-      {:else if $campaigns.isFetched && $campaigns.data?.length > 0}
-        {#each $campaigns.data ?? [] as campaign}
+        {#each campaigns as campaign}
           <CampaignLogin {campaign} />
         {/each}
-      {:else}
-        ERROR
-      {/if}
       <div class="mx-auto mt-8">
         <LinkButton href="/login">Sean's Login <LogInIcon class="lucid-icon" /></LinkButton>
       </div>
