@@ -8,7 +8,7 @@
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./jsconfig.json",
     "check:watch": "svelte-check --tsconfig ./jsconfig.json --watch",
-    "lint": "prettier --check .",
+    "lint": "prettier --check --verbose .",
     "format": "prettier --write .",
     "test": "vitest",
     "update-types": "npx supabase gen types typescript --project-id \"$PROJECT_REF\" > types/database/index.ts"
@@ -41,6 +41,7 @@
     "@tanstack/svelte-query": "^4.33.0",
     "classnames": "^2.3.2",
     "firebase": "^9.23.0",
-    "lucide-svelte": "^0.263.0"
+    "lucide-svelte": "^0.263.0",
+    "svelte-markdown": "^0.4.0"
   }
 }

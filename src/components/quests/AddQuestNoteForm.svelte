@@ -3,6 +3,7 @@
   import TextField from '$components/forms/controls/TextField.svelte';
   import { addQuestNoteMutation } from '$lib/persistance/quests';
   import { MessageCircle } from 'lucide-svelte';
+  import TextAreaField from '$components/forms/controls/TextAreaField.svelte';
 
   export let questId: number;
 
@@ -19,8 +20,13 @@
 </script>
 
 <form class="flex flex-row gap-2 items-center" on:submit={handleAdd}>
-  <TextField class="sm:col-span-3" bind:value placeholder="New update..." />
-  <Button disabled={value !== '' && !$m.isIdle} type="submit"
+  <TextAreaField
+    class="sm:col-span-3 "
+    bind:value
+    placeholder="Now with markdown and multiline..."
+    rows={2}
+  />
+  <Button disabled={value !== '' && !$m.isIdle} type="submit" class="mt-auto mb-2"
     >Add <MessageCircle class="fill-white" /></Button
   >
 </form>

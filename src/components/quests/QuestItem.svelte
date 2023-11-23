@@ -7,6 +7,7 @@
   import { slide, fly } from 'svelte/transition';
   import AddQuestNoteForm from './AddQuestNoteForm.svelte';
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
+  import SvelteMarkdown from 'svelte-markdown';
   import {
     deleteQuestMutation,
     deleteQuestNoteMutation,
@@ -146,7 +147,10 @@
             class="bg-offwhite/95 text-offblack rounded-t-xl rounded-br-2xl p-2 flex flex-row"
             transition:fly|local
           >
-            {note.content}
+            <SvelteMarkdown
+              source={note.content.replaceAll('\n', '<br />')}
+              options={{ break: true, gfm: true }}
+            />
             {#if editing}
               <Button
                 class="ml-auto"

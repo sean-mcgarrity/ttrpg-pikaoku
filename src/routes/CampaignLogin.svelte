@@ -59,8 +59,6 @@
       expanded = !expanded;
     }
   };
-
-  $: console.log($page.data.session);
 </script>
 
 <div class={cx('inline w-full', isDisabled && 'grayscale pointer-events-none')}>

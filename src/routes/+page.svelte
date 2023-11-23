@@ -16,7 +16,7 @@
   <div class="flex flex-col relative">
     <img src="https://i.imgur.com/yNNtAgU.jpeg" alt="" class="w-full object-contain" />
     <h1
-      class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 whitespace-nowrap xs:text-3xl md:text-4xl p-2 rounded bg-black/60 font-medium uppercase font-title"
+      class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 whitespace-nowrap xs:text-3xl md:text-4xl p-3 pb-1 rounded bg-black/60 font-medium uppercase font-title"
     >
       Sean's Game
     </h1>
