@@ -6,6 +6,7 @@
   import cx from 'classnames';
   import { goto } from '$app/navigation';
   import { slide } from 'svelte/transition';
+  import { isAdmin } from '$lib/utils/auth';
 
   type Campaign = {
     id: string;
@@ -43,12 +44,16 @@
       return;
     }
 
-    if ($page.data.session?.user?.id) {
+    if (isAdmin($page.data.session) || $page.data.session?.user?.email === campaign.email) {
       goto(href);
     } else {
       expanded = !expanded;
     }
   };
+$: console.log('campaign in here', campaign)
+
+  $: console.log('session', $page.data.session);
+
 </script>
 
 <div class={cx('inline w-full', isDisabled && 'grayscale pointer-events-none')}>
@@ -68,12 +73,12 @@
       {#if expanded}
         <div
           class={cx('overflow-hidden', 'max-h-60')}
-          transition:slide
+          transition:slide|local
         >
           <form on:submit={signIn} class="mt-4 flex flex-row gap-4 items-center">
             <div>Passcode</div>
             <div class="bg-white/40 rounded w-full">
-              <TextField type="password" bind:value={password} />
+              <TextField type="password" bind:value={password} autofocus />
             </div>
             <Button type="submit">Login <LogIn class="h-4 w-4 inline" /></Button>
           </form>

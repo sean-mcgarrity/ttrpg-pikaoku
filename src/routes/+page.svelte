@@ -11,6 +11,7 @@
 
   $: console.log('data campaigns', data.campaigns)
 
+  
 </script>
 
 <svelte:head>
