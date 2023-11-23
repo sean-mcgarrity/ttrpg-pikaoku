@@ -7,7 +7,7 @@
   import Heading from '$components/layout/Heading.svelte';
   import IfFeatureFlag from '$components/layout/IfFeatureFlag.svelte';
   import { getCharactersQuery } from '$lib/persistance/campaign';
-  import { hasFeatureFlag } from '$lib/utils/feature-flags';
+  import { List } from 'lucide-svelte';
   import QuestsPeek from './QuestsPeek.svelte';
 
   $: campaignId = $page.params.campaignId;
@@ -48,6 +48,25 @@
     </div>
   </div>
   <div class="w-full flex flex-col gap-4 mx-auto">
+    {#if campaign.discord_link}
+      <a
+        href={campaign.discord_link}
+        class="h-14 bg-[#5865F2] px-6 items-center rounded shadow hover:brightness-110 flex flex-row"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img src="/images/discord_logo_white.png" alt="Discord Logo" />
+      </a>
+    {/if}
+    <a
+      href={'https://forms.gle/KXDHR2qn8CiCJVE37'}
+      class="h-14 bg-emerald-600 px-6 py-3 rounded shadow hover:brightness-105 text-2xl font-medium flex flex-row items-center gap-2"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <List class="custom-icon inline h-[40px] text-xl" />
+      Feedback
+    </a>
     <IfFeatureFlag flag="monster-parts">
       <LandingLink
         size="sm"
