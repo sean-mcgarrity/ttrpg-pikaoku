@@ -13,7 +13,7 @@
     await supabase.auth.signInWithOAuth({
       provider: 'discord',
       options: {
-        redirectTo: afterLogin
+        redirectTo: `${window.location.origin}/me?help=me`
       }
     });
   }
@@ -46,11 +46,7 @@
           </a>
           .
         </p>
-        <Button
-          outlined
-          on:click={signInWithDiscord}
-          class="bg-[#5865F2] active:bg-[#5865F2] hover:bg-[#5d65F8] hover:brightness-105 mx-auto"
-        >
+        <Button color="#5865F2" on:click={signInWithDiscord} class="hover:brightness-105 mx-auto">
           <img src="/images/discord_logo_white.png" alt="Discord Logo" class=" h-16 p-4 " />
         </Button>
       {/if}

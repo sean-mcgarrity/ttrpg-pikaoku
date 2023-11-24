@@ -7,18 +7,20 @@
   export let type: 'button' | 'submit' = 'button';
   export let outlined = false;
   export let disabled = false;
-  export let dark = false;
   export let title = null;
+  export let color: string = null;
 </script>
 
 <button
   {type}
   on:click
+  style={color && `background-color: ${color}`}
   class={cx(
     padded ? 'px-4 py-2' : 'px-2 py-1',
-    dark
-      ? 'text-white bg-slate-950 hover:bg-slate-800 active:bg-slate-700'
-      : 'text-white bg-transparent hover:bg-white/10 active:bg-blue-200/20',
+    color
+      ? 'hover:brightness-110 active:brightness-90'
+      : 'bg-transparent hover:bg-white/10 active:bg-blue-200/20',
+    'text-white',
     'rounded cursor-pointer font-medium tracking-wider select-none',
     'inline-flex flex-row items-center gap-2',
     outlined && 'border border-white justify-between',
