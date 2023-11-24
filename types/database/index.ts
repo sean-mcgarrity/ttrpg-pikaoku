@@ -525,24 +525,34 @@ export interface Database {
       }
       quest_note: {
         Row: {
+          author_id: string | null
           content: string
           created_at: string
           id: number
           quest_id: number
         }
         Insert: {
+          author_id?: string | null
           content?: string
           created_at?: string
           id?: number
           quest_id: number
         }
         Update: {
+          author_id?: string | null
           content?: string
           created_at?: string
           id?: number
           quest_id?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "quest_note_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "quest_note_quest_id_fkey"
             columns: ["quest_id"]
