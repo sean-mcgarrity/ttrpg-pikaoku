@@ -4,15 +4,11 @@
   import { CheckCircle, ChevronDown, Pencil, Pin, SaveIcon, Trash } from 'lucide-svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
   import type { Quest } from 'src/app';
-  import { slide, fly } from 'svelte/transition';
+  import { slide } from 'svelte/transition';
   import AddQuestNoteForm from './AddQuestNoteForm.svelte';
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
-  import SvelteMarkdown from 'svelte-markdown';
-  import {
-    deleteQuestMutation,
-    deleteQuestNoteMutation,
-    updateQuestMutation
-  } from '$lib/persistance/quests';
+  import { deleteQuestMutation, updateQuestMutation } from '$lib/persistance/quests';
+  import QuestNote from './QuestNote.svelte';
 
   export let quest: Quest;
   export let preview = false;
@@ -49,13 +45,6 @@
   $: deleteQuest = async () => {
     if (confirm('Are you sure you want to delete this quest?')) {
       await $del.mutateAsync(quest.id);
-    }
-  };
-
-  $: deleteComment = deleteQuestNoteMutation();
-  $: handleDeleteComment = async (id: number) => {
-    if (confirm('Are you sure you want to delete this comment?')) {
-      await $deleteComment.mutateAsync(id);
     }
   };
 
@@ -143,24 +132,7 @@
       </div>
       <div class=" text-white/80 flex flex-col gap-2">
         {#each quest.notes as note (note.id)}
-          <div
-            class="bg-offwhite/95 text-offblack rounded-t-xl rounded-br-2xl p-2 flex flex-row"
-            transition:fly|local
-          >
-            <SvelteMarkdown
-              source={note.content.replaceAll('\n', '<br />')}
-              options={{ break: true, gfm: true }}
-            />
-            {#if editing}
-              <Button
-                class="ml-auto"
-                on:click={() => handleDeleteComment(note.id)}
-                title="Delete comment"
-              >
-                <Trash class="text-red-500" />
-              </Button>
-            {/if}
-          </div>
+          <QuestNote {note} deletable={editing} />
         {:else}
           <div class="text-white/80 italic">No updates added yet</div>
         {/each}

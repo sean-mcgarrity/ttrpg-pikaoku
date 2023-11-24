@@ -13,7 +13,7 @@ export const getQuestsQuery = () => {
       return extractData(
         await supabase
           .from('quest')
-          .select('*, notes:quest_note (*)')
+          .select('*, notes:quest_note (*, author:profile (username, avatar_src))')
           .eq('campaign_id', campaignId)
           .order('name')
       );
@@ -54,7 +54,7 @@ export const getPinnedQuestsQuery = () => {
       return extractData(
         await supabase
           .from('quest')
-          .select('*, notes:quest_note (*)')
+          .select('*, notes:quest_note (*, author:profile (username, avatar_src))')
           .eq('campaign_id', campaignId)
           .eq('pinned', true)
           .eq('finished', false)

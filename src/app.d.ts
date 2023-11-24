@@ -8,7 +8,7 @@ declare global {
       getSession: () => Promise<Session | null>;
     }
     interface PageData {
-      sessino: Session | null;
+      session: Session | null;
     }
   }
 
