@@ -35,9 +35,42 @@ export interface Database {
           }
         ]
       }
+      campaign_invite: {
+        Row: {
+          campaign_id: number
+          created_at: string
+          expires: string | null
+          id: string
+          max_uses: number
+        }
+        Insert: {
+          campaign_id: number
+          created_at?: string
+          expires?: string | null
+          id?: string
+          max_uses?: number
+        }
+        Update: {
+          campaign_id?: number
+          created_at?: string
+          expires?: string | null
+          id?: string
+          max_uses?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_invite_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       campaign_members: {
         Row: {
           campaign_id: number
+          campaign_invite_id: string
           created_at: string | null
           id: number
           is_gm: boolean
@@ -45,6 +78,7 @@ export interface Database {
         }
         Insert: {
           campaign_id: number
+          campaign_invite_id: string
           created_at?: string | null
           id?: number
           is_gm?: boolean
@@ -52,6 +86,7 @@ export interface Database {
         }
         Update: {
           campaign_id?: number
+          campaign_invite_id?: string
           created_at?: string | null
           id?: number
           is_gm?: boolean
@@ -63,6 +98,13 @@ export interface Database {
             columns: ["campaign_id"]
             isOneToOne: false
             referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_members_campaign_invite_id_fkey"
+            columns: ["campaign_invite_id"]
+            isOneToOne: false
+            referencedRelation: "campaign_invite"
             referencedColumns: ["id"]
           },
           {
@@ -410,6 +452,35 @@ export interface Database {
             columns: ["campaign"]
             isOneToOne: false
             referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      profile: {
+        Row: {
+          avatar_src: string | null
+          created_at: string
+          id: string
+          username: string | null
+        }
+        Insert: {
+          avatar_src?: string | null
+          created_at?: string
+          id: string
+          username?: string | null
+        }
+        Update: {
+          avatar_src?: string | null
+          created_at?: string
+          id?: string
+          username?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profile_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]
