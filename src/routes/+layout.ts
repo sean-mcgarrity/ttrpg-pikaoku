@@ -6,7 +6,7 @@ import type { Database } from 'types/database/index.js';
 export const load = async ({ fetch, data, depends }) => {
   depends('supabase:auth');
 
-  const supabase = createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
+  const supabase = createBrowserClient<Database>(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
     global: {
       fetch
     },

@@ -1,8 +1,10 @@
 <script lang="ts">
+  import { page } from '$app/stores';
   import EditCampaign from '$components/forms/EditCampaign.svelte';
   import Heading from '$components/layout/Heading.svelte';
   import BackToCampaign from '../BackToCampaign.svelte';
   import CampaignCharcatersEditor from './AdminCampaignCharacters.svelte';
+  import CampaignInviteManager from './CampaignInviteManager.svelte';
   import FeatureFlagManager from './FeatureFlagManager.svelte';
 </script>
 
@@ -13,5 +15,6 @@
     <EditCampaign />
     <FeatureFlagManager />
     <CampaignCharcatersEditor />
+    <CampaignInviteManager />
   </div>
 </div>

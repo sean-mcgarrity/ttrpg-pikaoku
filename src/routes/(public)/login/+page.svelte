@@ -3,20 +3,10 @@
   import BackTo from '$components/BackTo.svelte';
   import Button from '$components/Button.svelte';
   import Heading from '$components/layout/Heading.svelte';
+  import DiscordLoginButton from './DiscordLoginButton.svelte';
 
   export let data;
   $: ({ supabase, session } = data);
-
-  $: afterLogin = $page.data.afterLogin ?? '/';
-
-  async function signInWithDiscord() {
-    await supabase.auth.signInWithOAuth({
-      provider: 'discord',
-      options: {
-        redirectTo: `${window.location.origin}/me?help=me`
-      }
-    });
-  }
 
   $: hasSession = !!session?.access_token;
 </script>
@@ -46,9 +36,7 @@
           </a>
           .
         </p>
-        <Button color="#5865F2" on:click={signInWithDiscord} class="hover:brightness-105 mx-auto">
-          <img src="/images/discord_logo_white.png" alt="Discord Logo" class=" h-16 p-4 " />
-        </Button>
+        <DiscordLoginButton redirectTarget="/me" />
       {/if}
     </div>
   </div>
