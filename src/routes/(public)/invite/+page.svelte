@@ -3,7 +3,6 @@
   import YoureInvitedPrompt from './YoureInvitedPrompt.svelte';
   import ExpiredInvitePrompt from './ExpiredInvitePrompt.svelte';
   import LinkButton from '$components/LinkButton.svelte';
-  import { now } from 'svelte/internal';
   import { ArrowRight, Navigation } from 'lucide-svelte';
 
   $: hasExpired = $page.data.hasExpired;

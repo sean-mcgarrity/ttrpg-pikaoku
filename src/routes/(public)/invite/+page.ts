@@ -18,24 +18,27 @@ export const load = async ({ url, parent }) => {
         .single()
     );
 
-    const response = extractData(
-      await supabase
-        .from('campaign_members')
-        .select('*')
-        .eq('campaign_id', invite.campaign_id)
-        .eq('user_id', session.user.id)
-    );
+    let alreadyJoined = false;
+
+    if (!!session?.user?.id) {
+      const response = extractData(
+        await supabase
+          .from('campaign_members')
+          .select('*')
+          .eq('campaign_id', invite.campaign_id)
+          .eq('user_id', session.user.id)
+      );
+      alreadyJoined = response.length > 0;
+    }
 
     const remainingUses = invite.max_uses - invite.times_used[0]['count'];
     return {
       invite: invite,
       hasExpired: new Date(invite.expires) < new Date() || remainingUses <= 0,
-      alreadyJoined: response.length > 0
+      alreadyJoined
     };
   } catch (e) {
     console.error('something went wrong loading invite', e);
     throw redirect(303, '/');
   }
-
-  // const invite =
 };
