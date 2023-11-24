@@ -15,7 +15,7 @@
 <svelte:head>
   <title>Sean's Runs Games</title>
 </svelte:head>
-<div class="text-white w-full min-h-screen min-w-[320px] ">
+<div class="text-white w-full min-h-screen min-w-[320px] bg-slate-950">
   <div class="flex flex-col relative pointer-events-none select-none">
     <img src="https://i.imgur.com/yNNtAgU.jpeg" alt="" class="w-full object-contain" />
     <h1
