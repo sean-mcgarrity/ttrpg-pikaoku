@@ -19,7 +19,7 @@
       extractData<Imbuement>(
         await supabase.from('mp_imbuements').select('*').eq('id', imbuementId).single()
       ),
-    onError: (error) => console.log('error', error),
+    onError: (error) => console.error('error', error),
     refetchOnWindowFocus: false
   });
 

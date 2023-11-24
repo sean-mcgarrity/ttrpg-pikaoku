@@ -12,9 +12,11 @@
 <div class="">
   <Heading type="Page Heading">Campaign details</Heading>
   <div class="flex flex-col gap-8">
-    <EditCampaign />
-    <FeatureFlagManager />
-    <CampaignCharcatersEditor />
+    <div class="grid grid-cols-2 gap-4">
+      <EditCampaign />
+      <FeatureFlagManager />
+    </div>
+    <!-- <CampaignCharcatersEditor /> -->
     <CampaignInviteManager />
   </div>
 </div>

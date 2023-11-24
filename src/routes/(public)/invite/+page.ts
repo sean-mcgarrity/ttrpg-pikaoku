@@ -2,7 +2,7 @@ import { extractData } from '$lib/utils/requests.js';
 import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ url, parent }) => {
-  const { supabase, session } = await parent();
+  const { supabase } = await parent();
   const inviteToken = url.searchParams.get('token');
 
   if (!inviteToken) {
@@ -13,15 +13,17 @@ export const load = async ({ url, parent }) => {
     const invite = extractData(
       await supabase
         .from('campaign_invite')
-        .select('*, campaign:campaign_id(*)')
+        .select('*, campaign:campaign_id(*), times_used:campaign_members(count)')
         .eq('id', inviteToken)
         .single()
     );
+    const remainingUses = invite.max_uses - invite.times_used[0]['count'];
     return {
-      invite: invite
+      invite: invite,
+      hasExpired: new Date(invite.expires) < new Date() || remainingUses <= 0
     };
   } catch (e) {
-    console.log('something went wrong loading invite');
+    console.error('something went wrong loading invite');
     throw redirect(303, '/');
   }
 

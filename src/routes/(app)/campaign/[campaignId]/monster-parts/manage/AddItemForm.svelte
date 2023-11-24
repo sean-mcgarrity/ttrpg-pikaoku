@@ -30,8 +30,8 @@
     requires = '';
   };
 
-  export let onCancel: () => void = () => console.log('Cancelled adding item');
-  export let onAdd: (item) => void = () => console.log('Added item');
+  export let onCancel: () => void = () => console.info('Cancelled adding item');
+  export let onAdd: (item) => void = () => console.info('Added item');
 
   const handleCancel = () => {
     onCancel();

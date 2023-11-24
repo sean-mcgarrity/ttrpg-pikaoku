@@ -14,7 +14,7 @@
   $: moveDown = () => (level.level = Math.min(maxLevel, level.level + 1));
 
   export let onDelete = (value: Imbuement['levels'][number]) =>
-    console.log('Unimplemented delete for', value.level);
+    console.error('Unimplemented delete for', value.level);
 
   const handleDelete = () => onDelete(level);
 </script>

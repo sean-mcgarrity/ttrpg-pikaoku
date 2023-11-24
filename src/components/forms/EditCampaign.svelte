@@ -2,6 +2,7 @@
   import Button from '$components/Button.svelte';
   import SwitchField from '$components/forms/controls/SwitchField.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
+  import Heading from '$components/layout/Heading.svelte';
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
   import { getCurrentCampaign, updateCurrentCampaign } from '$lib/persistance/campaign';
   import { Save } from 'lucide-svelte';
@@ -15,7 +16,8 @@
 </script>
 
 <form on:submit={handleUpdate}>
-  <div class="bg-white bg-opacity-10 rounded px-16 py-8 flex flex-col gap-4">
+  <Heading type="Subsection Heading">Meta</Heading>
+  <div class="bg-white bg-opacity-10 rounded px-8 py-4 flex flex-col gap-2">
     {#if $campaignQuery.isLoading || !$campaignQuery.isFetched || $updateCampaign.isLoading}
       <LoadingInsert />
     {:else}

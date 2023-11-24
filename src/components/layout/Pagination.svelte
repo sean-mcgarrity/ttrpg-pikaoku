@@ -5,7 +5,7 @@
 
   export let currentPage: number;
   export let totalPages: number;
-  export let onPageChange = (newPage: number) => console.log(newPage);
+  export let onPageChange = (newPage: number) => {};
 
   function handlePageChange(newPage: number) {
     const newVal = Math.min(totalPages, Math.max(1, newPage));
