@@ -62,7 +62,7 @@
       text: 'Edit',
       icon: Edit,
       onClick: (item) =>
-        goto(`/campaign/${$page.params.campaignId}/monster-parts/manage/imbuements/${item.id}`)
+        goto(`/campaigns/${$page.params.campaignId}/monster-parts/manage/imbuements/${item.id}`)
     },
     {
       text: 'Delete',
@@ -81,7 +81,7 @@
 >
   <LinkButton
     slot="header-button"
-    href={`/campaign/${$page.params.campaignId}/monster-parts/manage/imbuements/add`}
+    href={`/campaigns/${$page.params.campaignId}/monster-parts/manage/imbuements/add`}
   >
     Add <PlusCircle class="h-4 w-4 inline" />
   </LinkButton>

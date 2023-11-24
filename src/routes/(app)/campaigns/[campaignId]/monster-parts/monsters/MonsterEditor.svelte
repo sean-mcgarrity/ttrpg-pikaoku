@@ -37,7 +37,7 @@
   </div>
   <div class="mx-auto">
     {#if monster.id}
-      <LinkButton href="/campaign/{getCampaignId()}/monster-parts/monsters/{monster.id}"
+      <LinkButton href="/campaigns/{getCampaignId()}/monster-parts/monsters/{monster.id}"
         >Cancel
         <Undo />
       </LinkButton>

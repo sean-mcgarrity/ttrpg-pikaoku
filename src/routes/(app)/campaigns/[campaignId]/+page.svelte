@@ -70,7 +70,7 @@
       <LandingLink
         size="sm"
         title="Monster Parts"
-        href={`/campaign/${campaignId}/monster-parts`}
+        href={`/campaigns/${campaignId}/monster-parts`}
         bgImgSrc="/images/monster-parts-banner.webp"
       />
     </IfFeatureFlag>
@@ -78,7 +78,7 @@
       <LandingLink
         size="sm"
         title="BASTION BUILDING"
-        href={`/campaign/${campaignId}/bastions`}
+        href={`/campaigns/${campaignId}/bastions`}
         bgImgSrc="https://i.imgur.com/WFsKg7W.jpeg"
       />
     </IfFeatureFlag>
@@ -88,7 +88,7 @@
 
     <AdminOnly>
       <div class="w-full mx-auto max-w-sm text-center">
-        <LinkButton href={`/campaign/${campaignId}/edit`}>Edit campaign &#9881;</LinkButton>
+        <LinkButton href={`/campaigns/${campaignId}/edit`}>Edit campaign &#9881;</LinkButton>
       </div>
     </AdminOnly>
   </div>

@@ -29,7 +29,7 @@
         await supabase.from('mp_imbuements').update(imbuement).eq('id', imbuementId).single()
       );
     },
-    onSuccess: () => goto(`/campaign/${$page.data.campaign.id}/monster-parts/manage`)
+    onSuccess: () => goto(`/campaigns/${$page.data.campaign.id}/monster-parts/manage`)
   });
 
   const onSave = (imbuement) => $updateImbuement.mutate(imbuement);
@@ -43,7 +43,7 @@
   {#if $imbuementQuery.isLoading}
     <LoadingInsert />
   {:else if $imbuementQuery.isError}
-    <SomethingWentWrong destination={`/campaign/${$page.data.campaign.id}/monster-parts/manage`} />
+    <SomethingWentWrong destination={`/campaigns/${$page.data.campaign.id}/monster-parts/manage`} />
   {:else}
     <EditImbuementForm imbuement={$imbuementQuery.data} {onSave} />
     {#if $updateImbuement.isLoading}

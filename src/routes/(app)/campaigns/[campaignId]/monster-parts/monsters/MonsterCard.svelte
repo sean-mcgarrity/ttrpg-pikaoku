@@ -8,7 +8,7 @@
 
 {#if asLink}
   <a
-    href={`/campaign/${monster.campaign_id}/monster-parts/monsters/${monster.id}`}
+    href={`/campaigns/${monster.campaign_id}/monster-parts/monsters/${monster.id}`}
     class={cs(
       'w-full transform transition duration-300 hover:scale-105 bg-white text-black overflow-hidden rounded shadow select-none',
       !monster.revealed && 'border-4 border-purple-800 border-solid bg-gray-400'

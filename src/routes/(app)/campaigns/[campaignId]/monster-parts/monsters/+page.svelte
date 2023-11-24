@@ -39,7 +39,7 @@
 <div class="mb-8">
   <div class="flex flex-row justify-between">
     <Heading type="Section Heading">Usable Monsters</Heading>
-    <LinkButton href="/campaign/{campaignId}/monster-parts/monsters/add"
+    <LinkButton href="/campaigns/{campaignId}/monster-parts/monsters/add"
       >Add Monster
       <PlusIcon /></LinkButton
     >

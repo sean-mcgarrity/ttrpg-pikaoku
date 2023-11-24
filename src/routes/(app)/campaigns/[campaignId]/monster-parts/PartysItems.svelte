@@ -30,7 +30,7 @@
     <div class=" flex flex-col gap-2 max-w-lg w-full mx-auto">
       {#each $query.data as item}
         <a
-          href={`/campaign/${campaignId}/monster-parts/item/${item.id}`}
+          href={`/campaigns/${campaignId}/monster-parts/item/${item.id}`}
           in:slide|local
           class="hover:brightness-110"
         >
@@ -50,7 +50,7 @@
         <div class="my-auto">
           <p>No-one has made an item yet!</p>
           <a
-            href={`/campaign/${campaignId}/monster-parts/item/create`}
+            href={`/campaigns/${campaignId}/monster-parts/item/create`}
             class="text-blue-300 underline"
             >Be the first
             <ArrowRight />
@@ -59,7 +59,7 @@
       </div>
     {:else}
       <div class="mx-auto">
-        <LinkButton href={`/campaign/${campaignId}/monster-parts/item/create`}
+        <LinkButton href={`/campaigns/${campaignId}/monster-parts/item/create`}
           >Create item <HammerIcon fill="white" /></LinkButton
         >
       </div>

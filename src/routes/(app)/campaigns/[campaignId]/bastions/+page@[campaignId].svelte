@@ -28,7 +28,7 @@
     <div class="flex flex-col gap-2">
       {#each bastions as bastion}
         <a
-          href={`/campaign/${campaignId}/bastions/${bastion.id ?? 1}`}
+          href={`/campaigns/${campaignId}/bastions/${bastion.id ?? 1}`}
           class="bg-offwhite text-offblack rounded-lg shadow overflow-hidden cursor-pointer hover:brightness-105 border-0"
         >
           <img src={bastion.banner_src} alt="" class="object-contain" />

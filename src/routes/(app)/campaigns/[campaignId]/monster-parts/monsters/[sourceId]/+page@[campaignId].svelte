@@ -18,7 +18,7 @@
   $: revealMutation = revealSource($page.params.sourceId);
 
   $: if ($query.isError && $query.error['code'] === 'PGRST116') {
-    goto(`/campaign/${$page.params.campaignId}/monster-parts/monsters`);
+    goto(`/campaigns/${$page.params.campaignId}/monster-parts/monsters`);
   }
 
   $: handleReveal = async () => {
@@ -27,7 +27,7 @@
   };
 </script>
 
-<BackTo href={`/campaign/${getCampaignId()}/monster-parts/monsters`} text="monsters" />
+<BackTo href={`/campaigns/${getCampaignId()}/monster-parts/monsters`} text="monsters" />
 <div class="relative pt-4">
   <div class="flex flex-col sm:flex-row gap-4 w-full">
     <div class="flex flex-col justify-center items-center w-full gap-4">
@@ -36,7 +36,7 @@
       {:else if $query.isFetched && !!$query.data}
         <MonsterInfoCard {monster} />
         <div>
-          <LinkButton href="/campaign/{getCampaignId()}/monster-parts/monsters/{monster.id}/edit"
+          <LinkButton href="/campaigns/{getCampaignId()}/monster-parts/monsters/{monster.id}/edit"
             >Edit <PencilRuler /></LinkButton
           >
           {#if !monster.revealed}

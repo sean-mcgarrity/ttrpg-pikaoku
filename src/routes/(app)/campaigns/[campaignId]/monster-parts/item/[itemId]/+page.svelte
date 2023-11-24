@@ -21,7 +21,7 @@
   let query = getCurrentItem();
 
   $: if ($query.isError && $query.error['code'] === 'PGRST116') {
-    goto(`/campaign/${$page.params.campaignId}/monster-parts`);
+    goto(`/campaigns/${$page.params.campaignId}/monster-parts`);
   }
 
   $: canAddImbuement = $query.isSuccess && getUnusedImbuementSlots($query.data) > 0;

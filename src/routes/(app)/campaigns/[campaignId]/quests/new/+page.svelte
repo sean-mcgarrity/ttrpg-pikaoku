@@ -6,7 +6,7 @@
   $: campaignId = getCampaignId();
 </script>
 
-<BackTo href={`/campaign/${campaignId}/quests`} text="All Quests" />
+<BackTo href={`/campaigns/${campaignId}/quests`} text="All Quests" />
 <div>
   <Heading type="Page Heading">New Quest</Heading>
 </div>

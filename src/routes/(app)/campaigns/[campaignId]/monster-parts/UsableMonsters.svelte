@@ -28,7 +28,7 @@
     </div>
   {/if}
   <div class="text-center py-4">
-    <LinkButton href={`/campaign/${campaignId}/monster-parts/monsters`}
+    <LinkButton href={`/campaigns/${campaignId}/monster-parts/monsters`}
       >See All <ArrowRight /></LinkButton
     >
   </div>

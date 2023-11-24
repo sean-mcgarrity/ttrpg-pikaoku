@@ -16,7 +16,7 @@
   $: handleClick = () => {
     $mutation.mutate(monster, {
       onSuccess: () => {
-        goto(`/campaign/${$page.params.campaignId}/monster-parts/monsters`);
+        goto(`/campaigns/${$page.params.campaignId}/monster-parts/monsters`);
       }
     });
   };
@@ -24,7 +24,7 @@
   $: handleDelete = () => {
     $deleteSourceM.mutate($query.data.id, {
       onSuccess: () => {
-        goto(`/campaign/${$page.params.campaignId}/monster-parts/monsters`);
+        goto(`/campaigns/${$page.params.campaignId}/monster-parts/monsters`);
       }
     });
   };

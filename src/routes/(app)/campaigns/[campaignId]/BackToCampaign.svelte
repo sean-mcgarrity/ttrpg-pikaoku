@@ -7,4 +7,4 @@
   $: campaignName = $page.data.campaign.name;
 </script>
 
-<BackTo href={`/campaign/${campaignId}`} text={campaignName} />
+<BackTo href={`/campaigns/${campaignId}`} text={campaignName} />

@@ -5,5 +5,5 @@
   $: campaignId = getCampaignId();
 </script>
 
-<BackTo href={`/campaign/${campaignId}/bastions`} text="all bastions" />
+<BackTo href={`/campaigns/${campaignId}/bastions`} text="all bastions" />
 <slot />

@@ -8,7 +8,9 @@
 
   $: session = $page.data.session;
   $: hasSession = !!session?.access_token;
-  $: href = hasSession ? `/campaign/${campaign.id}` : `/login?afterLogin=/campaign/${campaign.id}`;
+  $: href = hasSession
+    ? `/campaigns/${campaign.id}`
+    : `/login?afterLogin=/campaigns/${campaign.id}`;
 </script>
 
 <a

@@ -25,19 +25,19 @@
     <LandingLink
       class="flex-1"
       title="Imbuements"
-      href={`/campaign/${campaignId}/monster-parts/imbuements`}
+      href={`/campaigns/${campaignId}/monster-parts/imbuements`}
       bgImgSrc="https://i.imgur.com/HWqYImt.jpg"
     />
     <LandingLink
       class="flex-1"
       title="Monsters"
-      href={`/campaign/${campaignId}/monster-parts/monsters`}
+      href={`/campaigns/${campaignId}/monster-parts/monsters`}
       bgImgSrc="https://i.imgur.com/OEY4Ixd.jpg"
     />
   </div>
   <AdminOnly>
     <div class="text-white mt-8 text-center">
-      <LinkButton href={`/campaign/${campaignId}/monster-parts/manage`}>Admin manage</LinkButton>
+      <LinkButton href={`/campaigns/${campaignId}/monster-parts/manage`}>Admin manage</LinkButton>
     </div>
   </AdminOnly>
 </div>

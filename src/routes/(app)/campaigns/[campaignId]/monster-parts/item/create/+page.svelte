@@ -46,7 +46,7 @@
       },
       {
         onSuccess: () => {
-          goto(`/campaign/${campaignId}/monster-parts`);
+          goto(`/campaigns/${campaignId}/monster-parts`);
         }
       }
     );

@@ -12,7 +12,7 @@
 <div class="">
   <div class="w-full justify-between flex flex-row">
     <Heading type="Section Heading">Pinned Quests</Heading>
-    <LinkButton href={`/campaign/${getCampaignId()}/quests`} class="text-sm"
+    <LinkButton href={`/campaigns/${getCampaignId()}/quests`} class="text-sm"
       >See All <ArrowRight /></LinkButton
     >
   </div>

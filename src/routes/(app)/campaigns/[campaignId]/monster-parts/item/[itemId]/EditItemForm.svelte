@@ -86,7 +86,7 @@
       if (confirm(`Are you sure you want to delete ${refinement.name}?`)) {
         $deleteRefinementMutation.mutate(refinement.id, {
           onSuccess: () => {
-            goto(`/campaign/${campaignIdFromParams}/monster-parts`);
+            goto(`/campaigns/${campaignIdFromParams}/monster-parts`);
           }
         });
       }

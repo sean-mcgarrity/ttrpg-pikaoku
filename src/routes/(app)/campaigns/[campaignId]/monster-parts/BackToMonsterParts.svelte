@@ -5,4 +5,4 @@
   $: campaignId = getCampaignId();
 </script>
 
-<BackTo href={`/campaign/${campaignId}/monster-parts`} text="monster parts" />
+<BackTo href={`/campaigns/${campaignId}/monster-parts`} text="monster parts" />
