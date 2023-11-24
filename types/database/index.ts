@@ -35,6 +35,38 @@ export interface Database {
           }
         ]
       }
+      campaign_handout: {
+        Row: {
+          campaign_id: number
+          created_at: string
+          id: number
+          label: string
+          link: string
+        }
+        Insert: {
+          campaign_id: number
+          created_at?: string
+          id?: number
+          label: string
+          link: string
+        }
+        Update: {
+          campaign_id?: number
+          created_at?: string
+          id?: number
+          label?: string
+          link?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_handout_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       campaign_invite: {
         Row: {
           campaign_id: number
@@ -550,7 +582,7 @@ export interface Database {
             foreignKeyName: "quest_note_author_id_fkey"
             columns: ["author_id"]
             isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "profile"
             referencedColumns: ["id"]
           },
           {
