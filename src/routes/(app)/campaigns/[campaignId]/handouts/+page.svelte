@@ -44,10 +44,8 @@
 
 <BackToCampaign />
 <Heading type="Page Heading">Handouts</Heading>
-
 <LoadingInsert fullPage loading={$handoutsQ.isLoading || $killHandoutM.isLoading} />
-
-<div class="bg-blue-900 rounded p-8 overflow-none mb-8 drop-shadow-xl">
+<div class="mb-8 flex flex-col gap-2">
   {#each handouts as handout (handout.id)}
     <div class="flex flex-row gap-2">
       <a
