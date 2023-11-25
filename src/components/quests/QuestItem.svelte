@@ -4,7 +4,7 @@
   import { CheckCircle, ChevronDown, Pencil, Pin, SaveIcon, Trash } from 'lucide-svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
   import type { Quest } from 'src/app';
-  import { slide } from 'svelte/transition';
+  import { fade, slide } from 'svelte/transition';
   import AddQuestNoteForm from './AddQuestNoteForm.svelte';
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
   import { deleteQuestMutation, updateQuestMutation } from '$lib/persistance/quests';
@@ -97,7 +97,7 @@
       {/if}
     </div>
     {#if !preview || (preview && expanded)}
-      <div class="grid grid-cols-3 gap-2 items-center">
+      <div class="grid grid-cols-3 gap-2 items-center" transition:fade>
         {#if quest.finished !== true}
           {#if editing}
             <Button on:click={updateQuestDetails} title="Save changes">
