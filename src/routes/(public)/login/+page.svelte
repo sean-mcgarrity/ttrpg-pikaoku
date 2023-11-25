@@ -1,12 +1,10 @@
 <script lang="ts">
-  import { page } from '$app/stores';
   import BackTo from '$components/BackTo.svelte';
-  import Button from '$components/Button.svelte';
   import Heading from '$components/layout/Heading.svelte';
   import DiscordLoginButton from './DiscordLoginButton.svelte';
 
   export let data;
-  $: ({ supabase, session } = data);
+  $: ({ session } = data);
 
   $: hasSession = !!session?.access_token;
 </script>
