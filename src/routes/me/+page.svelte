@@ -56,8 +56,6 @@
     await $updateProfileM.mutate({ username: userName, avatar_src: avatarSrc });
   };
 
-  $: console.log('update profile success', $updateProfileM.status === 'success');
-
   let success = false;
   $: hasUpdated = !$updateProfileM.isLoading && success;
 </script>
