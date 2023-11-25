@@ -83,7 +83,12 @@
       />
     </IfFeatureFlag>
     <IfFeatureFlag flag="handouts">
-      <LandingLink size="sm" title="Handouts" href="" bgImgSrc="https://i.imgur.com/38Wjk61.jpeg" />
+      <LandingLink
+        size="sm"
+        title="Handouts"
+        href={`/campaigns/${campaignId}/handouts`}
+        bgImgSrc="https://i.imgur.com/38Wjk61.jpeg"
+      />
     </IfFeatureFlag>
 
     <AdminOnly>
