@@ -9,6 +9,7 @@
   import { getCharactersQuery } from '$lib/persistance/campaign';
   import { List } from 'lucide-svelte';
   import QuestsPeek from './QuestsPeek.svelte';
+  import BigLink from '$components/BigLink.svelte';
 
   $: campaignId = $page.params.campaignId;
   const charactersQ = getCharactersQuery();

@@ -32,7 +32,7 @@
         <a
           href={`/campaigns/${campaignId}/monster-parts/item/${item.id}`}
           in:slide|local
-          class="hover:brightness-110"
+          class="hover:brightness-110 hover:scale-105"
         >
           <ItemCardHeader {item} />
         </a>

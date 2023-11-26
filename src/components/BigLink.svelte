@@ -12,7 +12,7 @@
   export { className as class };
 </script>
 
-<a {href} class={className}>
+<a {href} class={cs(className, 'hover:scale-105')}>
   <div
     class={cs(
       {

@@ -16,6 +16,7 @@
   on:click
   style={color && `background-color: ${color}`}
   class={cx(
+    'hover:scale-105',
     padded ? 'px-4 py-2' : 'px-2 py-1',
     color
       ? 'hover:brightness-110 active:brightness-90'
