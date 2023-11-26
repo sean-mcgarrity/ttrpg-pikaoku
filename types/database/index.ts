@@ -456,6 +456,7 @@ export interface Database {
           img_src: string
           level: number
           name: string | null
+          player_id: string | null
           status: string
         }
         Insert: {
@@ -466,6 +467,7 @@ export interface Database {
           img_src?: string
           level?: number
           name?: string | null
+          player_id?: string | null
           status?: string
         }
         Update: {
@@ -476,6 +478,7 @@ export interface Database {
           img_src?: string
           level?: number
           name?: string | null
+          player_id?: string | null
           status?: string
         }
         Relationships: [
@@ -484,6 +487,13 @@ export interface Database {
             columns: ["campaign"]
             isOneToOne: false
             referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "player_characters_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]
