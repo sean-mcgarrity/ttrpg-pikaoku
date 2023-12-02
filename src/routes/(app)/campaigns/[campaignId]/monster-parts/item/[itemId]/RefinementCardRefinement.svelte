@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import ProgressBar from '$components/monster-parts/ProgressBar.svelte';
   import {
     calculateRefinementLevel,

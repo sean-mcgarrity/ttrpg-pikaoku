@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import { deleteQuestNoteMutation } from '$lib/persistance/quests';
   import { getRelativeTime } from '$lib/utils/time';
   import { Trash } from 'lucide-svelte';

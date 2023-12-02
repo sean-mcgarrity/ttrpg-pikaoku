@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import { deleteRefinementChange } from '$lib/persistance/monster-parts';
   import type { MP_Refinement } from '$lib/systems/pf2e_monster_parts';
   import { whereKeyEq } from '$lib/utils/iterators';

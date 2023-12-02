@@ -1,5 +1,5 @@
 <script lang="ts">
-  import BigButton from '$components/BigButton.svelte';
+  import BigButton from '$components/buttons/BigButton.svelte';
   import Heading from '$components/layout/Heading.svelte';
   import { getCampaignId } from '$lib/utils/contextual-helpers';
   import { ArrowRightIcon } from 'lucide-svelte';

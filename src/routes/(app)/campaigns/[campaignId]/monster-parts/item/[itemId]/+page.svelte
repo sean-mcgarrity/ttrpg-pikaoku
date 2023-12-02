@@ -3,20 +3,18 @@
 
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
   import { getCurrentItem } from '$lib/persistance/monster-parts';
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import { Navigation2, PencilRuler, X } from 'lucide-svelte';
   import AddImbuement from './AddImbuement.svelte';
   import { getUnusedImbuementSlots } from '$lib/systems/pf2e_monster_parts';
   import EditItemForm from './EditItemForm.svelte';
   import RecentItemChanges from './RecentItemChanges.svelte';
-  import BigButton from '$components/BigButton.svelte';
+  import BigButton from '$components/buttons/BigButton.svelte';
   import RefinePane from './RefinePane.svelte';
   import ImbuePane from './ImbuePane.svelte';
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { fade } from 'svelte/transition';
-  import BackToCampaign from '../../../BackToCampaign.svelte';
-  import BackToMonsterParts from '../../BackToMonsterParts.svelte';
 
   let query = getCurrentItem();
 

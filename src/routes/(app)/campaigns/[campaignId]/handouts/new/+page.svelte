@@ -1,8 +1,8 @@
 <script>
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import BackTo from '$components/BackTo.svelte';
-  import Button from '$components/Button.svelte';
+  import BackTo from '$components/buttons/BackTo.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
   import Heading from '$components/layout/Heading.svelte';
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';

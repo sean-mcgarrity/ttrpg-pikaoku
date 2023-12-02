@@ -1,6 +1,5 @@
 <script lang="ts">
-  import Button from '$components/Button.svelte';
-  import TextField from '$components/forms/controls/TextField.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import { addQuestNoteMutation } from '$lib/persistance/quests';
   import { MessageCircle } from 'lucide-svelte';
   import TextAreaField from '$components/forms/controls/TextAreaField.svelte';

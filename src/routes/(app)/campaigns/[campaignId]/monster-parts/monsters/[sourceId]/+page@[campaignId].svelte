@@ -2,14 +2,14 @@
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
   import { getUsableSourceById, revealSource } from '$lib/persistance/monster-parts';
   import { page } from '$app/stores';
-  import LinkButton from '$components/LinkButton.svelte';
+  import LinkButton from '$components/buttons/LinkButton.svelte';
   import { getCampaignId } from '$lib/utils/contextual-helpers';
   import MonsterInfoCard from './MonsterInfoCard.svelte';
   import { PencilRuler, StepBack } from 'lucide-svelte';
   import AdminOnly from '$components/AdminOnly.svelte';
   import { goto } from '$app/navigation';
-  import Button from '$components/Button.svelte';
-  import BackTo from '$components/BackTo.svelte';
+  import Button from '$components/buttons/Button.svelte';
+  import BackTo from '$components/buttons/BackTo.svelte';
 
   $: query = getUsableSourceById($page.params.sourceId);
 

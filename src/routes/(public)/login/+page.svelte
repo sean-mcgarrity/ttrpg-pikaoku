@@ -1,5 +1,5 @@
 <script lang="ts">
-  import BackTo from '$components/BackTo.svelte';
+  import BackTo from '$components/buttons/BackTo.svelte';
   import Heading from '$components/layout/Heading.svelte';
   import DiscordLoginButton from './DiscordLoginButton.svelte';
 

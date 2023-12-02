@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import SwitchField from '$components/forms/controls/SwitchField.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
   import Heading from '$components/layout/Heading.svelte';

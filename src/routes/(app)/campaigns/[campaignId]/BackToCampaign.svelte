@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import BackTo from '$components/BackTo.svelte';
+  import BackTo from '$components/buttons/BackTo.svelte';
   import { getCampaignId } from '$lib/utils/contextual-helpers';
 
   $: campaignId = getCampaignId();

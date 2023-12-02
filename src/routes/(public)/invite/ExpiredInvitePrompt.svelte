@@ -1,11 +1,9 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import Button from '$components/Button.svelte';
   import { isBrowser } from '@supabase/ssr';
-  import { ArrowRight, LogIn } from 'lucide-svelte';
-  import DiscordLoginButton from '../login/DiscordLoginButton.svelte';
+  import { ArrowRight } from 'lucide-svelte';
   import Heading from '$components/layout/Heading.svelte';
-  import LinkButton from '$components/LinkButton.svelte';
+  import LinkButton from '$components/buttons/LinkButton.svelte';
 
   $: ({ session } = $page.data);
 

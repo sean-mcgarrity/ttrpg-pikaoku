@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import * as pf2eCore from '$lib/systems/pf2e_core';
   import { byKeyAsc } from '$lib/utils/iterators';
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import cs from 'classnames';
   import { slide } from 'svelte/transition';
   import { ChevronDown, CopyX } from 'lucide-svelte';

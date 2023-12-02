@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Imbuement, MP_UsableSource } from '$lib/systems/pf2e_monster_parts';
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import { slide } from 'svelte/transition';
   import { Hammer } from 'lucide-svelte';
   import Modal from '$components/Modals/Modal.svelte';

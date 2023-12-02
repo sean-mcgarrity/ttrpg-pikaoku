@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from '$components/Button.svelte';
+  import Button from './Button.svelte';
 
   export let href = '';
   let className = '';

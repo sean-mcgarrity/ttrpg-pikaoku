@@ -1,11 +1,10 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import AdminOnly from '$components/AdminOnly.svelte';
-  import LinkButton from '$components/LinkButton.svelte';
+  import LinkButton from '$components/buttons/LinkButton.svelte';
   import PartysItemsTable from './PartysItems.svelte';
   import Heading from '$components/layout/Heading.svelte';
-  import LandingLink from '$components/BigLink.svelte';
-  import BackTo from '$components/BackTo.svelte';
+  import LandingLink from '$components/buttons/BigLink.svelte';
   import BackToCampaign from '../BackToCampaign.svelte';
 
   $: campaignId = $page.params.campaignId;

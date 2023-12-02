@@ -5,9 +5,9 @@
   import BackToCampaign from '../BackToCampaign.svelte';
   import { page } from '$app/stores';
   import { extractData } from '$lib/utils/requests';
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import { ExternalLink, PlusCircle, Trash } from 'lucide-svelte';
-  import LinkButton from '$components/LinkButton.svelte';
+  import LinkButton from '$components/buttons/LinkButton.svelte';
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
 
   export let data;

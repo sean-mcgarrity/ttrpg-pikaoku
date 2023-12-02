@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import NumberField from '$components/forms/controls/NumberField.svelte';
   import { getSupabase } from '$lib/utils/requests';
   import { createMutation, useQueryClient } from '@tanstack/svelte-query';

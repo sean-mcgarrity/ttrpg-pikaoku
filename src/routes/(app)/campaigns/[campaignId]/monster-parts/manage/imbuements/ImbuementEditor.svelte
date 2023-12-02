@@ -1,6 +1,6 @@
 <script lang="ts">
   import TextField from '$components/forms/controls/TextField.svelte';
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import { ArrowBigUp, BookDown, ListChecks, Save } from 'lucide-svelte';
 
   import type { Imbuement } from '$lib/systems/pf2e_monster_parts';

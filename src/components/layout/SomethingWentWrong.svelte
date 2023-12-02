@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LinkButton from '$components/LinkButton.svelte';
+  import LinkButton from '$components/buttons/LinkButton.svelte';
   import { Undo } from 'lucide-svelte';
 
   export let destination: string = '/';

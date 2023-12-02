@@ -6,7 +6,7 @@
   import Heading from '$components/layout/Heading.svelte';
   import cs from 'classnames';
   import { ArrowDown, ArrowUp } from 'lucide-svelte';
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
 
   export let item: MP_Refinement;
 

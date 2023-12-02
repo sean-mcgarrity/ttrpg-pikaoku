@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/stores';
 
-  import LinkButton from '$components/LinkButton.svelte';
+  import LinkButton from '$components/buttons/LinkButton.svelte';
   import { getUsableSourcesPreview } from '$lib/persistance/monster-parts';
   import Heading from '$components/layout/Heading.svelte';
   import { ArrowRight } from 'lucide-svelte';

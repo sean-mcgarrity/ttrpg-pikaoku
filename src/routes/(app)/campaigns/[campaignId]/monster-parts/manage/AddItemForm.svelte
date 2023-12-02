@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import NumberField from '$components/forms/controls/NumberField.svelte';
   import SelectField from '$components/forms/controls/SelectField.svelte';
   import SwitchField from '$components/forms/controls/SwitchField.svelte';

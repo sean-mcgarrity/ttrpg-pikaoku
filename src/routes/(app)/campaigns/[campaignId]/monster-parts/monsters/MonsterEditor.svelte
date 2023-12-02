@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Button from '$components/Button.svelte';
-  import LinkButton from '$components/LinkButton.svelte';
+  import Button from '$components/buttons/Button.svelte';
+  import LinkButton from '$components/buttons/LinkButton.svelte';
   import IntegerTicker from '$components/forms/controls/IntegerTicker.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
   import Heading from '$components/layout/Heading.svelte';

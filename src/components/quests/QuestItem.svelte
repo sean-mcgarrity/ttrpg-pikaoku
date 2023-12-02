@@ -1,6 +1,6 @@
 <script lang="ts">
   import cs from 'classnames';
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import { CheckCircle, ChevronDown, Pencil, Pin, SaveIcon, Trash } from 'lucide-svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
   import type { Quest } from 'src/app';

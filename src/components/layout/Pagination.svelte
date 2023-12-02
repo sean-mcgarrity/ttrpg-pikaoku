@@ -1,7 +1,7 @@
 <script lang="ts">
   import cx from 'classnames';
 
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
 
   export let currentPage: number;
   export let totalPages: number;

@@ -1,8 +1,8 @@
 <script lang="ts">
   import AdminOnly from '$components/AdminOnly.svelte';
   import CampaignLogin from './CampaignLogin.svelte';
-  import LinkButton from '$components/LinkButton.svelte';
-  import { PlusCircle, LogInIcon } from 'lucide-svelte';
+  import LinkButton from '$components/buttons/LinkButton.svelte';
+  import { PlusCircle } from 'lucide-svelte';
   import { page } from '$app/stores';
   import Heading from '$components/layout/Heading.svelte';
 

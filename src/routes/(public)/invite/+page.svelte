@@ -2,8 +2,8 @@
   import { page } from '$app/stores';
   import YoureInvitedPrompt from './YoureInvitedPrompt.svelte';
   import ExpiredInvitePrompt from './ExpiredInvitePrompt.svelte';
-  import LinkButton from '$components/LinkButton.svelte';
-  import { ArrowRight, Navigation } from 'lucide-svelte';
+  import LinkButton from '$components/buttons/LinkButton.svelte';
+  import { ArrowRight } from 'lucide-svelte';
 
   $: hasExpired = $page.data.hasExpired;
 

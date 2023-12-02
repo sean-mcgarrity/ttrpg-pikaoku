@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import TextAreaField from '$components/forms/controls/TextAreaField.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
   import CharacterSelect from '$components/monster-parts/CharacterSelect.svelte';

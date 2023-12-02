@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LinkButton from '$components/LinkButton.svelte';
+  import LinkButton from '$components/buttons/LinkButton.svelte';
   import Heading from '$components/layout/Heading.svelte';
   import QuestItem from '$components/quests/QuestItem.svelte';
   import { getPinnedQuestsQuery } from '$lib/persistance/quests';

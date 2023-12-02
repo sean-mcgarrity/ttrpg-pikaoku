@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LinkButton from '$components/LinkButton.svelte';
+  import LinkButton from '$components/buttons/LinkButton.svelte';
   import Heading from '$components/layout/Heading.svelte';
   import { getUnusableSources, getUsableSources } from '$lib/persistance/monster-parts';
   import { PlusIcon } from 'lucide-svelte';

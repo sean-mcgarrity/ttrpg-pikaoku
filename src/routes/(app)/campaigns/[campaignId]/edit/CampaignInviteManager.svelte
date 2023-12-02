@@ -1,12 +1,13 @@
 <script lang="ts">
   import { page } from '$app/stores';
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import Heading from '$components/layout/Heading.svelte';
   import { extractData, getSupabase } from '$lib/utils/requests';
   import { createMutation, createQuery, useQueryClient } from '@tanstack/svelte-query';
   import { MailPlus, Clipboard, Trash } from 'lucide-svelte';
   import NewInviteForm from './NewInviteForm.svelte';
   import { slide } from 'svelte/transition';
+  import ConfirmationModal from '$components/Modals/ConfirmationModal.svelte';
 
   $: campaign = $page.data.campaign;
 
@@ -49,10 +50,20 @@
     }
   });
 
+  let expireTarget = null;
+
   $: handleForceExpire = (id: string) => {
-    if (confirm('Are you sure you want to expire this invite?')) {
-      $forceExpireMutation.mutate(id);
-    }
+    expireTarget = id;
+  };
+
+  $: handleCancelExpire = () => {
+    expireTarget = null;
+  };
+
+  $: handleConfirmExpire = () => {
+    console.log('confirming expire');
+    $forceExpireMutation.mutate(expireTarget);
+    expireTarget = null;
   };
 </script>
 
@@ -134,3 +145,10 @@
     <NewInviteForm />
   {/if}
 </div>
+<ConfirmationModal
+  bind:open={expireTarget}
+  onCancel={handleCancelExpire}
+  onConfirm={handleConfirmExpire}
+>
+  <div class="mb-4">This invite will no longer work.</div>
+</ConfirmationModal>

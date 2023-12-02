@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Button from '$components/Button.svelte';
+  import Button from '$components/buttons/Button.svelte';
   import NewCharacter from '$components/forms/NewCharacter.svelte';
   import Heading from '$components/layout/Heading.svelte';
   import { deleteCharacterMutation, getCharactersQuery } from '$lib/persistance/campaign';

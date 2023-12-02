@@ -3,7 +3,7 @@
   import ManageTable, { type ManageTableColumns } from './ManageTable.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
   import { PlusCircle, Trash2Icon, Edit } from 'lucide-svelte';
-  import LinkButton from '$components/LinkButton.svelte';
+  import LinkButton from '$components/buttons/LinkButton.svelte';
   import { goto } from '$app/navigation';
   import { createMutation, createQuery } from '@tanstack/svelte-query';
   import { duplicateImbuement } from '$lib/persistance/monster-parts';
