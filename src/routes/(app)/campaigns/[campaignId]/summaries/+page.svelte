@@ -9,26 +9,28 @@
   import { ExternalLink, PlusCircle, Trash } from 'lucide-svelte';
   import LinkButton from '$components/buttons/LinkButton.svelte';
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
+  import { fly } from 'svelte/transition';
 
   export let data;
   $: ({ supabase } = data);
   $: campaignId = parseInt($page.params.campaignId);
 
   let handoutsQ = createQuery({
-    queryKey: ['campaign', campaignId, 'handouts'],
+    queryKey: ['campaign', campaignId, 'summaries'],
     queryFn: async () => {
       return extractData(
         await supabase
           .from('campaign_handout')
           .select('*')
           .eq('campaign_id', campaignId)
-          .neq('type', 'summary')
+          .eq('type', 'summary')
+          .order('created_at', { ascending: false })
       );
     }
   });
 
   $: killHandoutM = createMutation({
-    mutationKey: ['handouts', 'kill'],
+    mutationKey: ['summaries', 'kill'],
     mutationFn: async (id) => {
       return await supabase.from('campaign_handout').delete().eq('id', id);
     },
@@ -47,11 +49,16 @@
 </script>
 
 <BackToCampaign />
-<Heading type="Page Heading">Handouts</Heading>
+<Heading type="Page Heading">Summaries</Heading>
 <LoadingInsert fullPage loading={$handoutsQ.isLoading || $killHandoutM.isLoading} />
-<div class="mb-8 flex flex-col gap-2">
+<AdminOnly>
+  <LinkButton href={`/campaigns/${campaignId}/summaries/new`} class="mx-auto">
+    Add Summary <PlusCircle />
+  </LinkButton>
+</AdminOnly>
+<div class="my-8 flex flex-col gap-2">
   {#each handouts as handout (handout.id)}
-    <div class="flex flex-row gap-2">
+    <div class="flex flex-row gap-2" transition:fly|local>
       <a
         href={handout.link}
         target="_blank"
@@ -71,9 +78,3 @@
     <div class="text-white text-center">No handouts yet.</div>
   {/each}
 </div>
-
-<AdminOnly>
-  <LinkButton href={`/campaigns/${campaignId}/handouts/new`} class="mx-auto">
-    Add Handout <PlusCircle />
-  </LinkButton>
-</AdminOnly>

@@ -69,6 +69,12 @@
         bgImgSrc="https://i.imgur.com/38Wjk61.jpeg"
       />
     </IfFeatureFlag>
+    <LandingLink
+      size="sm"
+      title="Summaries"
+      href={`/campaigns/${campaignId}/summaries`}
+      bgImgSrc="https://i.imgur.com/gk0bb5b.jpeg"
+    />
     <AdminOnly>
       <div class="w-full mx-auto max-w-sm text-center">
         <LinkButton href={`/campaigns/${campaignId}/edit`}>Edit campaign &#9881;</LinkButton>
