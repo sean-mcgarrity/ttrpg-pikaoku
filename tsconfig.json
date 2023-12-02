@@ -1,6 +1,13 @@
 {
   "extends": "./.svelte-kit/tsconfig.json",
   "compilerOptions": {
+    "types": [
+      "@sveltejs/kit",
+      "svelte",
+      "vite/client",
+      "vite-plugin-svelte-spa-router",
+      "vitest/globals"
+    ],
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true,
     "paths": {

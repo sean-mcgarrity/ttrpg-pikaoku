@@ -1,4 +1,6 @@
-import { sveltekit, vitePreprocess } from '@sveltejs/kit/vite';
+/// <reference types="vitest" />
+
+import { sveltekit } from '@sveltejs/kit/vite';
 import path from 'path';
 
 /** @type {import('vite').UserConfig} */
@@ -13,7 +15,9 @@ const config = {
       $utils: path.resolve('./src/utils')
     }
   },
-  test: {}
+  test: {
+    include: ['src/**/*.test.ts']
+  }
 };
 
 export default config;
