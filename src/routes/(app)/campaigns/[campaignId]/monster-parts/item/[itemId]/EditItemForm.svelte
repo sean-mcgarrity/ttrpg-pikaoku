@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
+  import ConfirmationModal from '$components/Modals/ConfirmationModal.svelte';
   import Button from '$components/buttons/Button.svelte';
   import TextAreaField from '$components/forms/controls/TextAreaField.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
@@ -81,7 +82,21 @@
 {/if}
 
 <div class="flex flex-row gap-2 justify-center mt-6">
-  <Button
+  <ConfirmationModal
+    onConfirm={() => {
+      $deleteRefinementMutation.mutate(refinement.id, {
+        onSuccess: () => {
+          goto(`/campaigns/${campaignIdFromParams}/monster-parts`);
+        }
+      });
+    }}
+  >
+    <Button slot="trigger">Delete Refinement <Trash2 /></Button>
+    <div slot="message">
+      This will premenantly delete {refinement.name} and refund all monster parts.
+    </div>
+  </ConfirmationModal>
+  <!-- <Button
     on:click={() => {
       if (confirm(`Are you sure you want to delete ${refinement.name}?`)) {
         $deleteRefinementMutation.mutate(refinement.id, {
@@ -93,5 +108,5 @@
     }}
     >Delete Refinement
     <Trash2 />
-  </Button>
+  </Button> -->
 </div>

@@ -88,7 +88,6 @@
       class="quick-use-slider w-full my-auto bg-blue-950"
     />
     <p class="font-bold text-4xl">{value} MP</p>
-
     <div class="mt-6 text-black">
       <BigButton
         colorClasses="bg-blue-950 text-white text-center"

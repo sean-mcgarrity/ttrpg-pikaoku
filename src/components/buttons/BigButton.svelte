@@ -3,6 +3,7 @@
   export let colorClasses = 'bg-white/80 hover:bg-white/90 active:bg-white/60 text-slate-800';
   export let type: 'button' | 'submit' = 'button';
   export let disabled = false;
+  export let classes = '';
 </script>
 
 <button
@@ -13,7 +14,8 @@
     'text-left text-xl uppercase font-medium tracking-wider select-none',
     colorClasses,
     !disabled && 'cursor-pointer',
-    disabled && 'opacity-30 cursor-not-allowed pointer-events-none'
+    disabled && 'opacity-30 cursor-not-allowed pointer-events-none',
+    classes
   )}
 >
   <slot />

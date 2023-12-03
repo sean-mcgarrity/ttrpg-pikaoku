@@ -1,9 +1,10 @@
 <script lang="ts">
   import BigButton from '$components/buttons/BigButton.svelte';
 
-  export let open; // boolean
   export let onConfirm: () => void = null; // function
   export let onCancel: () => void = null; // function
+
+  let open = false;
 
   let dialog; // HTMLDialogElement
 
@@ -15,9 +16,7 @@
   };
 
   $: handleConfirm = () => {
-    console.log('insite handle confirm');
     if (!!onConfirm && typeof onConfirm === 'function') {
-      console.log('actually doing it');
       onConfirm();
     }
   };
@@ -25,6 +24,10 @@
   $: if (dialog && !!open) dialog.showModal();
   $: if (!open && dialog?.open) dialog.close();
 </script>
+
+<button on:click={() => (open = true)}>
+  <slot name="trigger" />
+</button>
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
 <dialog
@@ -36,21 +39,24 @@
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
     on:click|stopPropagation
-    class="px-8 text-center bg-gray-700 text-3xl font-bold text-white py-12"
+    class="px-8 text-center bg-cyan-800 text-3xl font-bold text-white py-12"
   >
-    <slot />
+    <slot name="message" />
     <span>Are you sure?</span>
   </div>
   <div
     on:click|stopPropagation
-    class="px-8 py-4 text-center bg-gray-800 flex flex-row justify-center gap-6"
+    class="px-8 py-4 text-center bg-cyan-900 flex flex-row justify-center gap-6"
   >
-    <BigButton on:click={handleClose} class="px-8 text-xl text-center bg-offwhite  font-extrabold"
-      >Cancel</BigButton
+    <BigButton
+      classes="max-w-[12rem]"
+      on:click={handleClose}
+      colorClasses="bg-offwhite font-extrabold">Cancel</BigButton
     >
     <BigButton
       on:click={handleConfirm}
-      class="px-8 text-xl text-center bg-orange-700 text-white font-extrabold">Yes</BigButton
+      colorClasses="bg-orange-700 hover:bg-orange-600 active:bg-orange-800 font-extrabold text-white"
+      classes="max-w-[12rem]">Yes</BigButton
     >
   </div>
 </dialog>
