@@ -5,6 +5,7 @@
   import { Hammer } from 'lucide-svelte';
   import Modal from '$components/Modals/Modal.svelte';
   import Heading from '$components/layout/Heading.svelte';
+  import BigButton from '$components/buttons/BigButton.svelte';
 
   export let source: MP_UsableSource & { imbuement?: Imbuement };
   export let buttonText: string = 'Refine';
@@ -84,23 +85,23 @@
       min="1"
       max={source.usable}
       bind:value
-      class="quick-use-slider w-full my-auto accent-blue-950"
+      class="quick-use-slider w-full my-auto bg-blue-950"
     />
     <p class="font-bold text-4xl">{value} MP</p>
 
     <div class="mt-6 text-black">
-      <Button
-        dark
-        on:click={() => {
-          showModal = false;
-        }}>Cancel</Button
-      >
-      <Button
-        dark
+      <BigButton
+        colorClasses="bg-blue-950 text-white text-center"
         on:click={() => {
           showModal = false;
           onClick(value);
-        }}>{buttonText} <Hammer /></Button
+        }}>{buttonText} <Hammer /></BigButton
+      >
+      <BigButton
+        colorClasses="bg-transparent text-red-600 text-center shadow-none"
+        on:click={() => {
+          showModal = false;
+        }}>Cancel</BigButton
       >
     </div>
   </div>
