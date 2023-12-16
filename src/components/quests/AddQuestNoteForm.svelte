@@ -25,16 +25,16 @@
   };
 </script>
 
-<form class="flex flex-row gap-2 items-center" on:submit={handleAdd}>
+<form class="flex flex-col items-center" on:submit={handleAdd}>
   <TextAreaField
     class="sm:col-span-3 "
     bind:value
     placeholder="Now with markdown and multiline..."
     rows={4}
   />
-  <div class="flex flex-col gap-2 bg-black/20 rounded px-4 pt-2 h-full">
-    <SwitchField bind:value={anonymous} label="Anon" />
-    <Button disabled={value === '' && !$m.isLoading} type="submit" class="mt-auto mb-2 mx-auto"
+  <div class="flex flex-row w-full items-center justify-between gap-2 rounded">
+    <SwitchField bind:value={anonymous} label="Comment anonymously" />
+    <Button disabled={value === '' && !$m.isLoading} type="submit" class=""
       >Add <MessageCircle class="fill-white" /></Button
     >
   </div>

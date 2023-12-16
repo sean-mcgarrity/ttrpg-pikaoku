@@ -56,8 +56,9 @@ export const getPinnedQuestsQuery = () => {
           .from('quest')
           .select('*, notes:quest_note (*, author:profile (username, avatar_src))')
           .eq('campaign_id', campaignId)
-          .eq('pinned', true)
-          .eq('finished', false)
+          .neq('status', 'deleted')
+          .neq('status', 'none')
+          .neq('status', 'finished')
           .order('name')
       );
     },
@@ -106,6 +107,7 @@ export const updateQuestMutation = () => {
       return extractData(response);
     },
     onSuccess: () => {
+      queryClient.invalidateQueries(['quests']);
       queryClient.invalidateQueries(['quests']);
     }
   });

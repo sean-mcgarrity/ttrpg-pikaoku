@@ -8,17 +8,22 @@
 
   let dialog; // HTMLDialogElement
 
+  $: close = () => {
+    if (dialog) dialog.close();
+  };
+
   $: handleClose = () => {
-    dialog.close();
     if (onCancel && typeof onCancel === 'function') {
       onCancel();
     }
+    close();
   };
 
   $: handleConfirm = () => {
     if (!!onConfirm && typeof onConfirm === 'function') {
       onConfirm();
     }
+    close();
   };
 
   $: if (dialog && !!open) dialog.showModal();

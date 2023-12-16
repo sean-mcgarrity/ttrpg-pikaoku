@@ -1,7 +1,7 @@
 <script lang="ts">
   import cs from 'classnames';
   import Button from '$components/buttons/Button.svelte';
-  import { CheckCircle, ChevronDown, Pencil, Pin, SaveIcon, Trash } from 'lucide-svelte';
+  import { CheckCircle, ChevronDown, FileEdit, Pin, SaveIcon, Star, Trash } from 'lucide-svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
   import type { Quest } from 'src/app';
   import { fade, slide } from 'svelte/transition';
@@ -9,16 +9,20 @@
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
   import { deleteQuestMutation, updateQuestMutation } from '$lib/persistance/quests';
   import QuestNote from './QuestNote.svelte';
+  import TextAreaField from '$components/forms/controls/TextAreaField.svelte';
+  import ConfirmationModal from '$components/Modals/ConfirmationModal.svelte';
 
   export let quest: Quest;
   export let preview = false;
 
   let expanded = false;
   let editing = false;
+  let newGroup = '';
 
   $: handleEditToggle = (newValue: boolean = null) => {
     editing = newValue ?? !editing;
     if (editing === true) {
+      newGroup = quest.group;
       expanded = true;
     }
   };
@@ -33,50 +37,62 @@
   let update = updateQuestMutation();
   let del = deleteQuestMutation();
 
-  $: pinQuest = async () => {
-    await $update.mutateAsync({ id: quest.id, pinned: !quest.pinned });
+  $: updateQuestStatus = async (newStatus: Quest['status']) => {
+    await $update.mutateAsync({ id: quest.id, status: newStatus });
   };
 
   $: updateQuestDetails = async () => {
-    await $update.mutateAsync({ id: quest.id, name: quest.name, description: quest.description });
+    await $update.mutateAsync({
+      id: quest.id,
+      name: quest.name,
+      description: quest.description,
+      group: newGroup
+    });
     editing = false;
   };
 
-  $: deleteQuest = async () => {
-    if (confirm('Are you sure you want to delete this quest?')) {
-      await $del.mutateAsync(quest.id);
-    }
-  };
-
-  $: finishQuest = async () => {
-    if (confirm('Are you sure you want to mark this quest as finished?')) {
-      await $update.mutateAsync({ id: quest.id, finished: true });
-    }
-  };
-
   $: loading = $update.isLoading && $del.isLoading;
+
+  $: finished = quest.status === 'finished';
+  $: pinned = quest.status === 'pinned';
+  $: starred = quest.status === 'starred';
+  $: editable = !finished && quest.status !== 'deleted';
+  $: deleted = quest.status === 'deleted';
 </script>
 
 <div
-  class={cs(quest.finished ? 'bg-green-900' : 'bg-blue-900', ` rounded overflow-hidden relative`)}
+  class={cs(
+    deleted ? 'bg-red-900' : starred ? 'bg-purple-800' : finished ? 'bg-green-900' : 'bg-blue-900',
+    `rounded overflow-hidden relative`
+  )}
 >
   {#if loading}
     <LoadingInsert />
   {/if}
   <div
     class={cs(
-      quest.finished ? 'bg-green-950' : 'bg-blue-950',
+      deleted
+        ? 'bg-red-950'
+        : starred
+        ? 'bg-purple-900'
+        : finished
+        ? 'bg-green-950'
+        : 'bg-blue-950',
       ' px-4 py-2 flex flex-row justify-between'
     )}
   >
-    <div class="items-center flex flex-row font-medium gap-1">
-      {#if quest.finished !== true}
-        <Button on:click={pinQuest} title="Pin quest" disabled={loading}>
+    <div class="items-center flex flex-row font-medium gap-2">
+      {#if editable}
+        <Button
+          on:click={() => updateQuestStatus(pinned || starred ? 'none' : 'pinned')}
+          title="Pin quest"
+          disabled={loading}
+        >
           <Pin
             class={cs(
               'transition-transform duration-300',
-              quest.pinned ? 'rotate-0' : '-rotate-45',
-              quest.pinned ? 'text-white fill-white' : 'text-white/50'
+              pinned || starred ? 'rotate-0' : '-rotate-45',
+              pinned || starred ? 'text-white fill-white' : 'text-white/50'
             )}
           />
         </Button>
@@ -97,23 +113,40 @@
       {/if}
     </div>
     {#if !preview || (preview && expanded)}
-      <div class="grid grid-cols-3 gap-2 items-center" transition:fade>
-        {#if quest.finished !== true}
+      <div class="grid grid-cols-4 gap-2 items-center" transition:fade|local>
+        {#if editable}
+          {#if pinned}
+            <Button on:click={() => updateQuestStatus('starred')} title="Save changes">
+              <Star stroke="white" />
+            </Button>
+          {:else if starred}
+            <Button on:click={() => updateQuestStatus('pinned')} title="Save changes">
+              <Star fill="white" />
+            </Button>
+          {:else}
+            <div />
+          {/if}
           {#if editing}
             <Button on:click={updateQuestDetails} title="Save changes">
-              <SaveIcon class="text-green-400" />
+              <SaveIcon stroke="white" />
             </Button>
           {:else}
             <Button on:click={() => handleEditToggle(true)} title="Edit quest details">
-              <Pencil class="text-cyan-400" />
+              <FileEdit stroke="white" />
             </Button>
           {/if}
-          <Button title="Delete quest" on:click={deleteQuest}>
-            <Trash class="text-red-500" />
-          </Button>
-          <Button title="Mark quest as finished" on:click={finishQuest}>
-            <CheckCircle class="text-green-700" />
-          </Button>
+          <ConfirmationModal onConfirm={() => updateQuestStatus('deleted')}>
+            <Button slot="trigger" title="Delete quest">
+              <Trash stroke="white" />
+            </Button>
+            <span slot="message">This quest will be permanently deleted.</span>
+          </ConfirmationModal>
+          <ConfirmationModal onConfirm={() => updateQuestStatus('finished')}>
+            <Button slot="trigger" title="Mark quest as finished">
+              <CheckCircle stroke="white" />
+            </Button>
+            <span slot="message">This quest will be permanently marked as finished.</span>
+          </ConfirmationModal>
         {/if}
       </div>
     {/if}
@@ -123,7 +156,8 @@
     <div class="px-8 pt-2 pb-4 flex flex-col gap-2" transition:slide|local>
       <div>
         {#if editing}
-          <TextField bind:value={quest.description} placeholder="Quest description" />
+          <TextAreaField placeholder="Quest description" bind:value={quest.description} />
+          <TextField placeholder="Enter group name..." label="Quest Group" bind:value={newGroup} />
         {:else}
           <div class="py-[0.125rem]">
             {quest.description}
@@ -137,8 +171,8 @@
           <div class="text-white/80 italic">No updates added yet</div>
         {/each}
       </div>
-      {#if quest.finished !== true}
-        <div>
+      {#if editable}
+        <div class="mt-4">
           <AddQuestNoteForm questId={quest.id} />
         </div>
       {/if}
