@@ -703,7 +703,7 @@ export interface Database {
       }
     }
     Enums: {
-      quest_status: "none" | "pinned" | "finished" | "starred"
+      quest_status: "none" | "pinned" | "finished" | "starred" | "deleted"
     }
     CompositeTypes: {
       [_ in never]: never
