@@ -535,34 +535,28 @@ export interface Database {
           campaign_id: number
           created_at: string
           description: string
-          finished: boolean
           group: string
           id: number
           name: string
-          pinned: boolean
-          starred: boolean
+          status: Database["public"]["Enums"]["quest_status"]
         }
         Insert: {
           campaign_id: number
           created_at?: string
           description?: string
-          finished?: boolean
           group?: string
           id?: number
           name?: string
-          pinned?: boolean
-          starred?: boolean
+          status?: Database["public"]["Enums"]["quest_status"]
         }
         Update: {
           campaign_id?: number
           created_at?: string
           description?: string
-          finished?: boolean
           group?: string
           id?: number
           name?: string
-          pinned?: boolean
-          starred?: boolean
+          status?: Database["public"]["Enums"]["quest_status"]
         }
         Relationships: [
           {
@@ -641,6 +635,21 @@ export interface Database {
       }
     }
     Views: {
+      quest_groups: {
+        Row: {
+          campaign_id: number | null
+          group: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quest_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       usable_sources: {
         Row: {
           campaign_id: number | null
@@ -694,7 +703,7 @@ export interface Database {
       }
     }
     Enums: {
-      [_ in never]: never
+      quest_status: "none" | "pinned" | "finished" | "starred"
     }
     CompositeTypes: {
       [_ in never]: never
