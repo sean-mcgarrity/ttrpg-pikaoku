@@ -64,7 +64,7 @@
                     <img
                       src={imb.implemented ? imb.icon_src : 'https://i.imgur.com/g66NgKc.png'}
                       alt=""
-                      class="w-8 h-8"
+                      class="w-8 h-8 rounded"
                     />
                     <div class="flex flex-col">
                       <div class="font-bold">{imb.name}</div>
