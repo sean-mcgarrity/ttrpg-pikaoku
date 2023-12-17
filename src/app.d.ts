@@ -29,3 +29,5 @@ export type Tables = Database['public']['Tables'];
 export type Quest = Row<'quest'> & {
   notes?: Row<'quest_note'>[];
 };
+
+export type Imbuement = Row<'mp_imbuements'>;

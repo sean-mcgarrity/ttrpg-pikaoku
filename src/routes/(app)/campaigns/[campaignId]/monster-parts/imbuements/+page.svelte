@@ -2,14 +2,12 @@
   import cs from 'classnames';
   import { page } from '$app/stores';
   import Modal from '$components/Modals/Modal.svelte';
-  import BackButton from '$components/layout/BackButton.svelte';
   import Heading from '$components/layout/Heading.svelte';
-  import type { Imbuement } from '$lib/systems/pf2e_monster_parts';
   import { extractData } from '$lib/utils/requests';
   import type { SupabaseClient } from '@supabase/supabase-js';
   import { createQuery } from '@tanstack/svelte-query';
-  import { Info, InfoIcon } from 'lucide-svelte';
   import { get } from 'svelte/store';
+  import type { Imbuement } from 'src/app';
 
   let imbuementsQuery = createQuery({
     queryKey: ['imbuements', 'all'],
@@ -62,8 +60,17 @@
                     'disabled:opacity-40 enabled:hover:scale-105'
                   )}
                 >
-                  <div class="font-bold">{imb.name}</div>
-                  <div>{imb.implemented ? imb.description : 'NOT IMPELEMENTED'}</div>
+                  <div class="flex flex-row gap-4">
+                    <img
+                      src={imb.implemented ? imb.icon_src : 'https://i.imgur.com/g66NgKc.png'}
+                      alt=""
+                      class="w-8 h-8"
+                    />
+                    <div class="flex flex-col">
+                      <div class="font-bold">{imb.name}</div>
+                      <div>{imb.implemented ? imb.description : 'NOT IMPELEMENTED'}</div>
+                    </div>
+                  </div>
                 </button>
               {/each}
             </div>
