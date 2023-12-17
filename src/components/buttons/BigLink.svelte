@@ -20,7 +20,7 @@
         'h-40': size === 'md',
         'h-60': size === 'lg'
       },
-      `bg-cover bg-center saturate-0 hover:saturate-100 transition-all duration-500 group relative py-12 gap-8 border-4 border-black hover:border-white/80 shadow`
+      `bg-cover bg-center saturate-0 hover:saturate-100 transition-all duration-500 group relative py-12 gap-8 border-4 border-black hover:border-white/80 shadow rounded`
     )}
     style={bgImgSrc && `background-image: url(${bgImgSrc});`}
   >

@@ -449,3 +449,9 @@ export const getUnusedImbuementSlots = (refinement: MP_Refinement) => {
   const usedSlots = refinement.imbuements?.length ?? 0;
   return Math.max(imbuementSlots - usedSlots, 0);
 };
+
+export const calculateImbuementSalvageCost = (refinement: MP_Refinement, imbuementId: number) => {
+  const changes = refinement.changes.filter((change) => change.imbuement_id === imbuementId);
+  const totalChangeAmount = changes.reduce((acc, change) => acc + change.amount, 0);
+  return Math.floor(totalChangeAmount / 2);
+};

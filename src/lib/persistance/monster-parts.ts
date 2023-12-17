@@ -1,7 +1,9 @@
 import { goto } from '$app/navigation';
 import { page } from '$app/stores';
 import {
+  calculateRefinementProgress,
   getMonsterPartsForLevel,
+  calculateImbuementSalvageCost,
   type Imbuement,
   type MP_BaseItem,
   type MP_Refinement,
@@ -48,6 +50,7 @@ export const getRefinementsForCampaign = () => {
             `*, base_item:mp_base_items (*), changes:mp_refinement_changes (*), imbuements:mp_imbuements!mp_refinement_imbuements (*), owner:player_characters (*)`
           )
           .eq('campaign_id', campaignId)
+          .eq('salvaged', false)
       )
   });
 };
@@ -451,6 +454,53 @@ export const deleteRefinement = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(['refinements']);
         queryClient.invalidateQueries(['usable_sources']);
+      }
+    }
+  );
+};
+
+export const salvageRefinement = () => {
+  const queryClient = useQueryClient();
+  const currentPage = get(page);
+  const supabase: SupabaseClient = getSupabase();
+
+  return createMutation(
+    ['salvage_refinement'],
+    async (refinement: MP_Refinement) => {
+      const res = await supabase
+        .from('mp_refinements')
+        .update({ salvaged: true })
+        .eq('id', refinement.id);
+      if (!res.error) {
+        await supabase.from('mp_sources').insert({
+          name: 'Salvaged ' + refinement.name,
+          level: 1,
+          quantity: 1,
+          enables: refinement.base_item.requires,
+          remaining: calculateRefinementProgress(refinement),
+          campaign_id: refinement.campaign_id,
+          img_src: 'https://i.imgur.com/8jYVvC2.png',
+          revealed: true
+        });
+        for (const imbuement of refinement.imbuements) {
+          await supabase.from('mp_sources').insert({
+            name: 'Salvaged ' + imbuement.name,
+            level: 1,
+            quantity: 1,
+            enables: imbuement.requires,
+            remaining: calculateImbuementSalvageCost(refinement, imbuement.id),
+            campaign_id: refinement.campaign_id,
+            img_src: 'https://i.imgur.com/8jYVvC2.png',
+            revealed: true
+          });
+        }
+      }
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['refinements']);
+        queryClient.invalidateQueries(['usable_sources']);
+        goto(`/campaigns/${currentPage.params.campaignId}/monster-parts`);
       }
     }
   );

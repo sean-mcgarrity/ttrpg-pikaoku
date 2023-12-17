@@ -6,7 +6,7 @@
   import Button from '$components/buttons/Button.svelte';
   import { Navigation2, PencilRuler, X } from 'lucide-svelte';
   import AddImbuement from './AddImbuement.svelte';
-  import { getUnusedImbuementSlots } from '$lib/systems/pf2e_monster_parts';
+  import { getUnusedImbuementSlots, itemTypes } from '$lib/systems/pf2e_monster_parts';
   import EditItemForm from './EditItemForm.svelte';
   import RecentItemChanges from './RecentItemChanges.svelte';
   import BigButton from '$components/buttons/BigButton.svelte';
@@ -15,6 +15,8 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { fade } from 'svelte/transition';
+  import { each } from 'svelte/internal';
+  import SalvageRefinementPane from './SalvageRefinementPane.svelte';
 
   let query = getCurrentItem();
 
@@ -23,7 +25,7 @@
   }
 
   $: canAddImbuement = $query.isSuccess && getUnusedImbuementSlots($query.data) > 0;
-  let tab: 'edit' | 'none' | 'refine' | 'imbue' | 'add-imbuement' | 'changes' = 'none';
+  let tab: 'edit' | 'none' | 'refine' | 'imbue' | 'add-imbuement' | 'changes' | 'salvage' = 'none';
 
   $: changeTab = (newTab: typeof tab) => {
     tab = newTab;
@@ -68,6 +70,7 @@
             <BigButton on:click={() => changeTab('add-imbuement')}>Add Imbuement</BigButton>
           {/if}
           <BigButton on:click={() => changeTab('changes')}>Changes</BigButton>
+          <BigButton on:click={() => changeTab('salvage')}>Salvage</BigButton>
           <BigButton on:click={() => changeTab('edit')}>Edit</BigButton>
         </div>
       {:else}
@@ -89,6 +92,8 @@
             <EditItemForm refinement={$query.data} afterSave={() => (tab = 'quick-actions')} />
           {:else if tab === 'changes'}
             <RecentItemChanges item={$query.data} />
+          {:else if tab === 'salvage'}
+            <SalvageRefinementPane item={$query.data} />
           {/if}
         </div>
       {/if}
