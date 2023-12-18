@@ -81,7 +81,7 @@
   </div>
 {/if}
 
-<div class="flex flex-row gap-2 justify-center mt-6">
+<!-- <div class="flex flex-row gap-2 justify-center mt-6">
   <ConfirmationModal
     onConfirm={() => {
       $deleteRefinementMutation.mutate(refinement.id, {
@@ -96,17 +96,4 @@
       This will premenantly delete {refinement.name} and refund all monster parts.
     </div>
   </ConfirmationModal>
-  <!-- <Button
-    on:click={() => {
-      if (confirm(`Are you sure you want to delete ${refinement.name}?`)) {
-        $deleteRefinementMutation.mutate(refinement.id, {
-          onSuccess: () => {
-            goto(`/campaigns/${campaignIdFromParams}/monster-parts`);
-          }
-        });
-      }
-    }}
-    >Delete Refinement
-    <Trash2 />
-  </Button> -->
-</div>
+</div> -->
