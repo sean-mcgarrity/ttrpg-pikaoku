@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       campaign_features: {
@@ -357,6 +357,7 @@ export interface Database {
           id: number
           name: string
           owner_id: number | null
+          salvaged: boolean
           type: string
         }
         Insert: {
@@ -367,6 +368,7 @@ export interface Database {
           id?: number
           name?: string
           owner_id?: number | null
+          salvaged?: boolean
           type: string
         }
         Update: {
@@ -377,6 +379,7 @@ export interface Database {
           id?: number
           name?: string
           owner_id?: number | null
+          salvaged?: boolean
           type?: string
         }
         Relationships: [
@@ -446,6 +449,81 @@ export interface Database {
             columns: ["campaign_id"]
             isOneToOne: false
             referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      pf2e_success_card: {
+        Row: {
+          action_cost: string
+          campaign_id: number
+          card_level: number
+          card_type: string
+          child_card_id: number
+          created_at: string
+          critical_failure: string
+          critical_success: string
+          description: string
+          failure: string
+          frequency: string | null
+          id: number
+          requirements: string | null
+          success: string
+          tags: string[]
+          title: string
+          trigger: string | null
+        }
+        Insert: {
+          action_cost?: string
+          campaign_id: number
+          card_level: number
+          card_type?: string
+          child_card_id: number
+          created_at?: string
+          critical_failure?: string
+          critical_success?: string
+          description?: string
+          failure?: string
+          frequency?: string | null
+          id?: number
+          requirements?: string | null
+          success?: string
+          tags?: string[]
+          title?: string
+          trigger?: string | null
+        }
+        Update: {
+          action_cost?: string
+          campaign_id?: number
+          card_level?: number
+          card_type?: string
+          child_card_id?: number
+          created_at?: string
+          critical_failure?: string
+          critical_success?: string
+          description?: string
+          failure?: string
+          frequency?: string | null
+          id?: number
+          requirements?: string | null
+          success?: string
+          tags?: string[]
+          title?: string
+          trigger?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_pf2e_success_card_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_pf2e_success_card_child_card_fkey"
+            columns: ["child_card_id"]
+            isOneToOne: false
+            referencedRelation: "pf2e_success_card"
             referencedColumns: ["id"]
           }
         ]
