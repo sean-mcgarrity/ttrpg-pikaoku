@@ -22,7 +22,7 @@
     "carbon-components-svelte": "^0.73.5",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "8.6.0",
-    "node-sass": "8.0.0",
+    "node-sass": "9.0.0",
     "postcss": "^8.4.27",
     "postcss-load-config": "4.0.1",
     "prettier": "2.8.3",

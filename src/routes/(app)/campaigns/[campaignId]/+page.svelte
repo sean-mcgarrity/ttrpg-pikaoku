@@ -75,6 +75,14 @@
       href={`/campaigns/${campaignId}/summaries`}
       bgImgSrc="https://i.imgur.com/gk0bb5b.jpeg"
     />
+    <IfFeatureFlag flag="quest-board">
+      <LandingLink
+        size="sm"
+        title="Quest Board"
+        href={`/campaigns/${campaignId}/quest-board`}
+        bgImgSrc="https://i.imgur.com/e0ORBRz.jpeg"
+      />
+    </IfFeatureFlag>
     <AdminOnly>
       <div class="w-full mx-auto max-w-sm text-center">
         <LinkButton href={`/campaigns/${campaignId}/edit`}>Edit campaign &#9881;</LinkButton>

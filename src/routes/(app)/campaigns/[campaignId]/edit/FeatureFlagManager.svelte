@@ -31,6 +31,10 @@
       label: 'Quests'
     },
     {
+      value: 'quest-board',
+      label: 'Quest Board'
+    },
+    {
       value: 'handouts',
       label: 'Handouts'
     }

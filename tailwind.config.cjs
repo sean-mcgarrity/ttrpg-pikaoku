@@ -22,7 +22,8 @@ module.exports = {
         sans: ['Inter', 'sans-serif'],
         title: ['Josefin Sans', 'serif'],
         heading: ['serif'],
-        body: ['Inter', 'sans-serif']
+        body: ['Inter', 'sans-serif'],
+        gothic: ['Gothic A1', 'sans-serif']
       },
       shadow: {
         text: 'drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]'
