@@ -3,11 +3,13 @@
   import TextArea from '$components/forms/controls/TextAreaField.svelte';
   import NumberField from '$components/forms/controls/NumberField.svelte';
   import Heading from '$components/layout/Heading.svelte';
-  import BackToCampaign from '../../BackToCampaign.svelte';
   import Button from '$components/buttons/Button.svelte';
   import { createSuccessCardMutation } from '$lib/persistance/quests';
   import { getCampaignId } from '$lib/utils/contextual-helpers';
   import { goto } from '$app/navigation';
+  import BackTo from '$components/buttons/BackTo.svelte';
+  import { Save } from 'lucide-svelte';
+  import SelectField from '$components/forms/controls/SelectField.svelte';
 
   let campaignId = getCampaignId();
 
@@ -28,6 +30,8 @@
   let failure = '';
   let criticalFailure = '';
 
+  let card_type = 'quest';
+
   let handleSubmit = async () => {
     await $addSuccessCard.mutateAsync(
       {
@@ -37,6 +41,7 @@
           .split(',')
           .map((t) => t.trim())
           .filter((t) => t.length > 0),
+        card_type: card_type,
         card_level: level,
         requirements: requirements,
         trigger: trigger,
@@ -57,23 +62,52 @@
   };
 </script>
 
-<BackToCampaign />
+<BackTo href={`/campaigns/${campaignId}/quest-board`} text="Quest Board" />
 <div class="flex flex-col gap-4">
   <Heading type="Page Heading">Add new quest</Heading>
 </div>
 
-<div class="bg-white/5 p-4 rounded flex flex-col gap-2 shadow">
-  <TextField label="Name" bind:value={newQuestName} />
-  <TextArea label="Description" bind:value={newQuestDescription} />
-  <TextField label="Tags" bind:value={newQuestTags} />
-  <NumberField label="Level" bind:value={level} />
-  <TextField label="Requirements" bind:value={requirements} />
-  <TextField label="Trigger" bind:value={trigger} />
-  <TextField label="Frequency" bind:value={frequency} />
-  <TextField label="Critical Success" bind:value={criticalSuccess} />
-  <TextField label="Success" bind:value={success} />
-  <TextField label="Failure" bind:value={failure} />
-  <TextField label="Critical Failure" bind:value={criticalFailure} />
+<div class="bg-white/5 p-4 rounded flex flex-col gap-2 shadow mb-2">
+  <div class="flex flex-row gap-2">
+    <div class="w-2/3">
+      <TextField placeholder="Name" bind:value={newQuestName} />
+    </div>
+    <div class="w-1/3 flex flex-row gap-2">
+      <SelectField
+        options={[
+          {
+            value: 'quest',
+            text: 'Quest'
+          },
+          {
+            value: 'action',
+            text: 'Action'
+          },
+          {
+            value: 'other',
+            text: 'Other'
+          }
+        ]}
+        bind:value={card_type}
+      />
+      <NumberField placeholder="Level" bind:value={level} />
+    </div>
+  </div>
+  <TextArea placeholder="Description" bind:value={newQuestDescription} />
+  <TextField placeholder="Tags (Comma seperated)" bind:value={newQuestTags} />
+</div>
+<div class="bg-white/5 p-4 rounded flex flex-col gap-2 shadow mb-2">
+  <TextField placeholder="Requirements" bind:value={requirements} />
+  <TextField placeholder="Trigger" bind:value={trigger} />
+  <TextField placeholder="Frequency" bind:value={frequency} />
+</div>
+<div class="bg-white/5 p-4 rounded flex flex-col gap-2 shadow mb-2">
+  <TextField placeholder="Critical Success" bind:value={criticalSuccess} />
+  <TextField placeholder="Success" bind:value={success} />
+  <TextField placeholder="Failure" bind:value={failure} />
+  <TextField placeholder="Critical Failure" bind:value={criticalFailure} />
 </div>
 
-<Button on:click={handleSubmit}>Create</Button>
+<div class="flex flex-row justify-end">
+  <Button class="" on:click={handleSubmit}><Save /> Create</Button>
+</div>

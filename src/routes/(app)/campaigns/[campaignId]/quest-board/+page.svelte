@@ -33,14 +33,15 @@
 <BackToCampaign />
 <Heading type="Page Heading">Quest Board</Heading>
 
-<div class=" bg-white/10 p-2 rounded mb-4 flex flex-row gap-4 items-center">
-  <TextField placeholder="Filter quests by name, description, tag" />
-  <AdminOnly>
+<AdminOnly>
+  <div class=" bg-white/10 p-2 rounded mb-4 flex flex-row gap-4 items-center">
+    <TextField placeholder="Filter quests by name, description, tag" />
+
     <LinkButton class="whitespace-nowrap" href={`/campaigns/${campaignId}/quest-board/new`} `>
       Add Quest</LinkButton
     >
-  </AdminOnly>
-</div>
+  </div>
+</AdminOnly>
 
 {#each quests as quest}
   <SuccessCard successCard={quest} />

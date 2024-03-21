@@ -14,7 +14,8 @@
     class={cx(
       'px-4 py-1 w-full  bg-black/20 rounded shadow-inner',
       !label && 'h-full',
-      $$restProps.disabled && 'bg-gray-200 bg-opacity-40 '
+      $$restProps.disabled && 'bg-gray-200 bg-opacity-40 ',
+      $$restProps.class
     )}
     bind:value
     on:change
