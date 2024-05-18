@@ -31,3 +31,7 @@ export type Quest = Row<'quest'> & {
 };
 
 export type Imbuement = Row<'mp_imbuements'>;
+
+export type Pf2eSuccessCard = Row<'pf2e_success_card'> & {
+  child_card?: Omit<Row<'pf2e_success_card'>, 'child_card_id'>;
+};

@@ -43,6 +43,48 @@ export const createQuestMutation = () => {
   });
 };
 
+export const createSuccessCardMutation = () => {
+  const queryClient = useQueryClient();
+  const campaignId = getCampaignId();
+  const supabase = getSupabase();
+  return createMutation<
+    unknown,
+    unknown,
+    Database['public']['Tables']['pf2e_success_card']['Insert']
+  >({
+    mutationKey: ['success_cards', campaignId, 'create'],
+    mutationFn: async (input) => {
+      const response = await supabase.from('pf2e_success_card').insert(input);
+      if (response.error) {
+        throw response.error;
+      }
+      queryClient.invalidateQueries(['success_cards']);
+      return extractData(response);
+    }
+  });
+};
+
+export const updateSuccessCardMutation = () => {
+  const queryClient = useQueryClient();
+  const campaignId = getCampaignId();
+  const supabase = getSupabase();
+  return createMutation<
+    unknown,
+    unknown,
+    Database['public']['Tables']['pf2e_success_card']['Update']
+  >({
+    mutationKey: ['success_cards', campaignId, 'update'],
+    mutationFn: async (input) => {
+      const response = await supabase.from('pf2e_success_card').update(input).eq('id', input.id);
+      if (response.error) {
+        throw response.error;
+      }
+      queryClient.invalidateQueries(['success_cards']);
+      return extractData(response);
+    }
+  });
+};
+
 export const getPinnedQuestsQuery = () => {
   const supabase = getSupabase();
   const campaignId = getCampaignId();
