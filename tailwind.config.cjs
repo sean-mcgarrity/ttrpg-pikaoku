@@ -1,3 +1,5 @@
+const { scale } = require('svelte/transition');
+
 module.exports = {
   content: ['./src/**/*.{html,js,svelte,ts}'],
   theme: {
@@ -7,7 +9,6 @@ module.exports = {
         svelteDark: '#F03A00',
         hotPink: '#FF1966',
         dark: '#111111',
-        light: '#FAFAFA',
         offblack: '#333333',
         offwhite: '#FAF9F6',
         refinement: {
@@ -16,7 +17,22 @@ module.exports = {
           skill: '#4444aa',
           perception: '#8844aa',
           shield: '#44aaaa'
+        },
+        dark: {
+          500: '#0d0d0d',
+          450: '#0d0d0d',
+          400: '#121212',
+          DEFAULT: '#121212',
+          350: '#1e1e1e',
+          300: '#1f1f1f',
+          0: '#000000'
+        },
+        campaign: {
+          DEFAULT: 'rgb(var(--campaign-color) / <alpha-value>)'
         }
+      },
+      scale: {
+        103: '1.03'
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

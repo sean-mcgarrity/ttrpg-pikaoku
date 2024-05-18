@@ -27,7 +27,7 @@
   <Heading type="Subsection Heading">Characters</Heading>
   {#if loading}
     <div
-      class="absolute inset-2 z-10 bg-black/60 rounded pointer-events-none flex transition-all duration-75"
+      class="absolute inset-2 bg-black/60 rounded pointer-events-none flex transition-all duration-75"
     >
       <div
         class="m-auto text-black font-bold bg-white/80 px-8 py-4 rounded transition-all duration-75"

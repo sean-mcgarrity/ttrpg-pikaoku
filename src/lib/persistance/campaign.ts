@@ -68,8 +68,8 @@ export const getCharactersQuery = () => {
     queryFn: async () =>
       extractData(
         await supabase
-          .from('player_characters')
-          .select('*')
+          .from('character')
+          .select('* owner:users(*)')
           .eq('campaign', campaignId)
           .order('created_at', { ascending: false })
       )
@@ -117,7 +117,7 @@ export const deleteCharacterMutation = () => {
   return createMutation({
     mutationKey: ['campaigns', campaignId, 'characters'],
     mutationFn: async (characterId: number) => {
-      return supabase.from('player_characters').delete().eq('id', characterId);
+      return supabase.from('character').delete().eq('id', characterId);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['campaigns', campaignId, 'characters']);
@@ -132,7 +132,7 @@ export const mutateCreateCharacter = () => {
   return createMutation({
     mutationKey: ['campaigns', campaignId, 'characters'],
     mutationFn: async (character: Partial<PlayerCharacter>) => {
-      return supabase.from('player_characters').insert({ ...character, campaign: campaignId });
+      return supabase.from('character').insert({ ...character, campaign: campaignId });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['campaigns', campaignId, 'characters']);

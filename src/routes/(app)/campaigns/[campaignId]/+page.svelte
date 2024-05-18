@@ -1,84 +1,80 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-  import AdminOnly from '$components/AdminOnly.svelte';
   import LandingLink from '$components/buttons/BigLink.svelte';
-  import LinkButton from '$components/buttons/LinkButton.svelte';
-  import Heading from '$components/layout/Heading.svelte';
   import IfFeatureFlag from '$components/layout/IfFeatureFlag.svelte';
-  import { getCharactersQuery } from '$lib/persistance/campaign';
-  import { List } from 'lucide-svelte';
-  import QuestsPeek from './QuestsPeek.svelte';
-  import CampaignMembers from './CampaignMembers.svelte';
+  import {
+    Headset,
+    List,
+    PawPrint,
+    ScrollText,
+    BookOpenText,
+    Anvil,
+    ExternalLink
+  } from 'lucide-svelte';
+  import QuestsPeek from './quests/QuestsPeek.svelte';
   import BigLinkButton from '$components/buttons/BigLinkButton.svelte';
+  import CampaignCharacters from './CampaignCharacters.svelte';
+  import CardLink from './CardLink.svelte';
+  import { getCampaignFromPage } from '$lib/utils/contextual-helpers';
+  import Heading from '$components/layout/Heading.svelte';
 
-  $: campaignId = $page.params.campaignId;
-  const charactersQ = getCharactersQuery();
-  $: characters = $charactersQ.data;
-
-  export let data;
-  $: campaign = data.campaign;
+  const campaign = getCampaignFromPage();
 </script>
 
 <svelte:head>
   <title>Sean Runs Games</title>
 </svelte:head>
-
-<!-- <BackTo href={`/`} text="Campaigns" /> -->
-<Heading type="Page Heading">{campaign.name}</Heading>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-  <div class="md:col-span-2 flex flex-col gap-4">
+<div class="flex flex-col gap-6">
+  <div class="w-full flex flex-col gap-8 mx-auto">
     <QuestsPeek />
-    <CampaignMembers />
-  </div>
-  <div class="w-full flex flex-col gap-4 mx-auto">
-    {#if campaign.discord_link}
-      <BigLinkButton colorClasses="bg-[#5865F2]" href={campaign.discord_link}>
-        <img
-          src="/images/discord_logo_white.png"
-          alt="Discord Logo"
-          class="select-none"
-          draggable={false}
+    <div>
+      <Heading type="Section Heading">Tools</Heading>
+      <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-3">
+        <IfFeatureFlag flag="monster-parts">
+          <CardLink
+            to={`/campaigns/${campaign.id}/monster-parts`}
+            Icon={PawPrint}
+            title="Monster Parts Subsystem"
+            description="Track monster parts and refined items"
+            class="md:col-span-2"
+          />
+        </IfFeatureFlag>
+        <IfFeatureFlag flag="handouts">
+          <CardLink to={`/campaigns/${campaign.id}/handouts`} Icon={ScrollText} title="Handouts" />
+        </IfFeatureFlag>
+        <CardLink
+          to={`/campaigns/${campaign.id}/summaries`}
+          Icon={BookOpenText}
+          title="Summaries"
         />
-      </BigLinkButton>
-    {/if}
-    <BigLinkButton colorClasses="bg-emerald-600" href="https://forms.gle/KXDHR2qn8CiCJVE37">
-      <List class="custom-icon inline h-[40px] text-xl" />
-      Feedback
-    </BigLinkButton>
-    <IfFeatureFlag flag="monster-parts">
-      <LandingLink
-        size="sm"
-        title="Monster Parts"
-        href={`/campaigns/${campaignId}/monster-parts`}
-        bgImgSrc="/images/monster-parts-banner.webp"
-      />
-    </IfFeatureFlag>
+      </div>
+    </div>
+    <CampaignCharacters />
     <IfFeatureFlag flag="bastions">
       <LandingLink
         size="sm"
         title="BASTION BUILDING"
-        href={`/campaigns/${campaignId}/bastions`}
+        href={`/campaigns/${campaign.id}/bastions`}
         bgImgSrc="https://i.imgur.com/WFsKg7W.jpeg"
       />
     </IfFeatureFlag>
-    <IfFeatureFlag flag="handouts">
-      <LandingLink
-        size="sm"
-        title="Handouts"
-        href={`/campaigns/${campaignId}/handouts`}
-        bgImgSrc="https://i.imgur.com/38Wjk61.jpeg"
-      />
-    </IfFeatureFlag>
-    <LandingLink
-      size="sm"
-      title="Summaries"
-      href={`/campaigns/${campaignId}/summaries`}
-      bgImgSrc="https://i.imgur.com/gk0bb5b.jpeg"
-    />
-    <AdminOnly>
-      <div class="w-full mx-auto max-w-sm text-center">
-        <LinkButton href={`/campaigns/${campaignId}/edit`}>Edit campaign &#9881;</LinkButton>
+    <div>
+      <Heading type="Section Heading">Quick Links</Heading>
+      <div class="grid grid-cols-1 md:grid-cols-3 sm:flex-row gap-4">
+        <BigLinkButton colorClasses="bg-orange-700" href="https://seans-pf2e.forge-vtt.com/game">
+          <Anvil class="custom-icon inline h-6 text-xl" />
+          Foundry <ExternalLink class="ml-auto" />
+        </BigLinkButton>
+        {#if campaign.discord_link}
+          <BigLinkButton colorClasses="bg-[#5865F2]" href={campaign.discord_link}>
+            <Headset class="custom-icon inline h-6 text-xl" />
+            Discord <ExternalLink class="ml-auto" />
+          </BigLinkButton>
+        {/if}
+        <BigLinkButton colorClasses="bg-emerald-600" href="https://forms.gle/KXDHR2qn8CiCJVE37">
+          <List class="custom-icon inline h-6 text-xl" />
+          Feedback <ExternalLink class="ml-auto" />
+        </BigLinkButton>
       </div>
-    </AdminOnly>
+    </div>
   </div>
 </div>

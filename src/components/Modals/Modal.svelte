@@ -9,13 +9,13 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
 <dialog
-  class="max-w-xl border-8 border-blue-950 bg-white shadow rounded-xl"
+  class="max-w-xl border border-campaign bg-campaign shadow rounded overflow-hidden"
   bind:this={dialog}
   on:close={() => (showModal = false)}
   on:click|self={() => dialog.close()}
 >
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div on:click|stopPropagation class="px-8 py-4">
+  <div on:click|stopPropagation class="">
     <slot />
   </div>
 </dialog>

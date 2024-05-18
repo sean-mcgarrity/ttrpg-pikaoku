@@ -5,7 +5,6 @@
   import { Trash } from 'lucide-svelte';
   import type { Row } from 'src/app';
   import SvelteMarkdown from 'svelte-markdown';
-  import { fly } from 'svelte/transition';
 
   export let note: Row<'quest_note'> & { author?: Row<'profile'> };
   export let deletable = false;
@@ -47,10 +46,7 @@
       {/if}
     </div>
   </div>
-  <div
-    class="bg-offwhite/95 text-offblack rounded-b-2xl p-2 px-6 flex flex-row"
-    transition:fly|local
-  >
+  <div class="bg-offwhite/95 text-offblack rounded-b-2xl p-2 px-6 flex flex-row">
     <SvelteMarkdown
       source={note.content.replaceAll('\n', '<br />')}
       options={{ break: true, gfm: true }}

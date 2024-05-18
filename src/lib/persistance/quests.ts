@@ -1,4 +1,3 @@
-import { goto } from '$app/navigation';
 import { getCampaignId } from '$lib/utils/contextual-helpers';
 import { extractData, getSupabase } from '$lib/utils/requests';
 import { createMutation, createQuery, useQueryClient } from '@tanstack/svelte-query';
