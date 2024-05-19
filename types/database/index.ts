@@ -9,149 +9,7 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      campaign_features: {
-        Row: {
-          campaign_id: number
-          feature: string
-          id: number
-        }
-        Insert: {
-          campaign_id: number
-          feature: string
-          id?: number
-        }
-        Update: {
-          campaign_id?: number
-          feature?: string
-          id?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "campaign_features_campaign_id_fkey"
-            columns: ["campaign_id"]
-            isOneToOne: false
-            referencedRelation: "campaigns"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      campaign_handout: {
-        Row: {
-          campaign_id: number
-          created_at: string
-          id: number
-          label: string
-          link: string
-          type: string | null
-        }
-        Insert: {
-          campaign_id: number
-          created_at?: string
-          id?: number
-          label: string
-          link: string
-          type?: string | null
-        }
-        Update: {
-          campaign_id?: number
-          created_at?: string
-          id?: number
-          label?: string
-          link?: string
-          type?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "campaign_handout_campaign_id_fkey"
-            columns: ["campaign_id"]
-            isOneToOne: false
-            referencedRelation: "campaigns"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      campaign_invite: {
-        Row: {
-          campaign_id: number
-          created_at: string
-          expires: string | null
-          id: string
-          max_uses: number
-        }
-        Insert: {
-          campaign_id: number
-          created_at?: string
-          expires?: string | null
-          id?: string
-          max_uses?: number
-        }
-        Update: {
-          campaign_id?: number
-          created_at?: string
-          expires?: string | null
-          id?: string
-          max_uses?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "campaign_invite_campaign_id_fkey"
-            columns: ["campaign_id"]
-            isOneToOne: false
-            referencedRelation: "campaigns"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      campaign_members: {
-        Row: {
-          campaign_id: number
-          campaign_invite_id: string
-          created_at: string | null
-          id: number
-          is_gm: boolean
-          user_id: string
-        }
-        Insert: {
-          campaign_id: number
-          campaign_invite_id: string
-          created_at?: string | null
-          id?: number
-          is_gm?: boolean
-          user_id: string
-        }
-        Update: {
-          campaign_id?: number
-          campaign_invite_id?: string
-          created_at?: string | null
-          id?: number
-          is_gm?: boolean
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "campaign_members_campaign_id_fkey"
-            columns: ["campaign_id"]
-            isOneToOne: false
-            referencedRelation: "campaigns"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "campaign_members_campaign_invite_id_fkey"
-            columns: ["campaign_invite_id"]
-            isOneToOne: false
-            referencedRelation: "campaign_invite"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "campaign_members_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "profile"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      campaigns: {
+      campaign: {
         Row: {
           archived: boolean
           banner_src: string | null
@@ -186,6 +44,199 @@ export type Database = {
           slug?: string
         }
         Relationships: []
+      }
+      campaign_features: {
+        Row: {
+          campaign_id: number
+          feature: string
+          id: number
+        }
+        Insert: {
+          campaign_id: number
+          feature: string
+          id?: number
+        }
+        Update: {
+          campaign_id?: number
+          feature?: string
+          id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_features_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaign"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_handout: {
+        Row: {
+          campaign_id: number
+          created_at: string
+          id: number
+          label: string
+          link: string
+          type: string | null
+        }
+        Insert: {
+          campaign_id: number
+          created_at?: string
+          id?: number
+          label: string
+          link: string
+          type?: string | null
+        }
+        Update: {
+          campaign_id?: number
+          created_at?: string
+          id?: number
+          label?: string
+          link?: string
+          type?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_handout_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaign"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_invite: {
+        Row: {
+          campaign_id: number
+          created_at: string
+          expires: string | null
+          id: string
+          max_uses: number
+        }
+        Insert: {
+          campaign_id: number
+          created_at?: string
+          expires?: string | null
+          id?: string
+          max_uses?: number
+        }
+        Update: {
+          campaign_id?: number
+          created_at?: string
+          expires?: string | null
+          id?: string
+          max_uses?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_invite_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaign"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      campaign_member: {
+        Row: {
+          campaign_id: number
+          campaign_invite_id: string
+          created_at: string | null
+          id: number
+          is_gm: boolean
+          user_id: string
+        }
+        Insert: {
+          campaign_id: number
+          campaign_invite_id: string
+          created_at?: string | null
+          id?: number
+          is_gm?: boolean
+          user_id: string
+        }
+        Update: {
+          campaign_id?: number
+          campaign_invite_id?: string
+          created_at?: string | null
+          id?: number
+          is_gm?: boolean
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_members_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaign"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_members_campaign_invite_id_fkey"
+            columns: ["campaign_invite_id"]
+            isOneToOne: false
+            referencedRelation: "campaign_invite"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaign_members_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      character: {
+        Row: {
+          active: boolean
+          campaign: number
+          created_at: string | null
+          id: number
+          img_src: string
+          level: number
+          name: string | null
+          player_id: string | null
+          status: string
+        }
+        Insert: {
+          active?: boolean
+          campaign: number
+          created_at?: string | null
+          id?: number
+          img_src?: string
+          level?: number
+          name?: string | null
+          player_id?: string | null
+          status?: string
+        }
+        Update: {
+          active?: boolean
+          campaign?: number
+          created_at?: string | null
+          id?: number
+          img_src?: string
+          level?: number
+          name?: string | null
+          player_id?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "player_characters_campaign_fkey"
+            columns: ["campaign"]
+            isOneToOne: false
+            referencedRelation: "campaign"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "player_characters_player_id_fkey"
+            columns: ["player_id"]
+            isOneToOne: false
+            referencedRelation: "profile"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       mp_base_items: {
         Row: {
@@ -312,7 +363,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "usable_sources"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       mp_refinement_imbuements: {
@@ -345,7 +396,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "mp_refinements"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       mp_refinements: {
@@ -394,16 +445,16 @@ export type Database = {
             foreignKeyName: "mp_refinements_campaign_id_fkey"
             columns: ["campaign_id"]
             isOneToOne: false
-            referencedRelation: "campaigns"
+            referencedRelation: "campaign"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "mp_refinements_owner_id_fkey"
             columns: ["owner_id"]
             isOneToOne: false
-            referencedRelation: "player_characters"
+            referencedRelation: "character"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       mp_sources: {
@@ -448,9 +499,9 @@ export type Database = {
             foreignKeyName: "mp_sources_campaign_id_fkey"
             columns: ["campaign_id"]
             isOneToOne: false
-            referencedRelation: "campaigns"
+            referencedRelation: "campaign"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       pf2e_success_card: {
@@ -459,7 +510,7 @@ export type Database = {
           campaign_id: number
           card_level: number
           card_type: string
-          child_card_id: number
+          child_card_id: number | null
           created_at: string
           critical_failure: string
           critical_success: string
@@ -478,7 +529,7 @@ export type Database = {
           campaign_id: number
           card_level: number
           card_type?: string
-          child_card_id: number
+          child_card_id?: number | null
           created_at?: string
           critical_failure?: string
           critical_success?: string
@@ -497,7 +548,7 @@ export type Database = {
           campaign_id?: number
           card_level?: number
           card_type?: string
-          child_card_id?: number
+          child_card_id?: number | null
           created_at?: string
           critical_failure?: string
           critical_success?: string
@@ -516,7 +567,7 @@ export type Database = {
             foreignKeyName: "public_pf2e_success_card_campaign_id_fkey"
             columns: ["campaign_id"]
             isOneToOne: false
-            referencedRelation: "campaigns"
+            referencedRelation: "campaign"
             referencedColumns: ["id"]
           },
           {
@@ -525,58 +576,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "pf2e_success_card"
             referencedColumns: ["id"]
-          }
-        ]
-      }
-      player_characters: {
-        Row: {
-          active: boolean
-          campaign: number
-          created_at: string | null
-          id: number
-          img_src: string
-          level: number
-          name: string | null
-          player_id: string | null
-          status: string
-        }
-        Insert: {
-          active?: boolean
-          campaign: number
-          created_at?: string | null
-          id?: number
-          img_src?: string
-          level?: number
-          name?: string | null
-          player_id?: string | null
-          status?: string
-        }
-        Update: {
-          active?: boolean
-          campaign?: number
-          created_at?: string | null
-          id?: number
-          img_src?: string
-          level?: number
-          name?: string | null
-          player_id?: string | null
-          status?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "player_characters_campaign_fkey"
-            columns: ["campaign"]
-            isOneToOne: false
-            referencedRelation: "campaigns"
-            referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "player_characters_player_id_fkey"
-            columns: ["player_id"]
-            isOneToOne: false
-            referencedRelation: "profile"
-            referencedColumns: ["id"]
-          }
         ]
       }
       profile: {
@@ -605,7 +605,7 @@ export type Database = {
             isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       quest: {
@@ -641,9 +641,9 @@ export type Database = {
             foreignKeyName: "quest_campaign_id_fkey"
             columns: ["campaign_id"]
             isOneToOne: false
-            referencedRelation: "campaigns"
+            referencedRelation: "campaign"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       quest_note: {
@@ -682,7 +682,37 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "quest"
             referencedColumns: ["id"]
-          }
+          },
+        ]
+      }
+      quest_pinned: {
+        Row: {
+          campaign_id: number
+          quest_id: number | null
+        }
+        Insert: {
+          campaign_id: number
+          quest_id?: number | null
+        }
+        Update: {
+          campaign_id?: number
+          quest_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quest_pinned_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: true
+            referencedRelation: "campaign"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quest_pinned_quest_id_fkey"
+            columns: ["quest_id"]
+            isOneToOne: false
+            referencedRelation: "quest"
+            referencedColumns: ["id"]
+          },
         ]
       }
       roles: {
@@ -708,7 +738,7 @@ export type Database = {
             isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
     }
@@ -723,9 +753,9 @@ export type Database = {
             foreignKeyName: "quest_campaign_id_fkey"
             columns: ["campaign_id"]
             isOneToOne: false
-            referencedRelation: "campaigns"
+            referencedRelation: "campaign"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
       usable_sources: {
@@ -749,9 +779,9 @@ export type Database = {
             foreignKeyName: "mp_sources_campaign_id_fkey"
             columns: ["campaign_id"]
             isOneToOne: false
-            referencedRelation: "campaigns"
+            referencedRelation: "campaign"
             referencedColumns: ["id"]
-          }
+          },
         ]
       }
     }
@@ -789,14 +819,16 @@ export type Database = {
   }
 }
 
+type PublicSchema = Database[Extract<keyof Database, "public">]
+
 export type Tables<
   PublicTableNameOrOptions extends
-    | keyof (Database["public"]["Tables"] & Database["public"]["Views"])
+    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
         Database[PublicTableNameOrOptions["schema"]]["Views"])
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
@@ -804,67 +836,67 @@ export type Tables<
     }
     ? R
     : never
-  : PublicTableNameOrOptions extends keyof (Database["public"]["Tables"] &
-      Database["public"]["Views"])
-  ? (Database["public"]["Tables"] &
-      Database["public"]["Views"])[PublicTableNameOrOptions] extends {
-      Row: infer R
-    }
-    ? R
+  : PublicTableNameOrOptions extends keyof (PublicSchema["Tables"] &
+        PublicSchema["Views"])
+    ? (PublicSchema["Tables"] &
+        PublicSchema["Views"])[PublicTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
     : never
-  : never
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Insert: infer I
-    }
-    ? I
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
     : never
-  : never
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-    | keyof Database["public"]["Tables"]
+    | keyof PublicSchema["Tables"]
     | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
-    : never = never
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
     : never
-  : PublicTableNameOrOptions extends keyof Database["public"]["Tables"]
-  ? Database["public"]["Tables"][PublicTableNameOrOptions] extends {
-      Update: infer U
-    }
-    ? U
+  : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
+    ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
     : never
-  : never
 
 export type Enums<
   PublicEnumNameOrOptions extends
-    | keyof Database["public"]["Enums"]
+    | keyof PublicSchema["Enums"]
     | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
-    : never = never
+    : never = never,
 > = PublicEnumNameOrOptions extends { schema: keyof Database }
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
-  ? Database["public"]["Enums"][PublicEnumNameOrOptions]
-  : never
+  : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
+    ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
