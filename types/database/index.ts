@@ -612,29 +612,35 @@ export type Database = {
         Row: {
           campaign_id: number
           created_at: string
+          creator_id: string | null
           description: string
           group: string
           id: number
           name: string
           status: Database["public"]["Enums"]["quest_status"]
+          summary: string | null
         }
         Insert: {
           campaign_id: number
           created_at?: string
+          creator_id?: string | null
           description?: string
           group?: string
           id?: number
           name?: string
           status?: Database["public"]["Enums"]["quest_status"]
+          summary?: string | null
         }
         Update: {
           campaign_id?: number
           created_at?: string
+          creator_id?: string | null
           description?: string
           group?: string
           id?: number
           name?: string
           status?: Database["public"]["Enums"]["quest_status"]
+          summary?: string | null
         }
         Relationships: [
           {
@@ -642,6 +648,13 @@ export type Database = {
             columns: ["campaign_id"]
             isOneToOne: false
             referencedRelation: "campaign"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quest_creator_id_fkey"
+            columns: ["creator_id"]
+            isOneToOne: false
+            referencedRelation: "profile"
             referencedColumns: ["id"]
           },
         ]
