@@ -28,10 +28,8 @@ export const POST = async (event) => {
   }
 
   const {
-    locals: { supabase, getSession }
+    locals: { supabase, session }
   } = event;
-
-  const session = await getSession();
 
   const invite = extractData(
     await supabase
@@ -46,7 +44,7 @@ export const POST = async (event) => {
     throw redirect(303, '/');
   }
 
-  const response = await supabase.from('campaign_members').insert({
+  const response = await supabase.from('campaign_member').insert({
     campaign_invite_id: token,
     user_id: session.user.id,
     campaign_id: invite.campaign_id

@@ -7,10 +7,10 @@
   import AdminOnly from '$components/AdminOnly.svelte';
   import { createQuery } from '@tanstack/svelte-query';
   import { getCampaignId } from '$lib/utils/contextual-helpers';
-  import { getSupabase, extractData } from '$lib/utils/requests';
+  import { extractData } from '$lib/utils/requests';
+  import { supabase } from '$lib/utils/supabaseClient';
 
   let campaignId = getCampaignId();
-  let supabase = getSupabase();
 
   let questOptions = createQuery({
     queryKey: ['quest-board', campaignId],

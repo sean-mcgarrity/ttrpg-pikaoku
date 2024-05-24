@@ -9,7 +9,8 @@ import {
   type MP_Refinement,
   type MP_UsableSource
 } from '$lib/systems/pf2e_monster_parts';
-import { extractData, getSupabase } from '$lib/utils/requests';
+import { supabase } from '$lib/utils/auth';
+import { extractData } from '$lib/utils/requests';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { createMutation, createQuery, useQueryClient } from '@tanstack/svelte-query';
 import { get } from 'svelte/store';
@@ -17,13 +18,12 @@ import { get } from 'svelte/store';
 export const getCurrentItem = () => {
   const currentPage = get(page);
   const itemId = parseInt(currentPage.params.itemId);
-  const supabase = getSupabase();
   return createQuery({
     queryKey: ['refinements', itemId],
     queryFn: async () => {
       if (!itemId) return null;
       return extractData(
-        await supabase
+        await get(supabase)
           .from('mp_refinements')
           .select(
             `*, base_item:mp_base_items (*), changes:mp_refinement_changes (*, source:mp_sources (*)), imbuements:mp_imbuements!mp_refinement_imbuements (*), owner:character (*)`
@@ -38,13 +38,12 @@ export const getCurrentItem = () => {
 
 export const getRefinementsForCampaign = () => {
   const currentPage = get(page);
-  const supabase: SupabaseClient = currentPage.data.supabase;
   const { campaignId } = currentPage.params;
-  return createQuery<MP_Refinement[]>({
+  return createQuery({
     queryKey: ['refinements'],
     queryFn: async () =>
       extractData(
-        await supabase
+        await get(supabase)
           .from('mp_refinements')
           .select(
             `*, base_item:mp_base_items (*), changes:mp_refinement_changes (*), imbuements:mp_imbuements!mp_refinement_imbuements (*), owner:character (*)`
@@ -58,12 +57,11 @@ export const getRefinementsForCampaign = () => {
 export const updateRefinement = () => {
   const queryClient = useQueryClient();
   const currentPage = get(page);
-  const supabase: SupabaseClient = currentPage.data.supabase;
   const itemId = currentPage.params.itemId;
   return createMutation(
     ['refinements', itemId],
     async (refinement: Partial<MP_Refinement>) => {
-      return supabase.from('mp_refinements').update(refinement).eq('id', itemId);
+      return get(supabase).from('mp_refinements').update(refinement).eq('id', itemId);
     },
     {
       onSuccess: () => {
@@ -74,27 +72,27 @@ export const updateRefinement = () => {
 };
 
 export const queryMpBaseItems = () => {
-  const currentPage = get(page);
-  const supabase: SupabaseClient = currentPage.data.supabase;
-  return createQuery<MP_BaseItem[]>({
+  return createQuery({
     queryKey: ['base_items'],
     queryFn: async () =>
-      extractData<MP_BaseItem[]>(
-        await supabase.from('mp_base_items').select('*').order('name', { ascending: true })
+      extractData(
+        (await get(supabase)
+          .from('mp_base_items')
+          .select('*')
+          .order('name', { ascending: true })) as any
       )
   });
 };
 
 export const getSourceFromParam = () => {
   const currentPage = get(page);
-  const supabase: SupabaseClient = currentPage.data.supabase;
   const { campaignId, sourceId } = currentPage.params;
   return createQuery<MP_UsableSource>({
     queryKey: ['mp_sources', sourceId],
     queryFn: async () => {
       if (!sourceId) return null;
       return extractData(
-        await supabase
+        await get(supabase)
           .from('mp_sources')
           .select('*')
           .eq('id', sourceId)
@@ -107,13 +105,12 @@ export const getSourceFromParam = () => {
 
 export const getUsableSourceById = (sourceId: number | string) => {
   const currentPage = get(page);
-  const supabase: SupabaseClient = currentPage.data.supabase;
   return createQuery<MP_UsableSource>({
     queryKey: ['mp_sources', sourceId],
     queryFn: async () => {
       if (!sourceId) return null;
       return extractData(
-        await supabase
+        await get(supabase)
           .from('usable_sources')
           .select('*')
           .eq('id', sourceId)
@@ -126,12 +123,10 @@ export const getUsableSourceById = (sourceId: number | string) => {
 
 export const revealSource = (sourceId) => {
   const queryClient = useQueryClient();
-  const currentPage = get(page);
-  const supabase: SupabaseClient = currentPage.data.supabase;
   return createMutation(
     ['reveal_source', sourceId],
     async () => {
-      return supabase.from('mp_sources').update({ revealed: true }).eq('id', sourceId);
+      return get(supabase).from('mp_sources').update({ revealed: true }).eq('id', sourceId);
     },
     {
       onSuccess: () => {
@@ -462,37 +457,40 @@ export const deleteRefinement = () => {
 export const salvageRefinement = () => {
   const queryClient = useQueryClient();
   const currentPage = get(page);
-  const supabase: SupabaseClient = getSupabase();
 
   return createMutation(
     ['salvage_refinement'],
     async (refinement: MP_Refinement) => {
-      const res = await supabase
+      const res = await get(supabase)
         .from('mp_refinements')
         .update({ salvaged: true })
         .eq('id', refinement.id);
       if (!res.error) {
-        await supabase.from('mp_sources').insert({
-          name: 'Salvaged ' + refinement.name,
-          level: 1,
-          quantity: 1,
-          enables: refinement.base_item.requires,
-          remaining: calculateRefinementProgress(refinement),
-          campaign_id: refinement.campaign_id,
-          img_src: 'https://i.imgur.com/8jYVvC2.png',
-          revealed: true
-        });
-        for (const imbuement of refinement.imbuements) {
-          await supabase.from('mp_sources').insert({
-            name: 'Salvaged ' + imbuement.name,
+        await get(supabase)
+          .from('mp_sources')
+          .insert({
+            name: 'Salvaged ' + refinement.name,
             level: 1,
             quantity: 1,
-            enables: imbuement.requires,
-            remaining: calculateImbuementSalvageCost(refinement, imbuement.id),
+            enables: refinement.base_item.requires,
+            remaining: calculateRefinementProgress(refinement),
             campaign_id: refinement.campaign_id,
             img_src: 'https://i.imgur.com/8jYVvC2.png',
             revealed: true
           });
+        for (const imbuement of refinement.imbuements) {
+          await get(supabase)
+            .from('mp_sources')
+            .insert({
+              name: 'Salvaged ' + imbuement.name,
+              level: 1,
+              quantity: 1,
+              enables: imbuement.requires,
+              remaining: calculateImbuementSalvageCost(refinement, imbuement.id),
+              campaign_id: refinement.campaign_id,
+              img_src: 'https://i.imgur.com/8jYVvC2.png',
+              revealed: true
+            });
         }
       }
     },

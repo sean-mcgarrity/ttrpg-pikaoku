@@ -23,7 +23,7 @@ export const load = async ({ url, parent }) => {
     if (!!session?.user?.id) {
       const response = extractData(
         await supabase
-          .from('campaign_members')
+          .from('campaign_member')
           .select('*')
           .eq('campaign_id', invite.campaign_id)
           .eq('user_id', session.user.id)

@@ -14,7 +14,7 @@
     queryFn: async () => {
       const currentPage = get(page);
       const supabase: SupabaseClient = currentPage.data.supabase;
-      return extractData<Imbuement[]>(await supabase.from('mp_imbuements').select().order('name'));
+      return extractData(await supabase.from('mp_imbuements').select().order('name'));
     }
   });
 

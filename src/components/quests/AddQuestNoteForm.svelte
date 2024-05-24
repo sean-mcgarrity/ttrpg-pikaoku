@@ -3,8 +3,8 @@
   import { addQuestNoteMutation } from '$lib/persistance/quests';
   import { MessageCircle } from 'lucide-svelte';
   import TextAreaField from '$components/forms/controls/TextAreaField.svelte';
-  import { page } from '$app/stores';
   import SwitchField from '$components/forms/controls/SwitchField.svelte';
+  import { user } from '$lib/utils/auth';
 
   export let questId: number;
 
@@ -12,7 +12,7 @@
 
   const m = addQuestNoteMutation();
 
-  $: userId = $page.data.session.user.id;
+  $: userId = $user?.id;
 
   let anonymous = false;
 

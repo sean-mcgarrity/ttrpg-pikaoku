@@ -3,13 +3,10 @@
   import CampaignLogin from './CampaignLogin.svelte';
   import LinkButton from '$components/buttons/LinkButton.svelte';
   import { PlusCircle } from 'lucide-svelte';
-  import { page } from '$app/stores';
   import Heading from '$components/layout/Heading.svelte';
+  import { getCampaigns } from '$lib/persistance/campaign';
 
-  export let data;
-  let { campaigns, session } = data;
-  $: session = $page.data.session;
-  $: hasSession = !!session?.access_token;
+  $: campaigns = getCampaigns();
 </script>
 
 <svelte:head>
@@ -25,18 +22,9 @@
     </h1>
   </div>
   <div class="max-w-xl mx-auto pb-12 px-4 pt-8 grid grid-cols-1 gap-4">
-    {#if hasSession}
-      <p class="">
-        Welcome back, <a href="/me">{session.user.user_metadata?.full_name}</a>
-      </p>
-      <!-- {:else}
-      <div class="mx-auto">
-        <LinkButton href="/login">Login <LogInIcon class="lucid-icon" /></LinkButton>
-      </div> -->
-    {/if}
     <Heading type="Page Heading">Campaigns</Heading>
     <div class="flex flex-col gap-4 -mt-4">
-      {#each campaigns as campaign (campaign.id)}
+      {#each $campaigns.data ?? [] as campaign (campaign.id)}
         <CampaignLogin {campaign} />
       {:else}
         <p class="text-center">No campaigns found.</p>

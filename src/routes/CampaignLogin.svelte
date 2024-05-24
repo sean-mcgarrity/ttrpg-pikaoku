@@ -1,14 +1,12 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { session } from '$lib/utils/auth';
 
   export let campaign: any;
 
   $: title = campaign.name;
   $: bgImgSrc = campaign.banner_src;
 
-  $: session = $page.data.session;
-  $: hasSession = !!session?.access_token;
-  $: href = hasSession
+  $: href = $session?.access_token
     ? `/campaigns/${campaign.id}`
     : `/login?afterLogin=/campaigns/${campaign.id}`;
 </script>

@@ -1,11 +1,8 @@
 <script lang="ts">
-  import { page } from '$app/stores';
   import Button from '$components/buttons/Button.svelte';
+  import { supabase } from '$lib/utils/supabaseClient';
   import { isBrowser } from '@supabase/ssr';
-
-  export let redirectTarget = '';
-
-  $: ({ supabase, session } = $page.data);
+  import { session } from '$lib/utils/auth';
 
   $: origin = isBrowser() ? window?.location.origin : '';
 
@@ -13,15 +10,13 @@
     await supabase.auth.signInWithOAuth({
       provider: 'discord',
       options: {
-        redirectTo: `${origin}${redirectTarget}`
+        redirectTo: `${origin}/me`
       }
     });
   }
-
-  $: hasSession = !!session?.access_token;
 </script>
 
-{#if hasSession}
+{#if $session}
   <div>You're already logged in, you shouldn't see this.</div>
 {:else}
   <Button color="#5865F2" on:click={signInWithDiscord} class="hover:brightness-105 mx-auto">

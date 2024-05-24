@@ -2,7 +2,8 @@
   import { page } from '$app/stores';
   import Button from '$components/buttons/Button.svelte';
   import Heading from '$components/layout/Heading.svelte';
-  import { extractData, getSupabase } from '$lib/utils/requests';
+  import { supabase } from '$lib/utils/supabaseClient';
+  import { extractData } from '$lib/utils/requests';
   import { createMutation, createQuery, useQueryClient } from '@tanstack/svelte-query';
   import { MailPlus, Clipboard, Trash } from 'lucide-svelte';
   import NewInviteForm from './NewInviteForm.svelte';
@@ -14,9 +15,8 @@
   $: getInvitesQuery = createQuery(
     ['campaign-invites', campaign?.id],
     async () => {
-      const sup = getSupabase();
       return extractData(
-        await sup
+        await supabase
           .from('campaign_invite')
           .select('*, times_used:campaign_members(count)')
           .eq('campaign_id', campaign.id)
@@ -40,10 +40,12 @@
   let forceExpireMutation = createMutation({
     mutationKey: ['force-expire'],
     mutationFn: async (id: string) => {
-      const sup = getSupabase();
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
-      await sup.from('campaign_invite').update({ expires: yesterday.toISOString() }).eq('id', id);
+      await supabase
+        .from('campaign_invite')
+        .update({ expires: yesterday.toISOString() })
+        .eq('id', id);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['campaign-invites']);

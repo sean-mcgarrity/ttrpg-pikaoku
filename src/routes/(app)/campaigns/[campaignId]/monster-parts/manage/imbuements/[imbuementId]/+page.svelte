@@ -16,16 +16,14 @@
   const imbuementQuery = createQuery({
     queryKey: ['imbuement', imbuementId],
     queryFn: async () =>
-      extractData<Imbuement>(
-        await supabase.from('mp_imbuements').select('*').eq('id', imbuementId).single()
-      ),
+      extractData(await supabase.from('mp_imbuements').select('*').eq('id', imbuementId).single()),
     onError: (error) => console.error('error', error),
     refetchOnWindowFocus: false
   });
 
   const updateImbuement = createMutation({
     mutationFn: async (imbuement: Partial<Imbuement>) => {
-      return extractData<Imbuement>(
+      return extractData(
         await supabase.from('mp_imbuements').update(imbuement).eq('id', imbuementId).single()
       );
     },

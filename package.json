@@ -14,34 +14,35 @@
     "update-types": "npx supabase gen types typescript --project-id \"$PROJECT_REF\" > types/database/index.ts"
   },
   "devDependencies": {
-    "@playwright/test": "^1.39.0",
+    "@playwright/test": "^1.44.0",
     "@sveltejs/adapter-auto": "2.0.0",
-    "@sveltejs/kit": "1.5.0",
-    "@types/node": "^20.9.0",
-    "autoprefixer": "^10.4.14",
+    "@sveltejs/kit": "2.5.10",
+    "@types/node": "^20.12.12",
+    "autoprefixer": "^10.4.19",
     "carbon-components-svelte": "^0.73.5",
-    "eslint": "^8.45.0",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "8.6.0",
     "node-sass": "9.0.0",
-    "postcss": "^8.4.27",
+    "postcss": "^8.4.38",
     "postcss-load-config": "4.0.1",
     "prettier": "2.8.3",
     "prettier-plugin-svelte": "2.9.0",
     "prettier-plugin-tailwindcss": "0.2.2",
-    "svelte": "3.55.1",
-    "svelte-preprocess": "^5.0.4",
-    "tailwindcss": "^3.3.3",
-    "typescript": "^5.2.2",
-    "vite": "^4.4.6",
-    "vitest": "^0.34.3"
+    "svelte": "4.2.17",
+    "svelte-preprocess": "^5.1.4",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.4.5",
+    "vite": "^4.5.3",
+    "vitest": "^0.34.6"
   },
   "dependencies": {
-    "@supabase/ssr": "^0.0.10",
-    "@supabase/supabase-js": "^2.27.0",
-    "@tanstack/svelte-query": "^4.33.0",
-    "classnames": "^2.3.2",
+    "@supabase/ssr": "^0.3.0",
+    "@supabase/supabase-js": "^2.43.2",
+    "@tanstack/svelte-query": "^4.36.1",
+    "carta-md": "^4.0.4",
+    "classnames": "^2.5.1",
     "firebase": "^9.23.0",
     "lucide-svelte": "^0.378.0",
-    "svelte-markdown": "^0.4.0"
+    "svelte-markdown": "^0.4.1"
   }
 }

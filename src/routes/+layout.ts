@@ -1,35 +1,54 @@
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
-import { extractData } from '$lib/utils/requests.js';
-import { combineChunks, createBrowserClient, isBrowser, parse } from '@supabase/ssr';
-import type { Database } from 'types/database/index.js';
+import { browser } from '$app/environment';
+import { QueryClient } from '@tanstack/svelte-query';
+import { createBrowserClient, createServerClient, isBrowser, parse } from '@supabase/ssr';
 
 export const load = async ({ fetch, data, depends }) => {
   depends('supabase:auth');
 
-  const supabase = createBrowserClient<Database>(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
-    global: {
-      fetch
-    },
-    cookies: {
-      get(key) {
-        if (!isBrowser()) {
-          return JSON.stringify(data.session);
+  const supabase = isBrowser()
+    ? createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
+        global: {
+          fetch
+        },
+        cookies: {
+          get(key) {
+            const cookie = parse(document.cookie);
+            return cookie[key];
+          }
         }
+      })
+    : createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
+        global: {
+          fetch
+        },
+        cookies: {
+          get() {
+            return JSON.stringify(data.session);
+          }
+        }
+      });
 
-        const cookie = combineChunks(key, (name) => {
-          const cookies = parse(document.cookie);
-          return cookies[name];
-        });
-        return cookie;
-      }
-    }
-  });
-
+  /**
+   * It's fine to use `getSession` here, because on the client, `getSession` is
+   * safe, and on the server, it reads `session` from the `LayoutData`, which
+   * safely checked the session using `safeGetSession`.
+   */
   const {
     data: { session }
   } = await supabase.auth.getSession();
 
-  const campaigns = extractData(await supabase.from('campaigns').select('*').eq('archived', false));
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
 
-  return { supabase, session, campaigns };
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        enabled: browser
+      }
+    }
+  });
+
+  return { supabase, session, queryClient, user };
 };

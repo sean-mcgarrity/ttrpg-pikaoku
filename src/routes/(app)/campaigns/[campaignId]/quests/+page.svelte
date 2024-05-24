@@ -1,12 +1,37 @@
 <script lang="ts">
+  import { page } from '$app/stores';
+  import Heading from '$components/layout/Heading.svelte';
   import { getQuestsQuery } from '$lib/persistance/quests';
-  import QuestDetails from './QuestDetails.svelte';
+  import QuestCard from './QuestCard.svelte';
 
-  $: quests = getQuestsQuery();
+  const quests = getQuestsQuery();
 
-  $: quest = $quests.data?.[0];
+  $: questGroups = Array.from(new Set($quests.data?.map((quest) => quest.group)))
+    .filter((x) => !!x)
+    .concat(['']);
+
+  $: console.log('quests', $quests.data);
+  $: console.log(questGroups);
 </script>
 
-{#if $quests.data}
-  <QuestDetails {quest} />
-{/if}
+<Heading type="Page Heading">Quests</Heading>
+<div class="flex flex-row flex-wrap gap-8">
+  {#if $quests.data}
+    {#each questGroups as group (group)}
+      {@const groupQuests = $quests.data.filter((quest) => quest.group === group)}
+      <div class="w-full flex flex-col gap-2">
+        <Heading tight type="Section Heading">{group || 'Ungrouped'}</Heading>
+        {#each groupQuests as quest (quest.id)}
+          <QuestCard {quest} link />
+        {/each}
+      </div>
+    {/each}
+  {/if}
+</div>
+<div class="col-span-2">
+  {#if $quests.data?.length === 0}
+    <div class="text-white">No quests yet</div>
+  {:else}
+    <slot />
+  {/if}
+</div>

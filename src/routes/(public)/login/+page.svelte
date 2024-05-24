@@ -2,11 +2,7 @@
   import BackTo from '$components/buttons/BackTo.svelte';
   import Heading from '$components/layout/Heading.svelte';
   import DiscordLoginButton from './DiscordLoginButton.svelte';
-
-  export let data;
-  $: ({ session } = data);
-
-  $: hasSession = !!session?.access_token;
+  import { session } from '$lib/utils/auth';
 </script>
 
 <div class="min-h-screen bg-slate-950 w-full flex flex-col">
@@ -16,9 +12,9 @@
       class="px-16 py-8 rounded shadow text-white flex flex-col gap-4 min-w-md bg-slate-900 text-center"
     >
       <Heading type="Page Heading">Login</Heading>
-      {#if hasSession}
+      {#if !!$session}
         <p>
-          You are already logged in as <strong>{session.user.user_metadata?.full_name}</strong>.
+          You are already logged in as <strong>{$session?.user.user_metadata?.full_name}</strong>.
         </p>
       {:else}
         <p>Sign in below by clicking the massive discord button.</p>
@@ -34,7 +30,7 @@
           </a>
           .
         </p>
-        <DiscordLoginButton redirectTarget="/me" />
+        <DiscordLoginButton />
       {/if}
     </div>
   </div>

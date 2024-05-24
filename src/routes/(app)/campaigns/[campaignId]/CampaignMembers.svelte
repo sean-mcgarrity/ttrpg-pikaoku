@@ -1,18 +1,18 @@
 <script lang="ts">
   import { page } from '$app/stores';
   import Heading from '$components/layout/Heading.svelte';
-  import { extractData, getSupabase } from '$lib/utils/requests';
+  import { extractData } from '$lib/utils/requests';
   import { createQuery } from '@tanstack/svelte-query';
+  import { supabase } from '$lib/utils/supabaseClient';
 
   $: ({ campaign } = $page.data);
-  $: supabase = getSupabase();
   $: campaignMembers = createQuery({
     enabled: !!campaign?.id,
     queryKey: ['campaign-members', campaign?.id],
     queryFn: async () => {
       return extractData(
         await supabase
-          .from('campaign_members')
+          .from('campaign_member')
           .select(`*, profile (username, avatar_src)pnpm run dev`)
           .eq('campaign_id', campaign?.id)
           .order('username', {

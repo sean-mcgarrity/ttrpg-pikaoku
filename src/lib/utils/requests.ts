@@ -1,16 +1,8 @@
 import type { PostgrestSingleResponse } from '@supabase/supabase-js';
 import { page } from '$app/stores';
-import type { SupabaseClient } from '@supabase/supabase-js';
 import { get } from 'svelte/store';
-import type { Database } from 'types/database';
 
-export const getSupabase = () => {
-  const currentPage = get(page);
-  const supabase: SupabaseClient<Database> = currentPage.data.supabase;
-  return supabase;
-};
-
-export function extractData<T>(response: PostgrestSingleResponse<T>) {
+export function extractData<R extends PostgrestSingleResponse<any>>(response: R): R['data'] {
   if (response.status === 204) {
     return null;
   }

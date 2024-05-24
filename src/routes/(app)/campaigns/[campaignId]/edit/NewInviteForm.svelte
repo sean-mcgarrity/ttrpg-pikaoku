@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import Button from '$components/buttons/Button.svelte';
   import NumberField from '$components/forms/controls/NumberField.svelte';
-  import { getSupabase } from '$lib/utils/requests';
+  import { supabase } from '$lib/utils/supabaseClient';
   import { createMutation, useQueryClient } from '@tanstack/svelte-query';
   import { Check } from 'lucide-svelte';
 
@@ -20,8 +20,7 @@
   >(
     ['create-invite'],
     async ({ uses, expiresAt }) => {
-      const sup = getSupabase();
-      await sup.from('campaign_invite').insert({
+      await supabase.from('campaign_invite').insert({
         campaign_id: campaign.id,
         max_uses: uses,
         expires: expiresAt.toISOString()

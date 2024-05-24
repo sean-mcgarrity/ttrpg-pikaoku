@@ -5,9 +5,8 @@
   import { PlusIcon } from 'lucide-svelte';
   import MonsterCard from './MonsterCard.svelte';
   import { page } from '$app/stores';
-  import BackButton from '$components/layout/BackButton.svelte';
   import TextField from '$components/forms/controls/TextField.svelte';
-  import { isAdmin } from '$lib/utils/auth';
+  import { userIsAdmin } from '$lib/utils/auth';
 
   $: campaignId = $page.params.campaignId;
 
@@ -22,8 +21,6 @@
       source.name.toLowerCase().includes(searchFilterLc) ||
       source.enables.some((trait) => trait.toLowerCase().includes(searchFilterLc))
   );
-
-  $: admin = isAdmin($page.data.session);
 </script>
 
 <Heading type="Page Heading">Campaign Monsters</Heading>
@@ -57,7 +54,7 @@
   {#if $unusableSourcesQ.isSuccess}
     <div class="gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center">
       {#each $unusableSourcesQ.data as monster}
-        <MonsterCard {monster} asLink={admin} />
+        <MonsterCard {monster} asLink={$userIsAdmin} />
       {/each}
     </div>
   {/if}
