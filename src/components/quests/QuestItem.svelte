@@ -113,7 +113,7 @@
       {/if}
     </div>
     {#if !preview || (preview && expanded)}
-      <div class="grid grid-cols-4 gap-2 items-center" transition:fade|local>
+      <div class="grid grid-cols-4 gap-2 items-center" transition:fade>
         {#if editable}
           {#if pinned}
             <Button on:click={() => updateQuestStatus('starred')} title="Save changes">
@@ -153,7 +153,7 @@
   </div>
 
   {#if expanded}
-    <div class="px-8 pt-2 pb-4 flex flex-col gap-2" transition:slide|local>
+    <div class="px-8 pt-2 pb-4 flex flex-col gap-2" transition:slide>
       <div>
         {#if editing}
           <TextAreaField placeholder="Quest description" bind:value={quest.description} />

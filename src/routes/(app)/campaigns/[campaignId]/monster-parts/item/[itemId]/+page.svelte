@@ -58,8 +58,8 @@
       {#if tab === 'none'}
         <div
           class="flex flex-col gap-2 justify-center items-center pt-4 w-full"
-          out:fade|local={{ duration: 75 }}
-          in:fade|local={{ duration: 75, delay: 75 }}
+          out:fade={{ duration: 75 }}
+          in:fade={{ duration: 75, delay: 75 }}
         >
           <Button class="pointer-events-none invisible mx-auto">Cancel</Button>
           <BigButton on:click={() => changeTab('refine')}>Refine</BigButton>

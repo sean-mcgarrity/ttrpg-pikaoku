@@ -12,11 +12,11 @@
       'animate-pulse inset-0 bg-black/80 m-2 rounded z-50',
       fullPage ? 'fixed' : 'absolute '
     )}
-    transition:fade|local
+    transition:fade
   />
   <div
     class={cx('inset-0 flex flex-row pointer-events-none z-50', fullPage ? 'fixed' : 'absolute ')}
-    transition:fade|local
+    transition:fade
   >
     <div class="lds-facebook m-auto">
       <div />

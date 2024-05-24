@@ -31,7 +31,7 @@
       {#each $query.data as item}
         <a
           href={`/campaigns/${campaignId}/monster-parts/item/${item.id}`}
-          in:slide|local
+          in:slide
           class="hover:brightness-110 hover:scale-105"
         >
           <ItemCardHeader {item} />

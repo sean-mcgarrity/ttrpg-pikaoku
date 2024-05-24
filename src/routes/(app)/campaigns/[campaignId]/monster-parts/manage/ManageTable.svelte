@@ -56,7 +56,7 @@
           <div
             class="grid gap-4 px-2 py-1 rounded items-center even:bg-black/10 hover:bg-black/20 cursor-pointer"
             style={rowSpanStyle}
-            transition:slide|local
+            transition:slide
           >
             {#each columns as column}
               <div

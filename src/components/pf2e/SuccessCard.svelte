@@ -93,7 +93,7 @@
   {/if}
   {#if editting || expanded}
     <div
-      transition:slide|local
+      transition:slide
       class={cx('quest-content flex flex-col gap-4 px-1', !child && 'px-4')}
     >
       {#if editting}

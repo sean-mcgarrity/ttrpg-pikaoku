@@ -74,7 +74,7 @@
       </Button>
     </div>
     {#if seeAllLevels}
-      <div class="px-8" transition:slide|local>
+      <div class="px-8" transition:slide>
         {#each futureLevels as level}
           <div class="font-medium text-white/60">Level {level.level}:</div>
           <ul class="px-8 list-disc">

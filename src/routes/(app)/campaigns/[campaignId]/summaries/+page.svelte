@@ -58,7 +58,7 @@
 </AdminOnly>
 <div class="my-8 flex flex-col gap-2">
   {#each handouts as handout (handout.id)}
-    <div class="flex flex-row gap-2" transition:fly|local>
+    <div class="flex flex-row gap-2" transition:fly>
       <a
         href={handout.link}
         target="_blank"

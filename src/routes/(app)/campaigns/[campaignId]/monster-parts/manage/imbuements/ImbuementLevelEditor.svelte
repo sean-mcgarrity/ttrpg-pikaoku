@@ -19,7 +19,7 @@
   const handleDelete = () => onDelete(level);
 </script>
 
-<div transition:slide|local>
+<div transition:slide>
   <div class="w-full text-left py-1 px-2 rounded flex flex-row">
     <div class="whitespace-nowrap mr-2">{level.level} -</div>
     <TextField

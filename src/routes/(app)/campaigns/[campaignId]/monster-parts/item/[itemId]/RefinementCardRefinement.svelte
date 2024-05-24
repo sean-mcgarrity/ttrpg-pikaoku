@@ -34,7 +34,7 @@
 
 <div class="px-4 py-2 flex flex-col gap-2 overflow-hidden">
   {#if currentBenefits}
-    <ul class="px-4 list-disc" transition:slide|local>
+    <ul class="px-4 list-disc" transition:slide>
       {#each currentBenefits.benefits as benefit}
         <li>{benefit}</li>
       {/each}
@@ -64,7 +64,7 @@
     </Button>
   </div>
   {#if seeAllLevels}
-    <div class="px-8" transition:slide|local>
+    <div class="px-8" transition:slide>
       {#each futureLevels as level}
         <div class="font-medium text-white/60">Level {level.level}:</div>
         <ul class="px-8 list-disc">
