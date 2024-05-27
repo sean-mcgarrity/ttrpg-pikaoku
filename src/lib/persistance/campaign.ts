@@ -2,8 +2,8 @@ import { extractData } from '$lib/utils/requests';
 import { createMutation, createQuery, useQueryClient } from '@tanstack/svelte-query';
 import { page } from '$app/stores';
 import { get } from 'svelte/store';
-import type { Campaign, Character } from 'src/app';
 import { supabase } from '$lib/utils/auth';
+import type { TablesUpdate } from '$types/database';
 
 export const getCampaigns = () => {
   return createQuery({
@@ -50,7 +50,7 @@ export const updateCurrentCampaign = () => {
   const campaignId = getCampaignIdFromRoute();
   return createMutation({
     mutationKey: ['campaigns', campaignId],
-    mutationFn: async (campaign: Partial<Campaign>) => {
+    mutationFn: async (campaign: TablesUpdate<'campaign'>) => {
       return get(supabase).from('campaign').update(campaign).eq('id', campaignId);
     },
     onSuccess: () => {
@@ -125,7 +125,7 @@ export const mutateCreateCharacter = () => {
   const campaignId = getCampaignIdFromRoute();
   return createMutation({
     mutationKey: ['campaigns', campaignId, 'characters'],
-    mutationFn: async (character: Partial<Character>) => {
+    mutationFn: async (character: TablesUpdate<'character'>) => {
       return get(supabase)
         .from('character')
         .insert({ ...character, campaign: parseInt(campaignId) });

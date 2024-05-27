@@ -1,7 +1,9 @@
 <script lang="ts">
   import { page } from '$app/stores';
+  import Button from '$components/buttons/Button.svelte';
   import Heading from '$components/layout/Heading.svelte';
   import { getQuestsQuery } from '$lib/persistance/quests';
+  import { PlusIcon } from 'lucide-svelte';
   import QuestCard from './QuestCard.svelte';
 
   const quests = getQuestsQuery();
@@ -15,6 +17,10 @@
 </script>
 
 <Heading type="Page Heading">Quests</Heading>
+<Button color="green" href="quests/new" oldStyle={false} class="mb-4">
+  <PlusIcon />
+  New Quest</Button
+>
 <div class="flex flex-row flex-wrap gap-8">
   {#if $quests.data}
     {#each questGroups as group (group)}

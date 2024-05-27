@@ -2,10 +2,9 @@ import { page } from '$app/stores';
 import { supabase } from '$lib/utils/auth';
 import { getCampaignId } from '$lib/utils/contextual-helpers';
 import { extractData } from '$lib/utils/requests';
+import type { Database, TablesInsert } from '$types/database';
 import { createMutation, createQuery, useQueryClient } from '@tanstack/svelte-query';
-import type { Quest } from 'src/app';
 import { get } from 'svelte/store';
-import type { Database } from 'types/database';
 
 export const getQuestsQuery = () => {
   const campaignId = getCampaignId();
@@ -15,7 +14,7 @@ export const getQuestsQuery = () => {
       const test = extractData(
         await get(supabase)
           .from('quest')
-          .select('*, notes:quest_note (*, author:profile (username, avatar_src))')
+          .select('*, notes:quest_note (*, author:profile (*))')
           .eq('campaign_id', campaignId)
           .order('name')
       );
@@ -41,17 +40,19 @@ export const getQuestQuery = () => {
       );
     },
     initialData: () =>
-      queryClient.getQueryData(['quests', campaignId])?.find((q) => q.id === questId) as never
+      (queryClient.getQueryData(['quests', campaignId]) as any)?.find(
+        (q) => q.id === questId
+      ) as never
   });
 };
 
-type CreateQuestParams = Omit<Database['public']['Tables']['quest']['Insert'], 'campaign_id'>;
+type CreateQuestParams = TablesInsert<'quest'>;
 export const createQuestMutation = () => {
   const queryClient = useQueryClient();
   const campaignId = getCampaignId();
-  return createMutation<unknown, unknown, CreateQuestParams>({
+  return createMutation({
     mutationKey: ['quests', campaignId, 'create'],
-    mutationFn: async (input) => {
+    mutationFn: async (input: CreateQuestParams) => {
       const campaignId = getCampaignId();
       const response = await get(supabase)
         .from('quest')

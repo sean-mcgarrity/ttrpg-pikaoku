@@ -49,10 +49,7 @@
     <slot name="message" />
     <span>Are you sure?</span>
   </div>
-  <div
-    on:click|stopPropagation
-    class="px-8 py-4 text-center bg-cyan-900 flex flex-row justify-center gap-6"
-  >
+  <div class="px-8 py-4 text-center bg-cyan-900 flex flex-row justify-center gap-6">
     <BigButton
       classes="max-w-[12rem]"
       on:click={handleClose}

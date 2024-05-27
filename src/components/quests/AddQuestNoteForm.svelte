@@ -2,9 +2,12 @@
   import Button from '$components/buttons/Button.svelte';
   import { addQuestNoteMutation } from '$lib/persistance/quests';
   import { MessageCircle } from 'lucide-svelte';
-  import TextAreaField from '$components/forms/controls/TextAreaField.svelte';
   import SwitchField from '$components/forms/controls/SwitchField.svelte';
   import { user } from '$lib/utils/auth';
+  import { Carta, MarkdownEditor } from 'carta-md';
+
+  const carta = new Carta();
+  import './github.css';
 
   export let questId: number;
 
@@ -23,15 +26,12 @@
     }
     value = '';
   };
+
+  $: console.log('value', value);
 </script>
 
-<form class="flex flex-col items-center" on:submit={handleAdd}>
-  <TextAreaField
-    class="sm:col-span-3 "
-    bind:value
-    placeholder="Now with markdown and multiline..."
-    rows={4}
-  />
+<form class="flex-col items-center gap-2 hidden md:flex" on:submit={handleAdd}>
+  <MarkdownEditor {carta} bind:value mode="tabs" theme="github" />
   <div class="flex flex-row w-full items-center justify-between gap-2 rounded">
     <SwitchField bind:value={anonymous} label="Comment anonymously" />
     <Button disabled={value === '' && !$m.isLoading} type="submit" class=""
@@ -39,3 +39,11 @@
     >
   </div>
 </form>
+
+<style>
+  :global(.carta-font-code) {
+    font-family: '...', monospace;
+    font-size: 1.1rem;
+    color: white;
+  }
+</style>

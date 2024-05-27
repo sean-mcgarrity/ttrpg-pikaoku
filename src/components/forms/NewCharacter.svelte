@@ -4,9 +4,7 @@
   import TextField from '$components/forms/controls/TextField.svelte';
   import { mutateCreateCharacter } from '$lib/persistance/campaign';
 
-  const campaignId = $page.params.campaignId;
   export let afterSubmit = () => {};
-  export let onCancel = () => {};
 
   let title = '';
   let active = true;

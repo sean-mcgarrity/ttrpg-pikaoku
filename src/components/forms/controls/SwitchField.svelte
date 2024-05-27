@@ -7,7 +7,7 @@
 
 <label
   class={cx(
-    'flex flex-row gap-4 cursor-pointer px-4 py-2 rounded hover:bg-white hover:bg-opacity-10 items-center',
+    'flex flex-row gap-4 cursor-pointer px-2 p-1 rounded hover:bg-white/5 items-center',
     label && 'mr-auto'
   )}
 >

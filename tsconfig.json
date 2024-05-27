@@ -8,14 +8,6 @@
       "vite-plugin-svelte-spa-router",
       "vitest/globals"
     ],
-    "baseUrl": ".",
-    "allowSyntheticDefaultImports": true,
-    "paths": {
-      "$assets/*": ["./src/assets/*"],
-      "$lib": ["./src/lib"],
-      "$lib/*": ["src/lib/*"],
-      "$components/*": ["src/components/*"],
-      "$utils/*": ["src/lib/utils/*"]
-    }
+    "allowSyntheticDefaultImports": true
   }
 }

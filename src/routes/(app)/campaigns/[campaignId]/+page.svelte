@@ -27,7 +27,10 @@
 {#if campaign}
   <div class="flex flex-col gap-6">
     <div class="w-full flex flex-col gap-8 mx-auto">
-      <QuestsPeek />
+      <!-- <QuestsPeek /> -->
+      <div class="grid grid-cols-4">
+        <CardLink to={`/campaigns/${campaign.id}/quests`} Icon={ScrollText} title="Quests" />
+      </div>
       <div>
         <Heading type="Section Heading">Tools</Heading>
         <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-3">

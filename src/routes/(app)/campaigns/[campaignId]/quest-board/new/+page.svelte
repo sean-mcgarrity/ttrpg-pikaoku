@@ -90,7 +90,7 @@
         ]}
         bind:value={card_type}
       />
-      <NumberField placeholder="Level" bind:value={level} />
+      <NumberField bind:value={level} />
     </div>
   </div>
   <TextArea placeholder="Description" bind:value={newQuestDescription} />

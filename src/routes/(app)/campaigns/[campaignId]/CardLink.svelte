@@ -23,7 +23,7 @@
     </div>
   {/if}
   {#if title}
-    <div class="text-lg font-medium ">{title}</div>
+    <div class="text-lg font-medium">{title}</div>
   {/if}
   {#if description}
     <div class="text-sm font-light hidden md:block">{description}</div>
