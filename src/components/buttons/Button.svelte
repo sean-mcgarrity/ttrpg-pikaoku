@@ -13,7 +13,7 @@
   export let title = null;
   export let color: ButtonColors = null;
   export let oldStyle = true;
-  export let href = false;
+  export let href: string | false = false;
 </script>
 
 {#if oldStyle}
