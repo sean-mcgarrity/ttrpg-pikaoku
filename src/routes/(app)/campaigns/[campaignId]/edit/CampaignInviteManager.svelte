@@ -2,28 +2,29 @@
   import { page } from '$app/stores';
   import Button from '$components/buttons/Button.svelte';
   import Heading from '$components/layout/Heading.svelte';
-  import { supabase } from '$lib/utils/supabaseClient';
   import { extractData } from '$lib/utils/requests';
   import { createMutation, createQuery, useQueryClient } from '@tanstack/svelte-query';
   import { MailPlus, Clipboard, Trash } from 'lucide-svelte';
   import NewInviteForm from './NewInviteForm.svelte';
   import { slide } from 'svelte/transition';
   import ConfirmationModal from '$components/Modals/ConfirmationModal.svelte';
+  import { supabase } from '$lib/utils/auth';
+  import { getCampaignId } from '$lib/utils/contextual-helpers';
 
-  $: campaign = $page.data.campaign;
+  $: campaignId = getCampaignId();
 
   $: getInvitesQuery = createQuery(
-    ['campaign-invites', campaign?.id],
+    ['campaign-invites', campaignId],
     async () => {
       return extractData(
-        await supabase
+        await $supabase
           .from('campaign_invite')
-          .select('*, times_used:campaign_members(count)')
-          .eq('campaign_id', campaign.id)
+          .select('*, times_used:campaign_member(count)')
+          .eq('campaign_id', campaignId)
       );
     },
     {
-      enabled: !!campaign?.id
+      enabled: !!campaignId
     }
   );
 
@@ -42,7 +43,7 @@
     mutationFn: async (id: string) => {
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
-      await supabase
+      await $supabase
         .from('campaign_invite')
         .update({ expires: yesterday.toISOString() })
         .eq('id', id);
@@ -86,7 +87,7 @@
         <Trash />
       </Button>
       {#if expired}
-        <div class="absolute flex inset-0  bg-zinc-950/90">
+        <div class="absolute flex inset-0 bg-zinc-950/90">
           <div class="m-auto text-6xl drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">Expired</div>
         </div>
       {/if}
@@ -94,11 +95,11 @@
         <div class="col-span-2 flex flex-col gap-2">
           <div class="text-lg font-bold">Invite Link</div>
           <div class="flex flex-rows">
-            <div class="flex rounded-l bg-slate-600  px-2">
+            <div class="flex rounded-l bg-slate-600 px-2">
               <Clipboard class="custom-icon m-auto" />
             </div>
             <input
-              class="bg-slate-800 border-2 border-slate-600 p-2 rounded-r shadow-inner text-ellipsis cursor-pointer w-full "
+              class="bg-slate-800 border-2 border-slate-600 p-2 rounded-r shadow-inner text-ellipsis cursor-pointer w-full"
               readonly
               type="text"
               value="{window.location.origin}/invite?token={invite.id}"
@@ -129,7 +130,7 @@
         <div class="flex flex-col gap-2">
           <div class="text-lg font-bold">Expires</div>
           <input
-            class="bg-slate-800 border-2 border-slate-600 p-2 rounded shadow-inner text-ellipsis cursor-pointer "
+            class="bg-slate-800 border-2 border-slate-600 p-2 rounded shadow-inner text-ellipsis cursor-pointer"
             readonly
             type="date"
             value={expiresString}
@@ -147,10 +148,6 @@
     <NewInviteForm />
   {/if}
 </div>
-<ConfirmationModal
-  bind:open={expireTarget}
-  onCancel={handleCancelExpire}
-  onConfirm={handleConfirmExpire}
->
+<ConfirmationModal onCancel={handleCancelExpire} onConfirm={handleConfirmExpire}>
   <div class="mb-4">This invite will no longer work.</div>
 </ConfirmationModal>

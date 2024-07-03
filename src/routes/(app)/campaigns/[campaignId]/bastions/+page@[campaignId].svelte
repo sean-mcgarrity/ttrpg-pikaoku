@@ -21,7 +21,6 @@
   ] as const;
 </script>
 
-<BackToCampaign />
 <Heading type="Page Heading">Bastions</Heading>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
   <div class="md:col-span-2">

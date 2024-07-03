@@ -48,7 +48,6 @@
   $: handouts = $handoutsQ.data ?? [];
 </script>
 
-<BackToCampaign />
 <Heading type="Page Heading">Summaries</Heading>
 <LoadingInsert fullPage loading={$handoutsQ.isLoading || $killHandoutM.isLoading} />
 <AdminOnly>

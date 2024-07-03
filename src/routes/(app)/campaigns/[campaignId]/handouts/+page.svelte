@@ -46,7 +46,6 @@
   $: handouts = $handoutsQ.data ?? [];
 </script>
 
-<BackToCampaign />
 <Heading type="Page Heading">Handouts</Heading>
 <LoadingInsert fullPage loading={$handoutsQ.isLoading || $killHandoutM.isLoading} />
 <div class="mb-8 flex flex-col gap-2">

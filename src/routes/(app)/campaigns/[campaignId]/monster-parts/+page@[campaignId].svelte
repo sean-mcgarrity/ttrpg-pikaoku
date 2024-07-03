@@ -10,7 +10,6 @@
   $: campaignId = $page.params.campaignId;
 </script>
 
-<BackToCampaign />
 <div class="flex flex-col gap-8">
   <div class="">
     <Heading type="Page Heading">Monster Parts Subsystem</Heading>

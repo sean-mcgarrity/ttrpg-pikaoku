@@ -2,13 +2,13 @@
   import { page } from '$app/stores';
   import Button from '$components/buttons/Button.svelte';
   import NumberField from '$components/forms/controls/NumberField.svelte';
-  import { supabase } from '$lib/utils/supabaseClient';
+  import { supabase } from '$lib/utils/auth';
   import { createMutation, useQueryClient } from '@tanstack/svelte-query';
   import { Check } from 'lucide-svelte';
 
   let queryClient = useQueryClient();
 
-  $: campaign = $page.data.campaign;
+  $: campaignId = $page.params.campaignId;
 
   $: createInviteMutation = createMutation<
     unknown,
@@ -20,8 +20,8 @@
   >(
     ['create-invite'],
     async ({ uses, expiresAt }) => {
-      await supabase.from('campaign_invite').insert({
-        campaign_id: campaign.id,
+      await $supabase.from('campaign_invite').insert({
+        campaign_id: parseInt(campaignId),
         max_uses: uses,
         expires: expiresAt.toISOString()
       });
