@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import Button from '$components/buttons/Button.svelte';
@@ -13,29 +15,34 @@
   import { ArrowDownIcon } from 'lucide-svelte';
   import { slide } from 'svelte/transition';
 
-  $: campaignId = $page.params.campaignId;
+  let campaignId = $derived($page.params.campaignId);
 
-  let name = '';
-  let description = '';
-  let baseItemKey = '';
-  let owner = '';
-  let type: ItemType = 'armor';
+  let name = $state('');
+  let description = $state('');
+  let baseItemKey = $state('');
+  let owner = $state('');
+  let type: ItemType = $state('armor');
 
   const qMpBaseItems = queryMpBaseItems();
   const qPlayerCharacters = getCharactersQuery();
   const mCreateRefinement = mutateCreateRefinement();
 
-  $: playerCharacterOptions = ($qPlayerCharacters.data ?? []).map((item) => ({
-    text: item.name,
-    value: item.id.toString()
-  }));
+  let playerCharacterOptions;
+  run(() => {
+    playerCharacterOptions = ($qPlayerCharacters.data ?? []).map((item) => ({
+      text: item.name,
+      value: item.id.toString()
+    }));
+  });
 
-  $: baseItems = $qMpBaseItems.data ?? [];
-  $: type &&
-    baseItems.find(whereKeyEq('key', baseItemKey))?.type !== type &&
-    (baseItemKey = baseItems.find(whereKeyEq('type', type))?.key);
+  let baseItems = $derived($qMpBaseItems.data ?? []);
+  run(() => {
+    type &&
+      baseItems.find(whereKeyEq('key', baseItemKey))?.type !== type &&
+      (baseItemKey = baseItems.find(whereKeyEq('type', type))?.key);
+  });
 
-  $: createItem = () => {
+  let createItem = $derived(() => {
     $mCreateRefinement.mutate(
       {
         name,
@@ -50,16 +57,19 @@
         }
       }
     );
-  };
-  let seeAllLevels = false;
-  $: typeBenefits = REFINEMENT_BENEFITS[type].filter((b) => b.benefits.length > 0);
-  $: futureLevels = typeBenefits.filter(filterByLevelGt(0));
-  $: baseItemOptions = ($qMpBaseItems.data ?? [])
-    .filter((item) => item.type === type)
-    .map((item) => ({
-      text: `${item.name} (${Math.ceil((item.cost || 0) / 100)} MP)`,
-      value: item.key
-    }));
+  });
+  let seeAllLevels = $state(false);
+  let typeBenefits = $derived(REFINEMENT_BENEFITS[type].filter((b) => b.benefits.length > 0));
+  let futureLevels = $derived(typeBenefits.filter(filterByLevelGt(0)));
+  let baseItemOptions;
+  run(() => {
+    baseItemOptions = ($qMpBaseItems.data ?? [])
+      .filter((item) => item.type === type)
+      .map((item) => ({
+        text: `${item.name} (${Math.ceil((item.cost || 0) / 100)} MP)`,
+        value: item.key
+      }));
+  });
 </script>
 
 <div>
@@ -87,8 +97,10 @@
     {/if}
     <SelectField label="Base Item" bind:value={baseItemKey} bind:options={baseItemOptions} />
     <SelectField label="Character" bind:value={owner} bind:options={playerCharacterOptions} />
-    <svelte:fragment slot="buttons">
-      <Button on:click={createItem}>Create <span class="text-xl">&plus;</span></Button>
-    </svelte:fragment>
+    {#snippet buttons()}
+      
+        <Button on:click={createItem}>Create <span class="text-xl">&plus;</span></Button>
+      
+      {/snippet}
   </ContentBlock>
 </div>

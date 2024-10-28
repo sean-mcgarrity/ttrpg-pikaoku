@@ -18,7 +18,7 @@
   import { getCurrentCampaign } from '$lib/persistance/campaign';
 
   const campaignQuery = getCurrentCampaign();
-  $: campaign = $campaignQuery.data;
+  let campaign = $derived($campaignQuery.data);
 </script>
 
 <svelte:head>

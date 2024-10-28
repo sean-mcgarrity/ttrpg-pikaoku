@@ -2,9 +2,13 @@
   import type { Tables } from '$types/database';
   import cs from 'classnames';
 
-  export let profile: Partial<Pick<Tables<'profile'>, 'avatar_src' | 'username'>>;
-  export let size: 'small' | 'medium' | 'large' = 'medium';
-  export let overlapped = false;
+  interface Props {
+    profile: Partial<Pick<Tables<'profile'>, 'avatar_src' | 'username'>>;
+    size?: 'small' | 'medium' | 'large';
+    overlapped?: boolean;
+  }
+
+  let { profile, size = 'medium', overlapped = false }: Props = $props();
 </script>
 
 <div

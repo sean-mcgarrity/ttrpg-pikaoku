@@ -1,11 +1,21 @@
 <script lang="ts">
   import cx from 'classnames';
   import { ArrowDown, ArrowUp } from 'lucide-svelte';
-  export let label: string = null;
-  export let value: number = 0;
-  export let max: number = null;
-  export let min: number = null;
-  export let className: string = '';
+  interface Props {
+    label?: string;
+    value?: number;
+    max?: number;
+    min?: number;
+    className?: string;
+  }
+
+  let {
+    label = null,
+    value = $bindable(0),
+    max = null,
+    min = null,
+    className = ''
+  }: Props = $props();
 
   const increment = () => {
     Math.min(value++, max);
@@ -22,7 +32,7 @@
   {/if}
   <div class={cx('rounded overflow-hidden bg-blue-600/40', className)}>
     <button
-      on:click={increment}
+      onclick={increment}
       disabled={max && value >= max}
       class="w-full bg-black/20 active:bg-black/30 hover:brightness-150 disabled:bg-gray-700"
       ><ArrowUp /></button
@@ -32,7 +42,7 @@
     </div>
     <button
       disabled={min && value <= min}
-      on:click={decrement}
+      onclick={decrement}
       class="w-full bg-black/20 active:bg-black/30 hover:brightness-150 disabled:bg-gray-700"
       ><ArrowDown /></button
     >

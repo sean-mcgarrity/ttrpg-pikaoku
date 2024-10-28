@@ -5,7 +5,7 @@
   import { ArrowRight } from 'lucide-svelte';
   import QuestCard from './QuestCard.svelte';
 
-  $: questQuery = getPinnedQuestsQuery();
+  let questQuery = $derived(getPinnedQuestsQuery());
 </script>
 
 <div class="flex flex-col gap-2">

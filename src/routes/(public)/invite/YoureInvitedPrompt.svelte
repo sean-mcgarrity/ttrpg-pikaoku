@@ -8,28 +8,28 @@
   import { createMutation } from '@tanstack/svelte-query';
   import { goto } from '$app/navigation';
 
-  $: ({ session } = $page.data);
+  let { session } = $derived($page.data);
 
-  $: search = isBrowser() ? window?.location?.search : '';
+  let search = $derived(isBrowser() ? window?.location?.search : '');
 
-  $: hasSession = !!session?.access_token;
+  let hasSession = $derived(!!session?.access_token);
 
-  $: joinMutation = createMutation({
+  let joinMutation = $derived(createMutation({
     mutationKey: ['join-campaign'],
     mutationFn: async () => {
       return await fetch('/invite' + search, {
         method: 'POST'
       });
     }
-  });
+  }));
 
-  $: handleJoin = () => {
+  let handleJoin = $derived(() => {
     $joinMutation.mutateAsync(null, {
       onSuccess: () => {
         goto('/campaigns/' + $page.data.invite.campaign.id);
       }
     });
-  };
+  });
 </script>
 
 <div class="text-7xl mb-4">&#127881;</div>

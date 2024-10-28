@@ -1,13 +1,17 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { page } from '$app/stores';
   import YoureInvitedPrompt from './YoureInvitedPrompt.svelte';
   import ExpiredInvitePrompt from './ExpiredInvitePrompt.svelte';
   import LinkButton from '$components/buttons/LinkButton.svelte';
   import { ArrowRight } from 'lucide-svelte';
 
-  $: hasExpired = $page.data.hasExpired;
+  let hasExpired = $derived($page.data.hasExpired);
 
-  $: console.log('already joined', $page.data.alreadyJoined);
+  run(() => {
+    console.log('already joined', $page.data.alreadyJoined);
+  });
 </script>
 
 <div class="min-h-screen bg-slate-950 w-full flex flex-col">

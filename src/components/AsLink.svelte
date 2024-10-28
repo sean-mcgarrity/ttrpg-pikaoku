@@ -1,12 +1,17 @@
 <script lang="ts">
-  export let href;
-  export let active = true;
+  interface Props {
+    href: any;
+    active?: boolean;
+    children?: import('svelte').Snippet;
+  }
+
+  let { href, active = true, children }: Props = $props();
 </script>
 
 {#if active && href}
   <a {href}>
-    <slot />
+    {@render children?.()}
   </a>
 {:else}
-  <slot />
+  {@render children?.()}
 {/if}

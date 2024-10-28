@@ -14,22 +14,26 @@
   import type { MP_Refinement } from '$lib/systems/pf2e_monster_parts';
   import { Save, Trash2, X } from 'lucide-svelte';
 
-  export let refinement: MP_Refinement;
-  export let afterSave: () => void = () => {};
+  interface Props {
+    refinement: MP_Refinement;
+    afterSave?: () => void;
+  }
+
+  let { refinement, afterSave = () => {} }: Props = $props();
 
   const mutation = updateRefinement();
 
-  let name = refinement.name;
-  let description = refinement.description;
-  let ownerId = refinement.owner_id?.toString();
+  let name = $state(refinement.name);
+  let description = $state(refinement.description);
+  let ownerId = $state(refinement.owner_id?.toString());
 
   const removeImbuement = deleteRefinementImbuement();
 
   let deleteRefinementMutation = deleteRefinement();
 
-  $: campaignIdFromParams = $page.params.campaignId;
+  let campaignIdFromParams = $derived($page.params.campaignId);
 
-  $: handleSave = async () => {
+  let handleSave = $derived(async () => {
     await $mutation.mutateAsync({
       id: refinement.id,
       name,
@@ -37,9 +41,9 @@
       owner_id: parseInt(ownerId) || refinement.owner_id
     });
     afterSave();
-  };
+  });
 
-  $: imbuements = refinement.imbuements;
+  let imbuements = $derived(refinement.imbuements);
 </script>
 
 <div class="flex flex-col gap-2 max-w-lg w-full mx-auto bg-white/10 rounded p-8">

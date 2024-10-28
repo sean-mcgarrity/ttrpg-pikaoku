@@ -4,7 +4,7 @@
   import { session, supabase } from '$lib/utils/auth';
   import { get } from 'svelte/store';
 
-  $: origin = isBrowser() ? window?.location.origin : '';
+  let origin = $derived(isBrowser() ? window?.location.origin : '');
 
   async function signInWithDiscord() {
     await get(supabase).auth.signInWithOAuth({

@@ -13,23 +13,27 @@
   import { slide } from 'svelte/transition';
   import cs from 'classnames';
 
-  export let refinement: MP_Refinement;
+  interface Props {
+    refinement: MP_Refinement;
+  }
 
-  $: itemLevel = calculateRefinementLevel(refinement);
-  $: progress = calculateRefinementProgress(refinement);
-  $: currentLevelCost = getUpgradeCostForLevel(itemLevel, refinement.type);
-  $: upgradeCost = getUpgradeCostForLevel(Math.min(itemLevel + 1, 20), refinement.type);
-  $: progressPercentage = Math.round(
+  let { refinement }: Props = $props();
+
+  let itemLevel = $derived(calculateRefinementLevel(refinement));
+  let progress = $derived(calculateRefinementProgress(refinement));
+  let currentLevelCost = $derived(getUpgradeCostForLevel(itemLevel, refinement.type));
+  let upgradeCost = $derived(getUpgradeCostForLevel(Math.min(itemLevel + 1, 20), refinement.type));
+  let progressPercentage = $derived(Math.round(
     ((progress - currentLevelCost) / (upgradeCost - currentLevelCost)) * 100
-  );
+  ));
 
-  let seeAllLevels = false;
+  let seeAllLevels = $state(false);
 
-  $: typeBenefits = REFINEMENT_BENEFITS[refinement.type].filter((b) => b.benefits.length > 0);
-  $: currentBenefits = typeBenefits.reduce(reduceToHighestLevelLte(itemLevel), null);
-  $: futureLevels = typeBenefits.filter(filterByLevelGt(itemLevel));
+  let typeBenefits = $derived(REFINEMENT_BENEFITS[refinement.type].filter((b) => b.benefits.length > 0));
+  let currentBenefits = $derived(typeBenefits.reduce(reduceToHighestLevelLte(itemLevel), null));
+  let futureLevels = $derived(typeBenefits.filter(filterByLevelGt(itemLevel)));
 
-  $: itemType = refinement.type;
+  let itemType = $derived(refinement.type);
 </script>
 
 <div class="px-4 py-2 flex flex-col gap-2 overflow-hidden">

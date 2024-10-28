@@ -1,8 +1,18 @@
 <script lang="ts">
   import cx from 'classnames';
-  export let colorClasses = 'bg-white/80 hover:bg-white/90 active:bg-white/60 text-slate-800';
-  export let href: string = '';
-  export let newPage: boolean = true;
+  interface Props {
+    colorClasses?: string;
+    href?: string;
+    newPage?: boolean;
+    children?: import('svelte').Snippet;
+  }
+
+  let {
+    colorClasses = 'bg-white/80 hover:bg-white/90 active:bg-white/60 text-slate-800',
+    href = '',
+    newPage = true,
+    children
+  }: Props = $props();
 </script>
 
 <a
@@ -18,5 +28,5 @@
     'cursor-pointer'
   )}
 >
-  <slot />
+  {@render children?.()}
 </a>

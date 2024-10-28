@@ -1,22 +1,29 @@
 <script>
-  export let showModal; // boolean
+  import { run, self, createBubbler, stopPropagation } from 'svelte/legacy';
 
-  let dialog; // HTMLDialogElement
+  const bubble = createBubbler();
+  let { showModal = $bindable(), children } = $props();
 
-  $: if (dialog && showModal) dialog.showModal();
-  $: if (!showModal && dialog?.open) dialog.close();
+  let dialog = $state(); // HTMLDialogElement
+
+  run(() => {
+    if (dialog && showModal) dialog.showModal();
+  });
+  run(() => {
+    if (!showModal && dialog?.open) dialog.close();
+  });
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
 <dialog
   class="max-w-xl border border-campaign bg-campaign shadow rounded overflow-hidden"
   bind:this={dialog}
-  on:close={() => (showModal = false)}
-  on:click|self={() => dialog.close()}
+  onclose={() => (showModal = false)}
+  onclick={self(() => dialog.close())}
 >
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div on:click|stopPropagation class="">
-    <slot />
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
+  <div onclick={stopPropagation(bubble('click'))} class="">
+    {@render children?.()}
   </div>
 </dialog>
 

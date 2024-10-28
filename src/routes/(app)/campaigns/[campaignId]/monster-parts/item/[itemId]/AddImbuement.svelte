@@ -3,14 +3,18 @@
   import { getImbuementsOfType, insertRefinementImbuement } from '$lib/persistance/monster-parts';
   import type { MP_Refinement } from '$lib/systems/pf2e_monster_parts';
 
-  export let item: MP_Refinement;
-  export let afterAdd: () => void = () => {};
+  interface Props {
+    item: MP_Refinement;
+    afterAdd?: () => void;
+  }
 
-  $: query = getImbuementsOfType(item.base_item.type);
+  let { item, afterAdd = () => {} }: Props = $props();
+
+  let query = $derived(getImbuementsOfType(item.base_item.type));
 
   let addImbueMutation = insertRefinementImbuement();
 
-  $: handleClick = (imbuementId: number) => {
+  let handleClick = $derived((imbuementId: number) => {
     $addImbueMutation.mutate(
       {
         imbuementId,
@@ -22,7 +26,7 @@
         }
       }
     );
-  };
+  });
 </script>
 
 <div>
@@ -42,7 +46,7 @@
       {#each $query.data as imbuement}
         <button
           class="flex flex-col p-2 rounded bg-white text-black transform transition duration-300 hover:scale-105 select-none text-left"
-          on:click={() => handleClick(imbuement.id)}
+          onclick={() => handleClick(imbuement.id)}
         >
           <div class="font-medium">
             {imbuement.name}

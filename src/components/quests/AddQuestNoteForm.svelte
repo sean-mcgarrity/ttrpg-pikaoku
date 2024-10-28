@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import Button from '$components/buttons/Button.svelte';
   import { addQuestNoteMutation } from '$lib/persistance/quests';
   import { MessageCircle } from 'lucide-svelte';
@@ -9,28 +11,34 @@
   const carta = new Carta();
   import './github.css';
 
-  export let questId: number;
+  interface Props {
+    questId: number;
+  }
 
-  let value = '';
+  let { questId }: Props = $props();
+
+  let value = $state('');
 
   const m = addQuestNoteMutation();
 
-  $: userId = $user?.id;
+  let userId = $derived($user?.id);
 
-  let anonymous = false;
+  let anonymous = $state(false);
 
-  $: handleAdd = (e) => {
+  let handleAdd = $derived((e) => {
     e.preventDefault();
     if (!!value && value !== '') {
       $m.mutate({ quest_id: questId, content: value, author_id: anonymous ? null : userId });
     }
     value = '';
-  };
+  });
 
-  $: console.log('value', value);
+  run(() => {
+    console.log('value', value);
+  });
 </script>
 
-<form class="flex-col items-center gap-2 hidden md:flex" on:submit={handleAdd}>
+<form class="flex-col items-center gap-2 hidden md:flex" onsubmit={handleAdd}>
   <MarkdownEditor {carta} bind:value mode="tabs" theme="github" />
   <div class="flex flex-row w-full items-center justify-between gap-2 rounded">
     <SwitchField bind:value={anonymous} label="Comment anonymously" />

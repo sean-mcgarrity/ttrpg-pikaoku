@@ -8,9 +8,9 @@
   import GhostLoaderPatyItem from './GhostLoaderPatyItem.svelte';
   import Heading from '$components/layout/Heading.svelte';
 
-  $: campaignId = $page.params.campaignId;
+  let campaignId = $derived($page.params.campaignId);
 
-  $: query = getRefinementsForCampaign();
+  let query = $derived(getRefinementsForCampaign());
 </script>
 
 <div class="flex flex-col gap-4">

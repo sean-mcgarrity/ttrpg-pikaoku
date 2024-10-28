@@ -16,20 +16,20 @@
   import type { TablesUpdate } from '$types/database';
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
 
-  $: campaignId = $page.params.campaignId;
+  let campaignId = $derived($page.params.campaignId);
   const query = getQuestQuery();
-  $: quest = $query.data;
+  let quest = $derived($query.data);
 
-  $: deleteComment = deleteQuestNoteMutation();
-  $: handleDeleteComment = async (id: number) => {
+  let deleteComment = $derived(deleteQuestNoteMutation());
+  let handleDeleteComment = $derived(async (id: number) => {
     if (confirm('Are you sure you want to delete this comment?')) {
       await $deleteComment.mutateAsync(id);
     }
-  };
+  });
 
   const update = updateQuestMutation();
 
-  let editting = false;
+  let editting = $state(false);
   let handleEditSave = async (updatedFields: TablesUpdate<'quest'>) => {
     console.log('saving', updatedFields);
     $update.mutateAsync({
@@ -68,7 +68,7 @@
             <div class="text-white/80 italic">No description</div>
           {/if}
         {/if}
-        <div class="border rounded-full border-white/10" />
+        <div class="border rounded-full border-white/10"></div>
         <div class="flex flex-col gap-2 shadow">
           {#each quest.notes as note (note.id)}
             <div class="relative bg-white/5 rounded p-4 flex flex-col gap-3">

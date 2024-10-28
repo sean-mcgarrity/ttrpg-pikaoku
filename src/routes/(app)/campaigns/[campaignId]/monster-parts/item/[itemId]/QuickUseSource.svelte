@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import type { Imbuement, MP_UsableSource } from '$lib/systems/pf2e_monster_parts';
   import Button from '$components/buttons/Button.svelte';
   import { slide } from 'svelte/transition';
@@ -7,20 +9,31 @@
   import Heading from '$components/layout/Heading.svelte';
   import BigButton from '$components/buttons/BigButton.svelte';
 
-  export let source: MP_UsableSource & { imbuement?: Imbuement };
-  export let buttonText: string = 'Refine';
-  export let actionText: string = 'Refining';
-  export let onClick: (amount: number) => void;
+  interface Props {
+    source: MP_UsableSource & { imbuement?: Imbuement };
+    buttonText?: string;
+    actionText?: string;
+    onClick: (amount: number) => void;
+  }
 
-  let value = source.usable;
-  $: if (value > source.usable) value = source.usable;
-  let showModal = false;
+  let {
+    source,
+    buttonText = 'Refine',
+    actionText = 'Refining',
+    onClick
+  }: Props = $props();
+
+  let value = $state(source.usable);
+  run(() => {
+    if (value > source.usable) value = source.usable;
+  });
+  let showModal = $state(false);
 </script>
 
 <button
   transition:slide
   class="w-full bg-white text-black overflow-hidden rounded shadow text-left transform transition duration-300 hover:scale-105"
-  on:click={() => {
+  onclick={() => {
     showModal = true;
   }}
 >

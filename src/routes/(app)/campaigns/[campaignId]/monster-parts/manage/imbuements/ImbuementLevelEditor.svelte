@@ -5,18 +5,27 @@
   import { ArrowUp, ArrowDown, Trash, X, Plus } from 'lucide-svelte';
   import { slide } from 'svelte/transition';
 
-  export let minLevel = 1;
-  export let maxLevel = 20;
 
-  export let level: Imbuement['levels'][number];
 
-  $: moveUp = () => (level.level = Math.max(minLevel, level.level - 1));
-  $: moveDown = () => (level.level = Math.min(maxLevel, level.level + 1));
 
-  export let onDelete = (value: Imbuement['levels'][number]) =>
-    console.error('Unimplemented delete for', value.level);
+  interface Props {
+    minLevel?: number;
+    maxLevel?: number;
+    level: Imbuement['levels'][number];
+    onDelete?: any;
+  }
+
+  let {
+    minLevel = 1,
+    maxLevel = 20,
+    level = $bindable(),
+    onDelete = (value: Imbuement['levels'][number]) =>
+    console.error('Unimplemented delete for', value.level)
+  }: Props = $props();
 
   const handleDelete = () => onDelete(level);
+  let moveUp = $derived(() => (level.level = Math.max(minLevel, level.level - 1)));
+  let moveDown = $derived(() => (level.level = Math.min(maxLevel, level.level + 1)));
 </script>
 
 <div transition:slide>

@@ -1,3 +1,13 @@
+<script>
+  /**
+   * @typedef {Object} Props
+   * @property {import('svelte').Snippet} [children]
+   */
+
+  /** @type {Props} */
+  let { children } = $props();
+</script>
+
 <div
   class="bg-gray-100 border-2 border-offblack rounded shadow p-2 sm:p-4 md:p-8 max-w-4xl mx-auto flex flex-col font-body text-offblack"
 >
@@ -26,6 +36,6 @@
     </div>
   </div>
   <div class="border-t border-offblack tracking-tight">
-    <slot />
+    {@render children?.()}
   </div>
 </div>

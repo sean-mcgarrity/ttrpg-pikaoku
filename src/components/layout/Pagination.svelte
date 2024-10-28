@@ -3,9 +3,13 @@
 
   import Button from '$components/buttons/Button.svelte';
 
-  export let currentPage: number;
-  export let totalPages: number;
-  export let onPageChange = (newPage: number) => {};
+  interface Props {
+    currentPage: number;
+    totalPages: number;
+    onPageChange?: any;
+  }
+
+  let { currentPage, totalPages, onPageChange = (newPage: number) => {} }: Props = $props();
 
   function handlePageChange(newPage: number) {
     const newVal = Math.min(totalPages, Math.max(1, newPage));

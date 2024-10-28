@@ -8,12 +8,17 @@
   import { supabase } from '$lib/utils/auth';
   import { extractData } from '$lib/utils/requests';
   import { createQuery } from '@tanstack/svelte-query';
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
 
-  $: campaignId = $page.params.campaignId;
+  let { children }: Props = $props();
 
-  let textSearch = '';
+  let campaignId = $derived($page.params.campaignId);
 
-  $: quests = createQuery({
+  let textSearch = $state('');
+
+  let quests = $derived(createQuery({
     queryKey: ['quests', campaignId, textSearch],
     queryFn: async () => {
       const queryBuilder = $supabase
@@ -26,11 +31,11 @@
       return extractData(await queryBuilder.order('name'));
     },
     staleTime: 1000 * 60 * 60 * 24
-  });
+  }));
 
-  $: questGroups = Array.from(new Set($quests.data?.map((quest) => quest.group)))
+  let questGroups = $derived(Array.from(new Set($quests.data?.map((quest) => quest.group)))
     .filter((x) => !!x)
-    .concat(['']);
+    .concat(['']));
 </script>
 
 <Heading type="Page Heading">Quests</Heading>
@@ -64,6 +69,6 @@
   {#if $quests.data?.length === 0}
     <div class="text-white">No quests yet</div>
   {:else}
-    <slot />
+    {@render children?.()}
   {/if}
 </div>

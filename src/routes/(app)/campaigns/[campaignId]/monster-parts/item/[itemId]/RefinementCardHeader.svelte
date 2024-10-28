@@ -2,8 +2,12 @@
   import { calculateRefinementLevel, type MP_Refinement } from '$lib/systems/pf2e_monster_parts';
   import cs from 'classnames';
 
-  export let item: MP_Refinement;
-  $: itemLevel = calculateRefinementLevel(item);
+  interface Props {
+    item: MP_Refinement;
+  }
+
+  let { item }: Props = $props();
+  let itemLevel = $derived(calculateRefinementLevel(item));
 </script>
 
 <div

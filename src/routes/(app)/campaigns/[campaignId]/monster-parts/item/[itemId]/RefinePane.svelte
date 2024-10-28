@@ -6,16 +6,20 @@
   import Heading from '$components/layout/Heading.svelte';
   import { FileWarning } from 'lucide-svelte';
 
-  export let item: MP_Refinement;
+  interface Props {
+    item: MP_Refinement;
+  }
 
-  $: requirements = [
+  let { item }: Props = $props();
+
+  let requirements = $derived([
     ...(item?.imbuements.map((i) => i.requires).flat() ?? []),
     ...(item?.base_item?.requires || [])
-  ];
-  $: queryMats = getSourcesForItems(requirements);
-  $: refinementActions =
-    $queryMats.data?.filter(whereKeyOverlap('enables', item?.base_item.requires ?? [])) ?? [];
-  $: refine = insertRefinementChange();
+  ]);
+  let queryMats = $derived(getSourcesForItems(requirements));
+  let refinementActions =
+    $derived($queryMats.data?.filter(whereKeyOverlap('enables', item?.base_item.requires ?? [])) ?? []);
+  let refine = $derived(insertRefinementChange());
 </script>
 
 <div class="flex flex-col gap-2">

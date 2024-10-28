@@ -7,10 +7,14 @@
 
   type EdittedQuest = TablesInsert<'quest'> | TablesUpdate<'quest'>;
 
-  export let quest: TablesInsert<'quest'> | TablesUpdate<'quest'>;
-  export let onSubmit: (result: EdittedQuest) => void;
+  interface Props {
+    quest: TablesInsert<'quest'> | TablesUpdate<'quest'>;
+    onSubmit: (result: EdittedQuest) => void;
+  }
 
-  let _quest = structuredClone(quest);
+  let { quest, onSubmit }: Props = $props();
+
+  let _quest = $state(structuredClone(quest));
 
   const handleSubmit = (e: Event) => {
     e.preventDefault();
@@ -18,10 +22,10 @@
     onSubmit({ name, summary, description, group });
   };
 
-  $: canSave = _quest.name?.length > 0 && _quest.summary?.length > 0;
+  let canSave = $derived(_quest.name?.length > 0 && _quest.summary?.length > 0);
 </script>
 
-<form on:submit={handleSubmit}>
+<form onsubmit={handleSubmit}>
   <div class="flex flex-col gap-3">
     <div class="w-full md:w-2/3">
       <TextField label="Name" bind:value={_quest.name} />

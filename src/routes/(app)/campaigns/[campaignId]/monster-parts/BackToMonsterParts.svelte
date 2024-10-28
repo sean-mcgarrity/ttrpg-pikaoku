@@ -2,7 +2,7 @@
   import BackTo from '$components/buttons/BackTo.svelte';
   import { getCampaignId } from '$lib/utils/contextual-helpers';
 
-  $: campaignId = getCampaignId();
+  let campaignId = $derived(getCampaignId());
 </script>
 
 <BackTo href={`/campaigns/${campaignId}/monster-parts`} text="monster parts" />

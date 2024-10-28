@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { page } from '$app/stores';
   import ManageTable, { type ManageTableColumns } from './ManageTable.svelte';
   import type { SupabaseClient } from '@supabase/supabase-js';
@@ -23,7 +25,10 @@
     }
   });
 
-  $: items = $getImbuements.data?.result ?? [];
+  let items;
+  run(() => {
+    items = $getImbuements.data?.result ?? [];
+  });
 
   let deleteImbuement = createMutation<any, any, Record<'id', string>>({
     mutationKey: ['imbuement', 'delete'],
@@ -35,41 +40,46 @@
 
   let duplicateImbuementMutation = duplicateImbuement();
 
-  let columns: ManageTableColumns = [];
-  $: columns = [
-    {
-      label: 'Name',
-      accessor: 'name'
-    },
-    {
-      label: 'Description',
-      accessor: 'description'
-    },
-    {
-      label: 'Requires',
-      accessor: (x) => x.requires.join(', '),
-      span: 1
-    }
-  ];
+  let columns: ManageTableColumns = $state([]);
+  run(() => {
+    columns = [
+      {
+        label: 'Name',
+        accessor: 'name'
+      },
+      {
+        label: 'Description',
+        accessor: 'description'
+      },
+      {
+        label: 'Requires',
+        accessor: (x) => x.requires.join(', '),
+        span: 1
+      }
+    ];
+  });
 
-  $: rowAction = [
-    {
-      text: 'Dupe',
-      icon: PlusCircle,
-      onClick: (item) => $duplicateImbuementMutation.mutate(item.id)
-    },
-    {
-      text: 'Edit',
-      icon: Edit,
-      onClick: (item) =>
-        goto(`/campaigns/${$page.params.campaignId}/monster-parts/manage/imbuements/${item.id}`)
-    },
-    {
-      text: 'Delete',
-      icon: Trash2Icon,
-      onClick: (item) => $deleteImbuement.mutate({ id: item.id })
-    }
-  ];
+  let rowAction;
+  run(() => {
+    rowAction = [
+      {
+        text: 'Dupe',
+        icon: PlusCircle,
+        onClick: (item) => $duplicateImbuementMutation.mutate(item.id)
+      },
+      {
+        text: 'Edit',
+        icon: Edit,
+        onClick: (item) =>
+          goto(`/campaigns/${$page.params.campaignId}/monster-parts/manage/imbuements/${item.id}`)
+      },
+      {
+        text: 'Delete',
+        icon: Trash2Icon,
+        onClick: (item) => $deleteImbuement.mutate({ id: item.id })
+      }
+    ];
+  });
 </script>
 
 <ManageTable
@@ -79,6 +89,7 @@
   bind:rowActions={rowAction}
   bind:items
 >
+  <!-- @migration-task: migrate this slot by hand, `header-button` is an invalid identifier -->
   <LinkButton
     slot="header-button"
     href={`/campaigns/${$page.params.campaignId}/monster-parts/manage/imbuements/add`}

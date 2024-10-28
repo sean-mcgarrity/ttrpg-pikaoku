@@ -10,17 +10,17 @@
 
   let supabase: SupabaseClient = $page.data.supabase;
 
-  let key = '';
-  let name = '';
-  let type = 'weapon';
-  let cost = 1;
-  let requires = '';
-  let autoKey = true;
+  let key = $state('');
+  let name = $state('');
+  let type = $state('weapon');
+  let cost = $state(1);
+  let requires = $state('');
+  let autoKey = $state(true);
 
-  $: autoGenKey = name
+  let autoGenKey = $derived(name
     .replace(/\s/g, '-')
     .replace(/[^a-zA-Z0-9\-]/g, '')
-    .toLowerCase();
+    .toLowerCase());
 
   const reset = () => {
     key = '';
@@ -30,8 +30,12 @@
     requires = '';
   };
 
-  export let onCancel: () => void = () => console.info('Cancelled adding item');
-  export let onAdd: (item) => void = () => console.info('Added item');
+  interface Props {
+    onCancel?: () => void;
+    onAdd?: (item) => void;
+  }
+
+  let { onCancel = () => console.info('Cancelled adding item'), onAdd = () => console.info('Added item') }: Props = $props();
 
   const handleCancel = () => {
     onCancel();

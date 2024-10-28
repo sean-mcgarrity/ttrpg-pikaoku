@@ -1,15 +1,25 @@
 <script lang="ts">
   import cs from 'classnames';
 
-  export let href: string;
-  export let title: string;
-  export let bgImgSrc: string;
 
   type sizes = 'sm' | 'md' | 'lg';
-  export let size: sizes = 'lg';
 
-  let className = '';
-  export { className as class };
+  interface Props {
+    href: string;
+    title: string;
+    bgImgSrc: string;
+    size?: sizes;
+    class?: string;
+  }
+
+  let {
+    href,
+    title,
+    bgImgSrc,
+    size = 'lg',
+    class: className = ''
+  }: Props = $props();
+  
 </script>
 
 <a {href} class={cs(className, 'hover:scale-105')}>
@@ -26,7 +36,7 @@
   >
     <div
       class="transition-all duration-500 absolute inset-0 bg-black bg-opacity-30 hover:bg-opacity-10"
-    />
+></div>
     <h2
       class="transition-all duration-500 absolute bottom-0 w-full px-6 py-2 group-hover:py-4 bg-black bg-opacity-80 font-bold uppercase text-white tracking-wider"
     >

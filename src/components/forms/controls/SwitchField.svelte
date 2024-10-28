@@ -1,8 +1,12 @@
 <script lang="ts">
   import cx from 'classnames';
   import { CheckSquare, Square } from 'lucide-svelte';
-  export let label: string = null;
-  export let value: boolean;
+  interface Props {
+    label?: string;
+    value: boolean;
+  }
+
+  let { label = null, value = $bindable() }: Props = $props();
 </script>
 
 <label

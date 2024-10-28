@@ -6,10 +6,10 @@
   import Heading from '$components/layout/Heading.svelte';
   import { ArrowRight } from 'lucide-svelte';
   import MonsterCard from './monsters/MonsterCard.svelte';
-  $: campaignId = $page.params.campaignId;
+  let campaignId = $derived($page.params.campaignId);
 
   const sourcesQuery = getUsableSourcesPreview();
-  $: monsters = $sourcesQuery.data ?? [];
+  let monsters = $derived($sourcesQuery.data ?? []);
 </script>
 
 <div class="w-full">

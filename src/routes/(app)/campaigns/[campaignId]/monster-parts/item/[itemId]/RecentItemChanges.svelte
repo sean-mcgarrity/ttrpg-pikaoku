@@ -6,24 +6,28 @@
   import { getRelativeTime } from '$lib/utils/time';
   import { X } from 'lucide-svelte';
 
-  export let item: MP_Refinement;
+  interface Props {
+    item: MP_Refinement;
+  }
 
-  $: changes = (item?.changes ?? [])
+  let { item }: Props = $props();
+
+  let changes = $derived((item?.changes ?? [])
     .map((change) => ({
       ...change,
       createdAtDate: new Date(change.created_at),
       imbuementName: item.imbuements.find(whereKeyEq('id', change.imbuement_id))?.name
     }))
     .filter((change) => !!change.imbuementName || !change.imbuement_id)
-    .sort((a, b) => b.createdAtDate - a.createdAtDate);
+    .sort((a, b) => b.createdAtDate - a.createdAtDate));
 
   let deleteRefinementMutation = deleteRefinementChange();
 
-  $: handleDelete = (id: number) => {
+  let handleDelete = $derived((id: number) => {
     if (confirm('Are you sure you want to delete this change?')) {
       $deleteRefinementMutation.mutate(id);
     }
-  };
+  });
 </script>
 
 {#if changes}

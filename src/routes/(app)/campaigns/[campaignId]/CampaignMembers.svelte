@@ -1,12 +1,14 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { page } from '$app/stores';
   import Heading from '$components/layout/Heading.svelte';
   import { extractData } from '$lib/utils/requests';
   import { createQuery } from '@tanstack/svelte-query';
   import { supabase } from '$lib/utils/supabaseClient';
 
-  $: ({ campaign } = $page.data);
-  $: campaignMembers = createQuery({
+  let { campaign } = $derived($page.data);
+  let campaignMembers = $derived(createQuery({
     enabled: !!campaign?.id,
     queryKey: ['campaign-members', campaign?.id],
     queryFn: async () => {
@@ -20,9 +22,11 @@
           })
       );
     }
-  });
+  }));
 
-  $: console.log($campaignMembers.data);
+  run(() => {
+    console.log($campaignMembers.data);
+  });
 </script>
 
 <div>

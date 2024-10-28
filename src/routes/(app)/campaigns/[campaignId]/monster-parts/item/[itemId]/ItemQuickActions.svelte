@@ -8,44 +8,48 @@
   import { ArrowDown, ArrowUp } from 'lucide-svelte';
   import Button from '$components/buttons/Button.svelte';
 
-  export let item: MP_Refinement;
+  interface Props {
+    item: MP_Refinement;
+  }
 
-  $: requirements = [
+  let { item }: Props = $props();
+
+  let requirements = $derived([
     ...(item?.imbuements.map((i) => i.requires).flat() ?? []),
     ...(item?.base_item?.requires || [])
-  ];
-  $: queryMats = getSourcesForItems(requirements);
-  $: refinementActions =
-    $queryMats.data?.filter(whereKeyOverlap('enables', item?.base_item.requires ?? [])) ?? [];
-  $: refine = insertRefinementChange();
+  ]);
+  let queryMats = $derived(getSourcesForItems(requirements));
+  let refinementActions =
+    $derived($queryMats.data?.filter(whereKeyOverlap('enables', item?.base_item.requires ?? [])) ?? []);
+  let refine = $derived(insertRefinementChange());
 
-  let expandRefinements = false;
-  let expandImbuements = false;
+  let expandRefinements = $state(false);
+  let expandImbuements = $state(false);
 
-  $: hasImbuementActions =
-    $queryMats.data?.some(
+  let hasImbuementActions =
+    $derived($queryMats.data?.some(
       whereKeyOverlap('enables', item?.imbuements.map((i) => i.requires).flat() ?? [])
-    ) ?? false;
+    ) ?? false);
 
-  $: imbuementOptions = item.imbuements
+  let imbuementOptions = $derived(item.imbuements
     .map((i) => {
       const options = $queryMats.data?.filter(whereKeyOverlap('enables', i.requires)) ?? [];
       return options.map((o) => ({ ...o, imbuement: i }));
     })
-    .flat();
+    .flat());
 
-  $: moreThanThreeRefinements = refinementActions.length > 3;
-  $: moreThanThreeImbuements = imbuementOptions.length > 3;
+  let moreThanThreeRefinements = $derived(refinementActions.length > 3);
+  let moreThanThreeImbuements = $derived(imbuementOptions.length > 3);
 
-  $: refinements =
-    moreThanThreeRefinements && expandRefinements
+  let refinements =
+    $derived(moreThanThreeRefinements && expandRefinements
       ? refinementActions
-      : refinementActions.slice(0, 3);
-  $: nextThreeRefinments = refinementActions.slice(3, 6);
-  $: imbuements =
-    moreThanThreeImbuements && expandImbuements
+      : refinementActions.slice(0, 3));
+  let nextThreeRefinments = $derived(refinementActions.slice(3, 6));
+  let imbuements =
+    $derived(moreThanThreeImbuements && expandImbuements
       ? imbuementOptions
-      : imbuementOptions.slice(0, hasImbuementActions ? 3 : 0);
+      : imbuementOptions.slice(0, hasImbuementActions ? 3 : 0));
 </script>
 
 <div class="flex flex-col">
@@ -71,7 +75,7 @@
             </p>
           </div>
         {:else}
-          <div />
+          <div></div>
         {/if}
         <div class="flex flex-col gap-2">
           {#each refinements as source (source.id)}

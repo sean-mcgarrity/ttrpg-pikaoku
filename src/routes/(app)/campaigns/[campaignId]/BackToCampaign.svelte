@@ -3,8 +3,8 @@
   import BackTo from '$components/buttons/BackTo.svelte';
   import { getCampaignId } from '$lib/utils/contextual-helpers';
 
-  $: campaignId = getCampaignId();
-  $: campaignName = $page.data.campaign.name;
+  let campaignId = $derived(getCampaignId());
+  let campaignName = $derived($page.data.campaign.name);
 </script>
 
 <BackTo href={`/campaigns/${campaignId}`} text={campaignName} />

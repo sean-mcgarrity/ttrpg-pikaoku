@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
   import { getUsableSourceById, revealSource } from '$lib/persistance/monster-parts';
   import { page } from '$app/stores';
@@ -11,20 +13,22 @@
   import Button from '$components/buttons/Button.svelte';
   import BackTo from '$components/buttons/BackTo.svelte';
 
-  $: query = getUsableSourceById($page.params.sourceId);
+  let query = $derived(getUsableSourceById($page.params.sourceId));
 
-  $: monster = $query.data;
+  let monster = $derived($query.data);
 
-  $: revealMutation = revealSource($page.params.sourceId);
+  let revealMutation = $derived(revealSource($page.params.sourceId));
 
-  $: if ($query.isError && $query.error['code'] === 'PGRST116') {
-    goto(`/campaigns/${$page.params.campaignId}/monster-parts/monsters`);
-  }
+  run(() => {
+    if ($query.isError && $query.error['code'] === 'PGRST116') {
+      goto(`/campaigns/${$page.params.campaignId}/monster-parts/monsters`);
+    }
+  });
 
-  $: handleReveal = async () => {
+  let handleReveal = $derived(async () => {
     await $revealMutation.mutate();
     $query.refetch();
-  };
+  });
 </script>
 
 <BackTo href={`/campaigns/${getCampaignId()}/monster-parts/monsters`} text="monsters" />

@@ -9,15 +9,15 @@
   import { createMutation, useQueryClient } from '@tanstack/svelte-query';
   import { PlusCircle } from 'lucide-svelte';
 
-  $: campaignId = parseInt($page.params.campaignId);
+  let campaignId = $derived(parseInt($page.params.campaignId));
 
-  let label = '';
-  let link = '';
+  let label = $state('');
+  let link = $state('');
 
   let queryClient = useQueryClient();
 
-  export let data;
-  $: ({ supabase } = data);
+  let { data } = $props();
+  let { supabase } = $derived(data);
 
   let createHandoutM = createMutation({
     mutationKey: ['summaries', 'create'],
@@ -32,17 +32,17 @@
     }
   });
 
-  $: handleSubmit = async (e) => {
+  let handleSubmit = $derived(async (e) => {
     e.preventDefault();
     await $createHandoutM.mutateAsync();
-  };
+  });
 </script>
 
 <div class="max-w-sm mx-auto">
   <LoadingInsert loading={$createHandoutM.isLoading} />
   <BackTo href={`/campaigns/${campaignId}/handouts`} text="campaign handouts" />
   <Heading type="Page Heading">New Summary</Heading>
-  <form on:submit={handleSubmit}>
+  <form onsubmit={handleSubmit}>
     <div class="bg-white/20 p-8 rounded-xl flex flex-col gap-4">
       <TextField bind:value={label} label="Label" />
       <TextField bind:value={link} label="Link" />

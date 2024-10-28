@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import BackTo from '$components/buttons/BackTo.svelte';
   import Heading from '$components/layout/Heading.svelte';
   import { user } from '$lib/utils/auth';
@@ -9,8 +11,8 @@
   import { page } from '$app/stores';
   import { createQuestMutation } from '$lib/persistance/quests';
 
-  $: campaignId = getCampaignId();
-  $: userId = $user.id;
+  let campaignId = $derived(getCampaignId());
+  let userId = $derived($user.id);
 
   const mutation = createQuestMutation();
 
@@ -27,7 +29,9 @@
     creator_id: get(user).id
   };
 
-  $: console.log('campaign id', campaignId, 'userId', userId);
+  run(() => {
+    console.log('campaign id', campaignId, 'userId', userId);
+  });
 </script>
 
 <div class="mx-auto max-w-lg mb-8">

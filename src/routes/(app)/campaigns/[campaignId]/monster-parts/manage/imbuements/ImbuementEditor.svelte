@@ -10,14 +10,18 @@
   import { byKeyAsc } from '$lib/utils/iterators';
   import TraitSelector from '$components/monster-parts/TraitSelector.svelte';
 
-  export let imbuement: Imbuement;
-  export let onSave: (imbuement: Partial<Imbuement>) => void;
+  interface Props {
+    imbuement: Imbuement;
+    onSave: (imbuement: Partial<Imbuement>) => void;
+  }
 
-  let activeLevel = null;
-  let pane: 'requires' | 'levels' | 'templates' = 'levels';
-  let sessionTimeStart = Date.now();
+  let { imbuement = $bindable(), onSave }: Props = $props();
 
-  $: handleSave = () => {
+  let activeLevel = $state(null);
+  let pane: 'requires' | 'levels' | 'templates' = $state('levels');
+  let sessionTimeStart = $state(Date.now());
+
+  let handleSave = $derived(() => {
     // TODO: Validate the data.
     const saveImbuement: Omit<Imbuement, 'id' | 'types'> = {
       ...imbuement,
@@ -27,9 +31,9 @@
     if (onSave) {
       onSave(saveImbuement);
     }
-  };
+  });
 
-  $: addStage = () => {
+  let addStage = $derived(() => {
     const previousStage = imbuement.levels[imbuement.levels.length - 1];
     const newImbuementLevel = imbuement.levels.length === 0 ? 1 : previousStage.level + 1;
     const seqId = (++sessionTimeStart).toString(36);
@@ -43,11 +47,11 @@
       }
     ].sort(byKeyAsc('level'));
     activeLevel = seqId;
-  };
+  });
 
-  $: deleteStage = (stage: Imbuement['levels'][number]) => {
+  let deleteStage = $derived((stage: Imbuement['levels'][number]) => {
     imbuement.levels = imbuement.levels.filter((s) => s.sequenceId !== stage.sequenceId);
-  };
+  });
 </script>
 
 <div
@@ -93,7 +97,7 @@
               />
             {:else}
               <button
-                on:click={() => (activeLevel = level.sequenceId)}
+                onclick={() => (activeLevel = level.sequenceId)}
                 class="block w-full text-left py-1 px-2 rounded cursor-pointer hover:bg-white/5"
                 >{level.level} - {level.preview}</button
               >

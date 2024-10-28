@@ -7,7 +7,7 @@
   import LandingLink from '$components/buttons/BigLink.svelte';
   import BackToCampaign from '../BackToCampaign.svelte';
 
-  $: campaignId = $page.params.campaignId;
+  let campaignId = $derived($page.params.campaignId);
 </script>
 
 <div class="flex flex-col gap-8">

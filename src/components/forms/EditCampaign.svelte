@@ -8,14 +8,14 @@
   import { Save } from 'lucide-svelte';
 
   const campaignQuery = getCurrentCampaign();
-  $: campaign = $campaignQuery.data;
+  let campaign = $derived($campaignQuery.data);
   const updateCampaign = updateCurrentCampaign();
-  $: handleUpdate = () => {
+  let handleUpdate = $derived(() => {
     $updateCampaign.mutate({ ...campaign });
-  };
+  });
 </script>
 
-<form on:submit={handleUpdate}>
+<form onsubmit={handleUpdate}>
   <Heading type="Subsection Heading">Meta</Heading>
   <div class="bg-white bg-opacity-10 rounded px-8 py-4 flex flex-col gap-2">
     {#if $campaignQuery.isLoading || !$campaignQuery.isFetched || $updateCampaign.isLoading}

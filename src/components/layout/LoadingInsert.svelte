@@ -2,8 +2,12 @@
   import { fade } from 'svelte/transition';
   import cx from 'classnames';
 
-  export let fullPage = false;
-  export let loading = false;
+  interface Props {
+    fullPage?: boolean;
+    loading?: boolean;
+  }
+
+  let { fullPage = false, loading = false }: Props = $props();
 </script>
 
 {#if loading}
@@ -13,15 +17,15 @@
       fullPage ? 'fixed' : 'absolute '
     )}
     transition:fade
-  />
+></div>
   <div
     class={cx('inset-0 flex flex-row pointer-events-none z-50', fullPage ? 'fixed' : 'absolute ')}
     transition:fade
   >
     <div class="lds-facebook m-auto">
-      <div />
-      <div />
-      <div />
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
   </div>
 {/if}

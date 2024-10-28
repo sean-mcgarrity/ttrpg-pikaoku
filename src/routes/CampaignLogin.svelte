@@ -1,14 +1,18 @@
 <script lang="ts">
   import { session } from '$lib/utils/auth';
 
-  export let campaign: any;
+  interface Props {
+    campaign: any;
+  }
 
-  $: title = campaign.name;
-  $: bgImgSrc = campaign.banner_src;
+  let { campaign }: Props = $props();
 
-  $: href = $session?.access_token
+  let title = $derived(campaign.name);
+  let bgImgSrc = $derived(campaign.banner_src);
+
+  let href = $derived($session?.access_token
     ? `/campaigns/${campaign.id}`
-    : `/login?afterLogin=/campaigns/${campaign.id}`;
+    : `/login?afterLogin=/campaigns/${campaign.id}`);
 </script>
 
 <a
@@ -18,7 +22,7 @@
 >
   <div
     class="transition-all duration-300 absolute inset-0 bg-black bg-opacity-20 hover:bg-opacity-10"
-  />
+></div>
   <div
     class="transition-all duration-300 absolute bottom-0 w-full px-6 py-2 group-hover:py-4 bg-black bg-opacity-80 text-white text-left"
   >

@@ -4,20 +4,20 @@
   import TextField from '$components/forms/controls/TextField.svelte';
   import { mutateCreateCharacter } from '$lib/persistance/campaign';
 
-  export let afterSubmit = () => {};
+  let { afterSubmit = () => {} } = $props();
 
-  let title = '';
-  let active = true;
+  let title = $state('');
+  let active = $state(true);
 
   const mCreateCharacter = mutateCreateCharacter();
-  $: handleSubmit = async (e) => {
+  let handleSubmit = $derived(async (e) => {
     e.preventDefault();
     $mCreateCharacter.mutate({ name: title, active });
     afterSubmit();
-  };
+  });
 </script>
 
-<form on:submit={handleSubmit} class="flex flex-col gap-2">
+<form onsubmit={handleSubmit} class="flex flex-col gap-2">
   <div class="flex flex-row gap-2">
     <TextField bind:value={title} />
     <SwitchField bind:value={active} />

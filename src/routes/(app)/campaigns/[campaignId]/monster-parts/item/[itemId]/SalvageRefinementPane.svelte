@@ -3,7 +3,11 @@
   import { salvageRefinement } from '$lib/persistance/monster-parts';
   import type { MP_Refinement } from '$lib/systems/pf2e_monster_parts';
 
-  export let item: MP_Refinement;
+  interface Props {
+    item: MP_Refinement;
+  }
+
+  let { item }: Props = $props();
 
   let mutation = salvageRefinement();
 </script>

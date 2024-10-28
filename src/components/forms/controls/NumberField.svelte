@@ -1,8 +1,15 @@
 <script lang="ts">
+  import { createBubbler } from 'svelte/legacy';
+
+  const bubble = createBubbler();
   import cx from 'classnames';
-  export let label: string = null;
-  export let value: number = null;
-  export let unit: string = null;
+  interface Props {
+    label?: string;
+    value?: number;
+    unit?: string;
+  }
+
+  let { label = null, value = $bindable(null), unit = null }: Props = $props();
 </script>
 
 <label class={cx(!label && 'w-full')}>
@@ -18,7 +25,7 @@
         !label && 'h-full'
       )}
       bind:value
-      on:change
+      onchange={bubble('change')}
     />
     {#if unit}
       <span class={cx(!label && 'h-full', 'rounded-r px-2 py-1 bg-white bg-opacity-40 select-none')}

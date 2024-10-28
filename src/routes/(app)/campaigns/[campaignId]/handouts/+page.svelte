@@ -10,9 +10,9 @@
   import LinkButton from '$components/buttons/LinkButton.svelte';
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
 
-  export let data;
-  $: ({ supabase } = data);
-  $: campaignId = parseInt($page.params.campaignId);
+  let { data } = $props();
+  let { supabase } = $derived(data);
+  let campaignId = $derived(parseInt($page.params.campaignId));
 
   let handoutsQ = createQuery({
     queryKey: ['campaign', campaignId, 'handouts'],
@@ -27,7 +27,7 @@
     }
   });
 
-  $: killHandoutM = createMutation({
+  let killHandoutM = $derived(createMutation({
     mutationKey: ['handouts', 'kill'],
     mutationFn: async (id) => {
       return await supabase.from('campaign_handout').delete().eq('id', id);
@@ -35,15 +35,15 @@
     onSuccess: async () => {
       await $handoutsQ.refetch();
     }
-  });
+  }));
 
-  $: handleDelete = async (id) => {
+  let handleDelete = $derived(async (id) => {
     if (confirm('Are you sure you want to delete this handout?')) {
       await $killHandoutM.mutateAsync(id);
     }
-  };
+  });
 
-  $: handouts = $handoutsQ.data ?? [];
+  let handouts = $derived($handoutsQ.data ?? []);
 </script>
 
 <Heading type="Page Heading">Handouts</Heading>

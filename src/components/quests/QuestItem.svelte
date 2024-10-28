@@ -12,36 +12,40 @@
   import TextAreaField from '$components/forms/controls/TextAreaField.svelte';
   import ConfirmationModal from '$components/Modals/ConfirmationModal.svelte';
 
-  export let quest: Quest;
-  export let preview = false;
+  interface Props {
+    quest: Quest;
+    preview?: boolean;
+  }
 
-  let expanded = false;
-  let editing = false;
-  let newGroup = '';
+  let { quest = $bindable(), preview = false }: Props = $props();
 
-  $: handleEditToggle = (newValue: boolean = null) => {
+  let expanded = $state(false);
+  let editing = $state(false);
+  let newGroup = $state('');
+
+  let handleEditToggle = $derived((newValue: boolean = null) => {
     editing = newValue ?? !editing;
     if (editing === true) {
       newGroup = quest.group;
       expanded = true;
     }
-  };
+  });
 
-  $: handleExpandToggle = () => {
+  let handleExpandToggle = $derived(() => {
     expanded = !expanded;
     if (expanded === false) {
       editing = false;
     }
-  };
+  });
 
   let update = updateQuestMutation();
   let del = deleteQuestMutation();
 
-  $: updateQuestStatus = async (newStatus: Quest['status']) => {
+  let updateQuestStatus = $derived(async (newStatus: Quest['status']) => {
     await $update.mutateAsync({ id: quest.id, status: newStatus });
-  };
+  });
 
-  $: updateQuestDetails = async () => {
+  let updateQuestDetails = $derived(async () => {
     await $update.mutateAsync({
       id: quest.id,
       name: quest.name,
@@ -49,15 +53,15 @@
       group: newGroup
     });
     editing = false;
-  };
+  });
 
-  $: loading = $update.isLoading && $del.isLoading;
+  let loading = $derived($update.isLoading && $del.isLoading);
 
-  $: finished = quest.status === 'finished';
-  $: pinned = quest.status === 'pinned';
-  $: starred = quest.status === 'starred';
-  $: editable = !finished && quest.status !== 'deleted';
-  $: deleted = quest.status === 'deleted';
+  let finished = $derived(quest.status === 'finished');
+  let pinned = $derived(quest.status === 'pinned');
+  let starred = $derived(quest.status === 'starred');
+  let editable = $derived(!finished && quest.status !== 'deleted');
+  let deleted = $derived(quest.status === 'deleted');
 </script>
 
 <div
@@ -97,7 +101,7 @@
           />
         </Button>
       {:else}
-        <div />
+        <div></div>
       {/if}
       <Button on:click={handleExpandToggle} title="Expand quest details">
         <ChevronDown
@@ -124,7 +128,7 @@
               <Star fill="white" />
             </Button>
           {:else}
-            <div />
+            <div></div>
           {/if}
           {#if editing}
             <Button on:click={updateQuestDetails} title="Save changes">
@@ -136,16 +140,24 @@
             </Button>
           {/if}
           <ConfirmationModal onConfirm={() => updateQuestStatus('deleted')}>
-            <Button slot="trigger" title="Delete quest">
-              <Trash stroke="white" />
-            </Button>
-            <span slot="message">This quest will be permanently deleted.</span>
+            {#snippet trigger()}
+                        <Button  title="Delete quest">
+                <Trash stroke="white" />
+              </Button>
+                      {/snippet}
+            {#snippet message()}
+                        <span >This quest will be permanently deleted.</span>
+                      {/snippet}
           </ConfirmationModal>
           <ConfirmationModal onConfirm={() => updateQuestStatus('finished')}>
-            <Button slot="trigger" title="Mark quest as finished">
-              <CheckCircle stroke="white" />
-            </Button>
-            <span slot="message">This quest will be permanently marked as finished.</span>
+            {#snippet trigger()}
+                        <Button  title="Mark quest as finished">
+                <CheckCircle stroke="white" />
+              </Button>
+                      {/snippet}
+            {#snippet message()}
+                        <span >This quest will be permanently marked as finished.</span>
+                      {/snippet}
           </ConfirmationModal>
         {/if}
       </div>

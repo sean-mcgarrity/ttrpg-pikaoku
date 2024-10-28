@@ -5,10 +5,14 @@
   import type { Tables } from '$types/database';
   import { getRelativeTime } from '$lib/utils/time';
 
-  export let quest: Tables<'quest'> & {
+  interface Props {
+    quest: Tables<'quest'> & {
     notes: (Tables<'quest_note'> & { author: Tables<'profile'> })[];
   };
-  export let link = false;
+    link?: boolean;
+  }
+
+  let { quest, link = false }: Props = $props();
 
   let wrapper = link ? 'a' : 'div';
   let elementProps: any = {

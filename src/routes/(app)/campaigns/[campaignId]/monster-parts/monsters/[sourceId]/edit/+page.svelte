@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import Heading from '$components/layout/Heading.svelte';
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
   import { deleteMpSource, getSourceFromParam, updateSource } from '$lib/persistance/monster-parts';
@@ -10,24 +12,27 @@
 
   const mutation = updateSource();
 
-  $: deleteSourceM = deleteMpSource();
-  $: monster = $query.data;
+  let deleteSourceM = $derived(deleteMpSource());
+  let monster;
+  run(() => {
+    monster = $query.data;
+  });
 
-  $: handleClick = () => {
+  let handleClick = $derived(() => {
     $mutation.mutate(monster, {
       onSuccess: () => {
         goto(`/campaigns/${$page.params.campaignId}/monster-parts/monsters`);
       }
     });
-  };
+  });
 
-  $: handleDelete = () => {
+  let handleDelete = $derived(() => {
     $deleteSourceM.mutate($query.data.id, {
       onSuccess: () => {
         goto(`/campaigns/${$page.params.campaignId}/monster-parts/monsters`);
       }
     });
-  };
+  });
 </script>
 
 <div class="relative">

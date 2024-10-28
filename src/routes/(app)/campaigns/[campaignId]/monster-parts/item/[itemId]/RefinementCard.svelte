@@ -6,12 +6,16 @@
   import RefinementCardRefinement from './RefinementCardRefinement.svelte';
   import cs from 'classnames';
 
-  export let refinement: MP_Refinement;
+  interface Props {
+    refinement: MP_Refinement;
+  }
 
-  $: unusedImbuementSlots = getUnusedImbuementSlots(refinement);
+  let { refinement }: Props = $props();
+
+  let unusedImbuementSlots = $derived(getUnusedImbuementSlots(refinement));
   //bg-[#6666cc]/20
 
-  $: itemType = refinement.type;
+  let itemType = $derived(refinement.type);
 </script>
 
 <div class="border-2 border-black/10 shadow overflow-hidden mb-4 max-w-lg mx-auto w-full">
@@ -33,9 +37,9 @@
         {refinement.description || 'No description'}
       </div>
     </div>
-    <div class="border border-white/20 border-solid" />
+    <div class="border border-white/20 border-solid"></div>
     <RefinementCardRefinement {refinement} />
-    <div class="border border-white/20 border-solid" />
+    <div class="border border-white/20 border-solid"></div>
     {#each refinement.imbuements as imbuement}
       <RefinementCardImbuement
         {refinement}
@@ -44,13 +48,13 @@
       />
     {/each}
     {#if unusedImbuementSlots > 1}
-      <div class="border border-white/20 border-solid" />
+      <div class="border border-white/20 border-solid"></div>
       <div class="px-4 py-8 text-center bg-black/10">Unused imbuement slot</div>
     {/if}
     {#if unusedImbuementSlots > 2}
-      <div class="border border-white/20 border-solid" />
+      <div class="border border-white/20 border-solid"></div>
       <div class="px-4 py-8 text-center bg-black/10">Unused imbuement slot</div>
     {/if}
-    <div class="bg-black/40 h-4" />
+    <div class="bg-black/40 h-4"></div>
   </div>
 </div>

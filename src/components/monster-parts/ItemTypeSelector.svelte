@@ -2,7 +2,11 @@
   import { itemTypes, type ItemType } from '$lib/systems/pf2e_monster_parts';
   import { Axe, Shield, Eye, Scroll, Shirt } from 'lucide-svelte';
 
-  export let value: ItemType = itemTypes[0].id;
+  interface Props {
+    value?: ItemType;
+  }
+
+  let { value = $bindable(itemTypes[0].id) }: Props = $props();
 </script>
 
 <div class="flex flex-col gap-1 flex-wrap justify-between">

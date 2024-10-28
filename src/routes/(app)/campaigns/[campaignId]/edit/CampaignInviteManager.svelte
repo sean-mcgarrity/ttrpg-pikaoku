@@ -11,9 +11,9 @@
   import { supabase } from '$lib/utils/auth';
   import { getCampaignId } from '$lib/utils/contextual-helpers';
 
-  $: campaignId = getCampaignId();
+  let campaignId = $derived(getCampaignId());
 
-  $: getInvitesQuery = createQuery(
+  let getInvitesQuery = $derived(createQuery(
     ['campaign-invites', campaignId],
     async () => {
       return extractData(
@@ -26,11 +26,12 @@
     {
       enabled: !!campaignId
     }
-  );
+  ));
 
-  $: invites = $getInvitesQuery.data ?? [];
+  let invites = $derived($getInvitesQuery.data ?? []);
 
-  $: expanded = false;
+  let expanded = $state(false);
+  
 
   let queryClient = useQueryClient();
 
@@ -53,21 +54,21 @@
     }
   });
 
-  let expireTarget = null;
+  let expireTarget = $state(null);
 
-  $: handleForceExpire = (id: string) => {
+  let handleForceExpire = $derived((id: string) => {
     expireTarget = id;
-  };
+  });
 
-  $: handleCancelExpire = () => {
+  let handleCancelExpire = $derived(() => {
     expireTarget = null;
-  };
+  });
 
-  $: handleConfirmExpire = () => {
+  let handleConfirmExpire = $derived(() => {
     console.log('confirming expire');
     $forceExpireMutation.mutate(expireTarget);
     expireTarget = null;
-  };
+  });
 </script>
 
 <div class="flex flex-col gap-2">
@@ -103,7 +104,7 @@
               readonly
               type="text"
               value="{window.location.origin}/invite?token={invite.id}"
-              on:click={copyToClipboard}
+              onclick={copyToClipboard}
             />
           </div>
         </div>
@@ -115,7 +116,7 @@
               readonly
               type="text"
               value={remainingUses}
-              on:click={copyToClipboard}
+              onclick={copyToClipboard}
             />
             <div class=" my-auto text-center">of</div>
             <input
@@ -123,7 +124,7 @@
               readonly
               type="text"
               value={invite.max_uses}
-              on:click={copyToClipboard}
+              onclick={copyToClipboard}
             />
           </div>
         </div>
@@ -134,7 +135,7 @@
             readonly
             type="date"
             value={expiresString}
-            on:click={copyToClipboard}
+            onclick={copyToClipboard}
           />
         </div>
       </div>

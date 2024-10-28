@@ -11,7 +11,7 @@
   import cs from 'classnames';
 
   const campaignQuery = getCurrentCampaign();
-  $: campaign = $campaignQuery.data;
+  let campaign = $derived($campaignQuery.data);
 
   const flags = [
     {
@@ -43,9 +43,9 @@
   let enableMutation = enableCampaignFeatureFlag();
   let disableMutation = disableCampaignFeatureFlag();
 
-  $: loading = $enableMutation.isLoading || $disableMutation.isLoading || $campaignQuery.isLoading;
+  let loading = $derived($enableMutation.isLoading || $disableMutation.isLoading || $campaignQuery.isLoading);
 
-  $: handleClick = async (flag: string) => {
+  let handleClick = $derived(async (flag: string) => {
     if (loading) {
       return;
     }
@@ -59,7 +59,7 @@
       await $enableMutation.mutateAsync(flag);
     }
     $campaignQuery.refetch();
-  };
+  });
 </script>
 
 <div>
@@ -75,7 +75,7 @@
           enabled ? 'bg-white' : 'bg-white/70 hover:bg-white/80',
           'rounded px-4 py-2 text-offblack flex flex-row justify-between items-center '
         )}
-        on:click={() => handleClick(flag.value)}
+        onclick={() => handleClick(flag.value)}
       >
         <div class="text-xl">
           {flag.label}

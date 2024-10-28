@@ -1,14 +1,24 @@
 <script lang="ts">
   import Button from './Button.svelte';
 
-  export let href = '';
-  let className = '';
-  export { className as class };
-  export let padded = false;
+  
+  interface Props {
+    href?: string;
+    class?: string;
+    padded?: boolean;
+    children?: import('svelte').Snippet;
+  }
+
+  let {
+    href = '',
+    class: className = '',
+    padded = false,
+    children
+  }: Props = $props();
 </script>
 
 <a {href}>
   <Button class={className} {padded}>
-    <slot />
+    {@render children?.()}
   </Button>
 </a>

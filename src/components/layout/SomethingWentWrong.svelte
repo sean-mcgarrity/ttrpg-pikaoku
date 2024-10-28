@@ -2,8 +2,12 @@
   import LinkButton from '$components/buttons/LinkButton.svelte';
   import { Undo } from 'lucide-svelte';
 
-  export let destination: string = '/';
-  export let explanation: string = null;
+  interface Props {
+    destination?: string;
+    explanation?: string;
+  }
+
+  let { destination = '/', explanation = null }: Props = $props();
 </script>
 
 <div class="px-8 py-4 bg-red-400/20 rounded-lg shadow flex flex-col gap-4 mx-auto max-w-md">

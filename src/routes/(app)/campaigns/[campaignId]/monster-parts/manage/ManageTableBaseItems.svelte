@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { page } from '$app/stores';
   import AddItemForm from './AddItemForm.svelte';
   import ManageTable, {
@@ -12,16 +14,19 @@
 
   let supabase: SupabaseClient = $page.data.supabase;
 
-  let items = [];
+  let items = $state([]);
 
-  let add = false;
-  let loading = false;
+  let add = $state(false);
+  let loading = $state(false);
 
-  let pageNumber = 1;
+  let pageNumber = $state(1);
   const pageSize = 10;
-  let totalItems = 0;
+  let totalItems = $state(0);
 
-  $: numOfPages = Math.ceil(totalItems / pageSize);
+  let numOfPages;
+  run(() => {
+    numOfPages = Math.ceil(totalItems / pageSize);
+  });
 
   const getItems = async () => {
     loading = true;
@@ -35,7 +40,9 @@
     loading = false;
   };
 
-  $: if (pageNumber) getItems();
+  run(() => {
+    if (pageNumber) getItems();
+  });
 
   const deleteItem = async (item) => {
     loading = true;
@@ -43,50 +50,59 @@
     getItems();
   };
 
-  let columns: ManageTableColumns = [];
-  $: columns = [
-    {
-      label: 'Name',
-      accessor: 'name'
-    },
-    {
-      label: 'Type',
-      accessor: 'type',
-      classes: 'capitalize'
-    },
-    {
-      label: 'Cost',
-      accessor: (item) => Math.ceil(item.cost / 100) + ' GP'
-    },
-    {
-      label: 'Requires',
-      accessor: 'requires',
-      span: 2
-    }
-  ];
+  let columns: ManageTableColumns = $state([]);
+  run(() => {
+    columns = [
+      {
+        label: 'Name',
+        accessor: 'name'
+      },
+      {
+        label: 'Type',
+        accessor: 'type',
+        classes: 'capitalize'
+      },
+      {
+        label: 'Cost',
+        accessor: (item) => Math.ceil(item.cost / 100) + ' GP'
+      },
+      {
+        label: 'Requires',
+        accessor: 'requires',
+        span: 2
+      }
+    ];
+  });
 
-  let rowAction: ManageTableRowAction = null;
-  $: rowAction = { text: 'Delete', onClick: deleteItem, icon: Trash2Icon };
+  let rowAction: ManageTableRowAction = $state(null);
+  run(() => {
+    rowAction = { text: 'Delete', onClick: deleteItem, icon: Trash2Icon };
+  });
 </script>
 
 <ManageTable title="Base Items" bind:loading bind:columns bind:rowActions={rowAction} bind:items>
+  <!-- @migration-task: migrate this slot by hand, `header-button` is an invalid identifier -->
   <Button slot="header-button" on:click={() => (add = !add)}
     >Add <PlusCircle class="h-4 w-4 inline" /></Button
   >
-  <svelte:fragment slot="head">
-    {#if add}
-      <AddItemForm onCancel={() => (add = false)} onAdd={getItems} />
-    {/if}
-  </svelte:fragment>
-  <svelte:fragment slot="tail">
-    {#if numOfPages > 1}
-      <div class="mx-auto">
-        <Pagination
-          bind:currentPage={pageNumber}
-          bind:totalPages={numOfPages}
-          onPageChange={(num) => (pageNumber = num)}
-        />
-      </div>
-    {/if}
-  </svelte:fragment>
+  {#snippet head()}
+  
+      {#if add}
+        <AddItemForm onCancel={() => (add = false)} onAdd={getItems} />
+      {/if}
+    
+  {/snippet}
+  {#snippet tail()}
+  
+      {#if numOfPages > 1}
+        <div class="mx-auto">
+          <Pagination
+            bind:currentPage={pageNumber}
+            bind:totalPages={numOfPages}
+            onPageChange={(num) => (pageNumber = num)}
+          />
+        </div>
+      {/if}
+    
+  {/snippet}
 </ManageTable>

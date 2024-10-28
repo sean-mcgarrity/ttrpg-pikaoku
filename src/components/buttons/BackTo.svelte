@@ -2,8 +2,12 @@
   import { ArrowLeft } from 'lucide-svelte';
   import LinkButton from './LinkButton.svelte';
 
-  export let href: string;
-  export let text: string;
+  interface Props {
+    href: string;
+    text: string;
+  }
+
+  let { href, text }: Props = $props();
 </script>
 
 <div class="my-2 -ml-2 select-none">

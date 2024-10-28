@@ -1,25 +1,44 @@
 <script lang="ts">
+  import { createBubbler } from 'svelte/legacy';
+
+  const bubble = createBubbler();
   import AsLink from '$components/AsLink.svelte';
   import cx from 'classnames';
-  let className = '';
-  export { className as class };
+  
 
   type ButtonColors = 'green' | 'red' | 'slate';
 
-  export let padded = false;
-  export let type: 'button' | 'submit' = 'button';
-  export let outlined = false;
-  export let disabled = false;
-  export let title = null;
-  export let color: ButtonColors = null;
-  export let oldStyle = true;
-  export let href: string | false = false;
+  interface Props {
+    class?: string;
+    padded?: boolean;
+    type?: 'button' | 'submit';
+    outlined?: boolean;
+    disabled?: boolean;
+    title?: any;
+    color?: ButtonColors;
+    oldStyle?: boolean;
+    href?: string | false;
+    children?: import('svelte').Snippet;
+  }
+
+  let {
+    class: className = '',
+    padded = false,
+    type = 'button',
+    outlined = false,
+    disabled = false,
+    title = null,
+    color = null,
+    oldStyle = true,
+    href = false,
+    children
+  }: Props = $props();
 </script>
 
 {#if oldStyle}
   <button
     {type}
-    on:click
+    onclick={bubble('click')}
     style={color && `background-color: ${color}`}
     class={cx(
       'hover:scale-105',
@@ -36,14 +55,14 @@
     )}
     {title}
   >
-    <slot />
+    {@render children?.()}
   </button>
 {:else}
   <AsLink {href}>
     <svelte:element
       this={href ? 'div' : 'button'}
       {type}
-      on:click
+      onclick={bubble('click')}
       aria-label="Create new quest"
       role="button"
       tabindex="0"
@@ -65,7 +84,7 @@
       )}
       {title}
     >
-      <slot />
+      {@render children?.()}
     </svelte:element>
   </AsLink>
 {/if}

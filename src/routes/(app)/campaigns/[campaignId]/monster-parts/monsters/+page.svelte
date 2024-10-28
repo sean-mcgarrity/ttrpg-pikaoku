@@ -8,19 +8,19 @@
   import TextField from '$components/forms/controls/TextField.svelte';
   import { userIsAdmin } from '$lib/utils/auth';
 
-  $: campaignId = $page.params.campaignId;
+  let campaignId = $derived($page.params.campaignId);
 
   let usableSourcesQ = getUsableSources();
   let unusableSourcesQ = getUnusableSources();
 
-  let searchFilter = '';
-  $: searchFilterLc = searchFilter.toLowerCase();
+  let searchFilter = $state('');
+  let searchFilterLc = $derived(searchFilter.toLowerCase());
 
-  $: filteredUsableSourcesQ = ($usableSourcesQ.data ?? []).filter(
+  let filteredUsableSourcesQ = $derived(($usableSourcesQ.data ?? []).filter(
     (source) =>
       source.name.toLowerCase().includes(searchFilterLc) ||
       source.enables.some((trait) => trait.toLowerCase().includes(searchFilterLc))
-  );
+  ));
 </script>
 
 <Heading type="Page Heading">Campaign Monsters</Heading>

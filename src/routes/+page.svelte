@@ -6,7 +6,7 @@
   import Heading from '$components/layout/Heading.svelte';
   import { getCampaigns } from '$lib/persistance/campaign';
 
-  $: campaigns = getCampaigns();
+  let campaigns = $derived(getCampaigns());
 </script>
 
 <svelte:head>

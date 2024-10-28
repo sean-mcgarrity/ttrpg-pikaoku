@@ -9,9 +9,13 @@
   import { getCampaignId } from '$lib/utils/contextual-helpers';
   import { Delete, Save, Undo } from 'lucide-svelte';
 
-  export let monster: MP_Source;
-  export let onSave: (monster: Partial<MP_Source>) => void;
-  export let onDelete: () => void = null;
+  interface Props {
+    monster: MP_Source;
+    onSave: (monster: Partial<MP_Source>) => void;
+    onDelete?: () => void;
+  }
+
+  let { monster = $bindable(), onSave, onDelete = null }: Props = $props();
 
   let handleDelete = () => {
     if (onDelete && confirm('Are you sure you want to delete this monster?')) {

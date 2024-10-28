@@ -1,13 +1,25 @@
 <script>
   import cx from 'classnames';
 
-  export let to = '/';
-  export let title = '';
-  export let description = '';
-  export let Icon;
   // export class
-  let className = '';
-  export { className as class };
+  /**
+   * @typedef {Object} Props
+   * @property {string} [to]
+   * @property {string} [title]
+   * @property {string} [description]
+   * @property {any} Icon
+   * @property {string} [class]
+   */
+
+  /** @type {Props} */
+  let {
+    to = '/',
+    title = '',
+    description = '',
+    Icon,
+    class: className = ''
+  } = $props();
+  
 </script>
 
 <a

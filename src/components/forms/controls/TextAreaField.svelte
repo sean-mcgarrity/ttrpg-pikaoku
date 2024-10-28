@@ -1,8 +1,16 @@
 <script lang="ts">
+  import { createBubbler } from 'svelte/legacy';
+
+  const bubble = createBubbler();
   import cx from 'classnames';
-  export let label: string = null;
-  export let value: string = null;
-  export let rows: number = 3;
+  interface Props {
+    label?: string;
+    value?: string;
+    rows?: number;
+    [key: string]: any
+  }
+
+  let { label = null, value = $bindable(null), rows = 3, ...rest }: Props = $props();
 </script>
 
 <label class={cx(!label && 'w-full h-full')}>
@@ -10,14 +18,14 @@
     <div class="font-medium mb-1">{label}</div>
   {/if}
   <textarea
-    {...$$restProps}
+    {...rest}
     {rows}
     class={cx(
       'rounded px-4 py-1 w-full bg-black/20 shadow-inner',
       !label && 'h-full',
-      $$restProps.disabled && 'bg-gray-200 bg-opacity-40 '
+      rest.disabled && 'bg-gray-200 bg-opacity-40 '
     )}
     bind:value
-    on:change
-  />
+    onchange={bubble('change')}
+></textarea>
 </label>

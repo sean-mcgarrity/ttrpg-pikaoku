@@ -2,8 +2,12 @@
   import type { MP_UsableSource } from '$lib/systems/pf2e_monster_parts';
   import cs from 'classnames';
 
-  export let monster: MP_UsableSource;
-  export let asLink: boolean = false;
+  interface Props {
+    monster: MP_UsableSource;
+    asLink?: boolean;
+  }
+
+  let { monster, asLink = false }: Props = $props();
 </script>
 
 {#if asLink}

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import SuccessCard from './SuccessCard.svelte';
   import type { Pf2eSuccessCard } from 'src/app';
   import cx from 'classnames';
   import { slide } from 'svelte/transition';
@@ -13,15 +14,19 @@
 
   const updateMutation = updateSuccessCardMutation();
 
-  let expanded = true;
-  export let editting = false;
+  let expanded = $state(true);
 
-  export let child = false;
-  export let successCard: Pf2eSuccessCard;
+  interface Props {
+    editting?: boolean;
+    child?: boolean;
+    successCard: Pf2eSuccessCard;
+  }
+
+  let { editting = $bindable(false), child = false, successCard = $bindable() }: Props = $props();
 
   const hasTopSection = successCard.requirements || successCard.trigger || successCard.frequency;
 
-  let updatedTags = successCard.tags.join(',');
+  let updatedTags = $state(successCard.tags.join(','));
 
   let handleEdit = () => {
     editting = true;
@@ -33,12 +38,12 @@
     updatedTags = successCard.tags.join(',');
   };
 
-  $: handleSave = () => {
+  let handleSave = $derived(() => {
     editting = false;
     successCard.tags = updatedTags.split(',');
     const { child_card, ...rest } = successCard;
     $updateMutation.mutate(rest);
-  };
+  });
 </script>
 
 <div
@@ -71,7 +76,7 @@
         ' font-bold flex justify-between tracking-wide cursor-pointer card-header',
         successCard.card_type
       )}
-      on:click={() => (expanded = !expanded)}
+      onclick={() => (expanded = !expanded)}
     >
       <span>{successCard.title}</span>
       {#if successCard.card_type !== 'action'}
@@ -100,7 +105,7 @@
         <TextField bind:value={successCard.trigger} placeholder="Trigger" label="Top Section" />
         <TextField bind:value={successCard.frequency} placeholder="Frequency" />
         <TextField bind:value={successCard.requirements} placeholder="Requirements" />
-        <div class="divider mt-2" />
+        <div class="divider mt-2"></div>
       {:else if hasTopSection}
         <div class="">
           {#each ['trigger', 'frequency', 'requirements'] as key}
@@ -111,7 +116,7 @@
               </div>
             {/if}
           {/each}
-          <div class="divider mt-2" />
+          <div class="divider mt-2"></div>
         </div>
       {/if}
 
@@ -145,8 +150,8 @@
       {/if}
 
       {#if successCard.child_card?.[0]}
-        <div class="divider" />
-        <svelte:self successCard={successCard.child_card?.[0]} child />
+        <div class="divider"></div>
+        <SuccessCard successCard={successCard.child_card?.[0]} child />
       {/if}
       {#if !child}
         <AdminOnly>

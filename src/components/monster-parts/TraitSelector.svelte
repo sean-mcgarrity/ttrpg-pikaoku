@@ -21,20 +21,24 @@
     'hardness'
   ] as const;
 
-  export let selected: string[];
-  let expandedPane: (typeof panes)[number] = null;
+  interface Props {
+    selected: string[];
+  }
 
-  let resistances = [];
-  let weaknesses = [];
-  let immunities = [];
-  let attacks = [];
-  let senses = [];
-  let skills = [];
-  let traits = [];
-  let abilities = [];
-  let hardness = [];
-  let crafts = [];
-  let speeds = [];
+  let { selected = $bindable() }: Props = $props();
+  let expandedPane: (typeof panes)[number] = $state(null);
+
+  let resistances = $state([]);
+  let weaknesses = $state([]);
+  let immunities = $state([]);
+  let attacks = $state([]);
+  let senses = $state([]);
+  let skills = $state([]);
+  let traits = $state([]);
+  let abilities = $state([]);
+  let hardness = $state([]);
+  let crafts = $state([]);
+  let speeds = $state([]);
 
   onMount(() => {
     const sortedDamageTypes = [...pf2eCore.DamageTypes].sort(byKeyAsc('name'));
@@ -57,7 +61,7 @@
     speeds = ['speed:flight'];
   });
 
-  $: getTraitsForPane = (pane: (typeof panes)[number]) => {
+  let getTraitsForPane = $derived((pane: (typeof panes)[number]) => {
     switch (pane) {
       case 'resistances':
         return resistances;
@@ -84,9 +88,9 @@
       default:
         return [];
     }
-  };
+  });
 
-  $: currentTraits = getTraitsForPane(expandedPane);
+  let currentTraits = $derived(getTraitsForPane(expandedPane));
 </script>
 
 <div class="flex flex-col gap-1">

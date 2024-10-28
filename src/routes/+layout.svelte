@@ -4,8 +4,8 @@
   import { QueryClientProvider } from '@tanstack/svelte-query';
   import { goto, invalidate } from '$app/navigation';
 
-  export let data;
-  $: ({ session, supabase } = data);
+  let { data, children } = $props();
+  let { session, supabase } = $derived(data);
 
   onMount(() => {
     const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
@@ -33,5 +33,5 @@
   </style>
 </svelte:head>
 <QueryClientProvider client={data.queryClient}>
-  <slot />
+  {@render children?.()}
 </QueryClientProvider>

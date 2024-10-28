@@ -1,7 +1,11 @@
 <script lang="ts">
   import type { MP_UsableSource } from '$lib/systems/pf2e_monster_parts';
 
-  export let monster: MP_UsableSource;
+  interface Props {
+    monster: MP_UsableSource;
+  }
+
+  let { monster }: Props = $props();
 </script>
 
 <div class="bg-white rounded-xl p-8 max-w-md text-black flex flex-col mx-auto w-full gap-2">

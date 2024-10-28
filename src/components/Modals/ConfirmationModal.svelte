@@ -1,52 +1,70 @@
 <script lang="ts">
+  import { run, self, createBubbler, stopPropagation } from 'svelte/legacy';
+
+  const bubble = createBubbler();
   import BigButton from '$components/buttons/BigButton.svelte';
 
-  export let onConfirm: () => void = null; // function
-  export let onCancel: () => void = null; // function
+  interface Props {
+    onConfirm?: () => void;
+    onCancel?: () => void;
+    trigger?: import('svelte').Snippet;
+    message?: import('svelte').Snippet;
+  }
 
-  let open = false;
+  let {
+    onConfirm = null,
+    onCancel = null,
+    trigger,
+    message
+  }: Props = $props();
 
-  let dialog; // HTMLDialogElement
+  let open = $state(false);
 
-  $: close = () => {
+  let dialog = $state(); // HTMLDialogElement
+
+  let close = $derived(() => {
     if (dialog) dialog.close();
-  };
+  });
 
-  $: handleClose = () => {
+  let handleClose = $derived(() => {
     if (onCancel && typeof onCancel === 'function') {
       onCancel();
     }
     close();
-  };
+  });
 
-  $: handleConfirm = () => {
+  let handleConfirm = $derived(() => {
     if (!!onConfirm && typeof onConfirm === 'function') {
       onConfirm();
     }
     close();
-  };
+  });
 
-  $: if (dialog && !!open) dialog.showModal();
-  $: if (!open && dialog?.open) dialog.close();
+  run(() => {
+    if (dialog && !!open) dialog.showModal();
+  });
+  run(() => {
+    if (!open && dialog?.open) dialog.close();
+  });
 </script>
 
-<button on:click={() => (open = true)}>
-  <slot name="trigger" />
+<button onclick={() => (open = true)}>
+  {@render trigger?.()}
 </button>
 
-<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
 <dialog
   class="max-w-none my-auto w-screen mx-0 drop-shadow-md"
   bind:this={dialog}
-  on:close={() => (open = false)}
-  on:click|self={handleClose}
+  onclose={() => (open = false)}
+  onclick={self(handleClose)}
 >
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <!-- svelte-ignore a11y_no_static_element_interactions -->
   <div
-    on:click|stopPropagation
+    onclick={stopPropagation(bubble('click'))}
     class="px-8 text-center bg-cyan-800 text-3xl font-bold text-white py-12"
   >
-    <slot name="message" />
+    {@render message?.()}
     <span>Are you sure?</span>
   </div>
   <div class="px-8 py-4 text-center bg-cyan-900 flex flex-row justify-center gap-6">

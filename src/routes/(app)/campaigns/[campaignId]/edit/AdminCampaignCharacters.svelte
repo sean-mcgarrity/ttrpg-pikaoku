@@ -6,18 +6,18 @@
   import { Pencil, Trash, X } from 'lucide-svelte';
 
   const charactersQ = getCharactersQuery();
-  $: characters = $charactersQ.data;
+  let characters = $derived($charactersQ.data);
   const deleteCharM = deleteCharacterMutation();
-  $: loading = $charactersQ.isLoading || $deleteCharM.isLoading;
+  let loading = $derived($charactersQ.isLoading || $deleteCharM.isLoading);
 
-  $: activeCharacters = characters?.filter((c) => c.active);
-  $: otherCharacters = characters?.filter((c) => !c.active);
+  let activeCharacters = $derived(characters?.filter((c) => c.active));
+  let otherCharacters = $derived(characters?.filter((c) => !c.active));
 
-  $: handleDeleteCharacter = async (id: number) => {
+  let handleDeleteCharacter = $derived(async (id: number) => {
     await $deleteCharM.mutate(id);
-  };
+  });
 
-  let editting = null;
+  let editting = $state(null);
   let editCharacter = (id: number) => {
     editting = id;
   };
@@ -79,7 +79,7 @@
       </div>
     {/if}
     {#if editting}
-      <div class="w-full border-white border-opacity-20 border border-solid" />
+      <div class="w-full border-white border-opacity-20 border border-solid"></div>
       <NewCharacter
         afterSubmit={() => {
           add = false;

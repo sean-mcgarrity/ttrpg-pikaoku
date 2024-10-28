@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import Button from '$components/buttons/Button.svelte';
   import NumberField from '$components/forms/controls/NumberField.svelte';
   import {
@@ -12,31 +14,35 @@
   import { ArrowLeft, ArrowRight } from 'lucide-svelte';
   import { onMount } from 'svelte';
 
-  export let calendar: CalendarDefinition;
-  $: cal = calendar;
+  interface Props {
+    calendar: CalendarDefinition;
+  }
+
+  let { calendar }: Props = $props();
+  let cal = $derived(calendar);
 
   onMount(() => {});
 
-  let currentYear = 4723;
-  let currentMonth = 1;
+  let currentYear = $state(4723);
+  let currentMonth = $state(1);
 
-  $: handleBackYear = () => {
+  let handleBackYear = $derived(() => {
     currentYear -= 1;
-  };
+  });
 
-  $: handleNextYear = () => {
+  let handleNextYear = $derived(() => {
     currentYear += 1;
-  };
+  });
 
-  $: handleBackMonth = () => {
+  let handleBackMonth = $derived(() => {
     currentMonth -= 1;
-  };
+  });
 
-  $: handleNextMonth = () => {
+  let handleNextMonth = $derived(() => {
     currentMonth += 1;
-  };
+  });
 
-  $: {
+  run(() => {
     if (calendar) {
       const firstDay = getDayForDayNumber(
         calendar,
@@ -44,7 +50,7 @@
       );
       console.log('first day', firstDay);
     }
-  }
+  });
 </script>
 
 <div>

@@ -11,33 +11,37 @@
   import { ArrowDownIcon } from 'lucide-svelte';
   import ProgressBar from '$components/monster-parts/ProgressBar.svelte';
 
-  export let refinement: MP_Refinement;
-  export let imbuement: Imbuement;
-  export let changes: any = [];
+  interface Props {
+    refinement: MP_Refinement;
+    imbuement: Imbuement;
+    changes?: any;
+  }
 
-  $: progress = changes.reduce((acc, curr) => acc + curr.amount, 0);
-  $: imbuementLevel = Math.min(
+  let { refinement, imbuement, changes = [] }: Props = $props();
+
+  let progress = $derived(changes.reduce((acc, curr) => acc + curr.amount, 0));
+  let imbuementLevel = $derived(Math.min(
     calculateUpgradeLevel(progress, 'armor'),
     calculateRefinementLevel(refinement)
-  );
+  ));
 
-  $: highestLevelGained = imbuement.levels.reduce(
+  let highestLevelGained = $derived(imbuement.levels.reduce(
     (acc, curr) => {
       return curr.level <= imbuementLevel ? curr : acc;
     },
     { level: 0, benefits: '' }
-  );
+  ));
 
-  $: nextLevel = imbuement.levels.find((level) => level.level > imbuementLevel);
-  $: hasNextLevel = !!nextLevel;
-  $: costOfNextLevel = hasNextLevel
+  let nextLevel = $derived(imbuement.levels.find((level) => level.level > imbuementLevel));
+  let hasNextLevel = $derived(!!nextLevel);
+  let costOfNextLevel = $derived(hasNextLevel
     ? getUpgradeCostForLevel(nextLevel?.level, 'armor')
-    : getUpgradeCostForLevel(imbuementLevel, 'armor');
-  $: percentageToNextLevel = Math.min(
+    : getUpgradeCostForLevel(imbuementLevel, 'armor'));
+  let percentageToNextLevel = $derived(Math.min(
     hasNextLevel ? Math.round((progress / costOfNextLevel) * 100) : 100,
     100
-  );
-  let seeAllLevels = false;
+  ));
+  let seeAllLevels = $state(false);
 </script>
 
 <div class="p-4 pb-2 flex flex-col gap-2">

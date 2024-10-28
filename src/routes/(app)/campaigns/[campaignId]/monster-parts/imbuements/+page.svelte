@@ -18,7 +18,7 @@
     }
   });
 
-  let activeImbuement: Imbuement = null;
+  let activeImbuement: Imbuement = $state(null);
 
   const categories = ['attribute', null, 'energy', 'defensive', 'spell', 'bane'];
   const categoryDescription = {
@@ -51,7 +51,7 @@
             <div class="grid grid-cols-3 gap-3">
               {#each $imbuementsQuery.data.filter((x) => x.category === category) as imb}
                 <button
-                  on:click={() => {
+                  onclick={() => {
                     activeImbuement = imb;
                   }}
                   disabled={!imb.implemented}

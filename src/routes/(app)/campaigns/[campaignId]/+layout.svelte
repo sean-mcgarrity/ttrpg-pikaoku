@@ -4,11 +4,16 @@
   import { getCurrentCampaign } from '$lib/persistance/campaign';
   import { getUserProfile } from '$lib/persistance/users';
   import { User, PencilRuler, ArrowLeft } from 'lucide-svelte';
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
 
   const campaignQuery = getCurrentCampaign();
   const profileQuery = getUserProfile();
 
-  $: campaign = $campaignQuery.data;
+  let campaign = $derived($campaignQuery.data);
 </script>
 
 {#if campaign}
@@ -50,7 +55,7 @@
       </a>
     </div>
     <main class="flex-1 border-0 p-4 md:p-4 mx-auto w-full">
-      <slot />
+      {@render children?.()}
     </main>
   </div>
 

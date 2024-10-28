@@ -3,13 +3,18 @@
   import { hasFeatureFlag } from '$lib/utils/feature-flags';
 
   type FeatureFlags = 'monster-parts' | 'bastions' | 'handouts' | 'quest-board';
-  export let flag: FeatureFlags;
+  interface Props {
+    flag: FeatureFlags;
+    children?: import('svelte').Snippet;
+  }
+
+  let { flag, children }: Props = $props();
 
   const campaignQuery = getCurrentCampaign();
-  $: campaign = $campaignQuery.data;
-  $: enabled = hasFeatureFlag(campaign, flag);
+  let campaign = $derived($campaignQuery.data);
+  let enabled = $derived(hasFeatureFlag(campaign, flag));
 </script>
 
 {#if enabled}
-  <slot />
+  {@render children?.()}
 {/if}

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { goto } from '$app/navigation';
   import BackTo from '$components/buttons/BackTo.svelte';
   import Button from '$components/buttons/Button.svelte';
@@ -11,7 +13,7 @@
   import { HardDriveDownload, LogOut } from 'lucide-svelte';
   import { fade } from 'svelte/transition';
 
-  $: signoutMutation = createMutation({
+  let signoutMutation = $derived(createMutation({
     mutationKey: ['signout'],
     mutationFn: async () => {
       return $supabase.auth.signOut({ scope: 'local' });
@@ -19,19 +21,21 @@
     onSuccess: () => {
       goto('/login');
     }
+  }));
+
+  let hasSession = $derived(!!$session?.access_token);
+
+  run(() => {
+    console.log('has session', $user);
   });
-
-  $: hasSession = !!$session?.access_token;
-
-  $: console.log('has session', $user);
 
   let mutation = updateUserProfile();
 
-  let userName = ''; //$userProfile?.username;
+  let userName = $state(''); //$userProfile?.username;
   let avatarSrc = ''; //$userProfile?.avatar_src;
 
-  $: handleUpdate = async () =>
-    $mutation.mutate({ username: userName, avatar_src: avatarSrc, id: $user.id });
+  let handleUpdate = $derived(async () =>
+    $mutation.mutate({ username: userName, avatar_src: avatarSrc, id: $user.id }));
 </script>
 
 {#if hasSession}

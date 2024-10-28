@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import type { SupabaseClient } from '@supabase/supabase-js';
@@ -23,8 +25,12 @@
     goto(`/campaigns/${$page.params.campaignId}/monster-parts/manage`);
   }
 
-  $: newImbuement;
-  $: newImbuement.levels;
+  run(() => {
+    newImbuement;
+  });
+  run(() => {
+    newImbuement.levels;
+  });
 </script>
 
 <div class="text-white">

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { run } from 'svelte/legacy';
+
   import RefinementCard from './RefinementCard.svelte';
 
   import LoadingInsert from '$components/layout/LoadingInsert.svelte';
@@ -20,16 +22,18 @@
 
   let query = getCurrentItem();
 
-  $: if ($query.isError && $query.error['code'] === 'PGRST116') {
-    goto(`/campaigns/${$page.params.campaignId}/monster-parts`);
-  }
+  run(() => {
+    if ($query.isError && $query.error['code'] === 'PGRST116') {
+      goto(`/campaigns/${$page.params.campaignId}/monster-parts`);
+    }
+  });
 
-  $: canAddImbuement = $query.isSuccess && getUnusedImbuementSlots($query.data) > 0;
-  let tab: 'edit' | 'none' | 'refine' | 'imbue' | 'add-imbuement' | 'changes' | 'salvage' = 'none';
+  let canAddImbuement = $derived($query.isSuccess && getUnusedImbuementSlots($query.data) > 0);
+  let tab: 'edit' | 'none' | 'refine' | 'imbue' | 'add-imbuement' | 'changes' | 'salvage' = $state('none');
 
-  $: changeTab = (newTab: typeof tab) => {
+  let changeTab = $derived((newTab: typeof tab) => {
     tab = newTab;
-  };
+  });
 </script>
 
 <div class="flex flex-row gap-4">
@@ -40,17 +44,19 @@
     <div class="flex flex-col gap-4 max-w-sm min-w-sm min-w-[24rem] w-full">
       {#if !$query.isLoading && !!$query.data}
         <RefinementCard refinement={$query.data}>
-          <svelte:fragment slot="buttons">
-            <Button
-              class="sm:mr-auto"
-              on:click={() => (tab = tab === 'edit' ? 'quick-actions' : 'edit')}
-              >Edit <PencilRuler /></Button
-            >
-            {#if canAddImbuement}
-              <Button on:click={() => (tab = 'add-imbuement')}>Add Imbuement <Navigation2 /></Button
+          {#snippet buttons()}
+                  
+              <Button
+                class="sm:mr-auto"
+                on:click={() => (tab = tab === 'edit' ? 'quick-actions' : 'edit')}
+                >Edit <PencilRuler /></Button
               >
-            {/if}
-          </svelte:fragment>
+              {#if canAddImbuement}
+                <Button on:click={() => (tab = 'add-imbuement')}>Add Imbuement <Navigation2 /></Button
+                >
+              {/if}
+            
+                  {/snippet}
         </RefinementCard>
       {/if}
     </div>
