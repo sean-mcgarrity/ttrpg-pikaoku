@@ -17,6 +17,7 @@ export type Database = {
           description: string | null
           discord_link: string | null
           email: string | null
+          game_system_id: number
           id: number
           name: string | null
           slug: string
@@ -28,6 +29,7 @@ export type Database = {
           description?: string | null
           discord_link?: string | null
           email?: string | null
+          game_system_id: number
           id?: number
           name?: string | null
           slug?: string
@@ -39,11 +41,20 @@ export type Database = {
           description?: string | null
           discord_link?: string | null
           email?: string | null
+          game_system_id?: number
           id?: number
           name?: string | null
           slug?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "campaign_game_system_id_fkey"
+            columns: ["game_system_id"]
+            isOneToOne: false
+            referencedRelation: "game_system"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       campaign_features: {
         Row: {
@@ -190,45 +201,29 @@ export type Database = {
       character: {
         Row: {
           active: boolean
-          campaign: number
           created_at: string | null
           id: number
           img_src: string
-          level: number
           name: string | null
           player_id: string | null
-          status: string
         }
         Insert: {
           active?: boolean
-          campaign: number
           created_at?: string | null
           id?: number
           img_src?: string
-          level?: number
           name?: string | null
           player_id?: string | null
-          status?: string
         }
         Update: {
           active?: boolean
-          campaign?: number
           created_at?: string | null
           id?: number
           img_src?: string
-          level?: number
           name?: string | null
           player_id?: string | null
-          status?: string
         }
         Relationships: [
-          {
-            foreignKeyName: "player_characters_campaign_fkey"
-            columns: ["campaign"]
-            isOneToOne: false
-            referencedRelation: "campaign"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "player_characters_player_id_fkey"
             columns: ["player_id"]
@@ -237,6 +232,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      game_system: {
+        Row: {
+          id: number
+          label: string | null
+          name: string
+        }
+        Insert: {
+          id?: number
+          label?: string | null
+          name: string
+        }
+        Update: {
+          id?: number
+          label?: string | null
+          name?: string
+        }
+        Relationships: []
       }
       mp_base_items: {
         Row: {
@@ -598,15 +611,7 @@ export type Database = {
           id?: string
           username?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "profile_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       quest: {
         Row: {
@@ -744,15 +749,7 @@ export type Database = {
           role?: string
           user_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "roles_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
     }
     Views: {
@@ -912,4 +909,19 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof PublicSchema["CompositeTypes"]
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
+    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
