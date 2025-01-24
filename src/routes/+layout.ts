@@ -1,7 +1,15 @@
-import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
+import {
+  PUBLIC_SUPABASE_ANON_KEY,
+  PUBLIC_SUPABASE_URL
+} from '$env/static/public';
 import { browser } from '$app/environment';
 import { QueryClient } from '@tanstack/svelte-query';
-import { createBrowserClient, createServerClient, isBrowser, parse } from '@supabase/ssr';
+import {
+  createBrowserClient,
+  createServerClient,
+  isBrowser,
+  parse
+} from '@supabase/ssr';
 
 export const load = async ({ fetch, data, depends }) => {
   depends('supabase:auth');

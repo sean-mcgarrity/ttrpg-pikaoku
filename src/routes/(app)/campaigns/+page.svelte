@@ -4,6 +4,7 @@
   import CampaignLogin from '../../CampaignLogin.svelte';
 
   let campaigns = $derived(getCampaigns());
+  $campaigns.data[0].name
 </script>
 
 <Heading type="Page Heading">Your campaigns</Heading>

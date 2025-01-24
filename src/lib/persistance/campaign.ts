@@ -1,5 +1,9 @@
 import { extractData } from '$lib/utils/requests';
-import { createMutation, createQuery, useQueryClient } from '@tanstack/svelte-query';
+import {
+  createMutation,
+  createQuery,
+  useQueryClient
+} from '@tanstack/svelte-query';
 import { page } from '$app/stores';
 import { get } from 'svelte/store';
 import { supabase } from '$lib/utils/auth';
@@ -51,7 +55,10 @@ export const updateCurrentCampaign = () => {
   return createMutation({
     mutationKey: ['campaigns', campaignId],
     mutationFn: async (campaign: TablesUpdate<'campaign'>) => {
-      return get(supabase).from('campaign').update(campaign).eq('id', campaignId);
+      return get(supabase)
+        .from('campaign')
+        .update(campaign)
+        .eq('id', campaignId);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['campaigns']);
@@ -80,7 +87,9 @@ export const enableCampaignFeatureFlag = () => {
   return createMutation({
     mutationKey: ['campaigns', campaignId],
     mutationFn: async (feature: string) => {
-      return get(supabase).from('campaign_features').insert({ campaign_id: campaignId, feature });
+      return get(supabase)
+        .from('campaign_features')
+        .insert({ campaign_id: campaignId, feature });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['campaigns', campaignId]);
