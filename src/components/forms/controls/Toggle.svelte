@@ -1,9 +1,4 @@
 <script>
-  // based on suggestions from:
-  // Inclusive Components by Heydon Pickering https://inclusive-components.design/toggle-button/
-  // On Designing and Building Toggle Switches by Sara Soueidan https://www.sarasoueidan.com/blog/toggle-switch-design/
-  
-
   /**
    * @typedef {Object} Props
    * @property {any} label - and this example by Scott O'hara https://codepen.io/scottohara/pen/zLZwNv

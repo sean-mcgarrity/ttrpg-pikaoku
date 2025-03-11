@@ -22,7 +22,6 @@
   let sessionTimeStart = $state(Date.now());
 
   let handleSave = $derived(() => {
-    // TODO: Validate the data.
     const saveImbuement: Omit<Imbuement, 'id' | 'types'> = {
       ...imbuement,
       enabled: true

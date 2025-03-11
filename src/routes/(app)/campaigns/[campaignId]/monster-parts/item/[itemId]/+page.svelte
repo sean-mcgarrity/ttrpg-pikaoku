@@ -8,7 +8,10 @@
   import Button from '$components/buttons/Button.svelte';
   import { Navigation2, PencilRuler, X } from 'lucide-svelte';
   import AddImbuement from './AddImbuement.svelte';
-  import { getUnusedImbuementSlots, itemTypes } from '$lib/systems/pf2e_monster_parts';
+  import {
+    getUnusedImbuementSlots,
+    itemTypes
+  } from '$lib/systems/pf2e_monster_parts';
   import EditItemForm from './EditItemForm.svelte';
   import RecentItemChanges from './RecentItemChanges.svelte';
   import BigButton from '$components/buttons/BigButton.svelte';
@@ -17,7 +20,6 @@
   import { goto } from '$app/navigation';
   import { page } from '$app/stores';
   import { fade } from 'svelte/transition';
-  import { each } from 'svelte/internal';
   import SalvageRefinementPane from './SalvageRefinementPane.svelte';
 
   let query = getCurrentItem();
@@ -28,8 +30,17 @@
     }
   });
 
-  let canAddImbuement = $derived($query.isSuccess && getUnusedImbuementSlots($query.data) > 0);
-  let tab: 'edit' | 'none' | 'refine' | 'imbue' | 'add-imbuement' | 'changes' | 'salvage' = $state('none');
+  let canAddImbuement = $derived(
+    $query.isSuccess && getUnusedImbuementSlots($query.data) > 0
+  );
+  let tab:
+    | 'edit'
+    | 'none'
+    | 'refine'
+    | 'imbue'
+    | 'add-imbuement'
+    | 'changes'
+    | 'salvage' = $state('none');
 
   let changeTab = $derived((newTab: typeof tab) => {
     tab = newTab;
@@ -45,18 +56,17 @@
       {#if !$query.isLoading && !!$query.data}
         <RefinementCard refinement={$query.data}>
           {#snippet buttons()}
-                  
-              <Button
-                class="sm:mr-auto"
-                on:click={() => (tab = tab === 'edit' ? 'quick-actions' : 'edit')}
-                >Edit <PencilRuler /></Button
+            <Button
+              class="sm:mr-auto"
+              on:click={() => (tab = tab === 'edit' ? 'quick-actions' : 'edit')}
+              >Edit <PencilRuler /></Button
+            >
+            {#if canAddImbuement}
+              <Button on:click={() => (tab = 'add-imbuement')}
+                >Add Imbuement <Navigation2 /></Button
               >
-              {#if canAddImbuement}
-                <Button on:click={() => (tab = 'add-imbuement')}>Add Imbuement <Navigation2 /></Button
-                >
-              {/if}
-            
-                  {/snippet}
+            {/if}
+          {/snippet}
         </RefinementCard>
       {/if}
     </div>
@@ -73,7 +83,9 @@
             <BigButton on:click={() => changeTab('imbue')}>Imbue</BigButton>
           {/if}
           {#if canAddImbuement}
-            <BigButton on:click={() => changeTab('add-imbuement')}>Add Imbuement</BigButton>
+            <BigButton on:click={() => changeTab('add-imbuement')}
+              >Add Imbuement</BigButton
+            >
           {/if}
           <BigButton on:click={() => changeTab('changes')}>Changes</BigButton>
           <BigButton on:click={() => changeTab('salvage')}>Salvage</BigButton>
@@ -87,7 +99,9 @@
             delay: 75
           }}
         >
-          <Button on:click={() => (tab = 'none')} class="mx-auto mb-4">Cancel <X /></Button>
+          <Button on:click={() => (tab = 'none')} class="mx-auto mb-4"
+            >Cancel <X /></Button
+          >
           {#if tab === 'refine'}
             <RefinePane item={$query.data} />
           {:else if tab === 'imbue'}
@@ -95,7 +109,10 @@
           {:else if tab === 'add-imbuement'}
             <AddImbuement item={$query.data} afterAdd={() => (tab = 'none')} />
           {:else if tab === 'edit'}
-            <EditItemForm refinement={$query.data} afterSave={() => (tab = 'quick-actions')} />
+            <EditItemForm
+              refinement={$query.data}
+              afterSave={() => (tab = 'quick-actions')}
+            />
           {:else if tab === 'changes'}
             <RecentItemChanges item={$query.data} />
           {:else if tab === 'salvage'}
